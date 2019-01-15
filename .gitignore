@@ -10,6 +10,8 @@
 /build
 
 # misc
+package-lock.json
+yarn.lock
 .vscode/chrome
 .DS_Store
 .env.local
