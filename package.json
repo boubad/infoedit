@@ -1,0 +1,46 @@
+{
+  "name": "infoedit",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "^4.2.1",
+    "classnames": "^2.2.6",
+    "flux-standard-action": "^2.0.3",
+    "immer": "^1.10.0",
+    "jquery": "^3.3.1",
+    "moment": "^2.23.0",
+    "papaparse": "^4.6.3",
+    "popper.js": "^1.14.6",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "react-redux": "^6.0.0",
+    "react-router-dom": "^4.3.1",
+    "react-router-redux": "^4.0.8",
+    "react-scripts-ts": "3.1.0",
+    "reactstrap": "^7.0.2",
+    "redux": "^4.0.1",
+    "redux-actions": "^2.6.4",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0"
+  },
+  "scripts": {
+    "start": "react-scripts-ts start",
+    "build": "react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject"
+  },
+  "devDependencies": {
+    "@types/classnames": "^2.2.7",
+    "@types/jest": "^23.3.12",
+    "@types/node": "^10.12.18",
+    "@types/papaparse": "^4.5.6",
+    "@types/react": "^16.7.18",
+    "@types/react-dom": "^16.0.11",
+    "@types/react-redux": "^6.0.12",
+    "@types/react-router-dom": "^4.3.1",
+    "@types/reactstrap": "^6.4.4",
+    "@types/redux-actions": "^2.3.1",
+    "redux-devtools-extension": "^2.13.7",
+    "typescript": "^3.2.2"
+  }
+}

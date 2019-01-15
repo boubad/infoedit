@@ -1,0 +1,41 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+.infoback {
+  font-family: "Lato", sans-serif;
+  background-color: #111;
+  color: #818181;
+  font-weight: bold;
+}
+
+.infotext {
+  font-family: "Lato", sans-serif;
+  font-weight: bold;
+}
+
+.infoerror {
+  font-family: "Lato", sans-serif;
+  font-weight: bold;
+  color: #ff0000;
+}
+
+.infostatus {
+  font-family: "Lato", sans-serif;
+  font-weight: bold;
+  color: #00ff00;
+}
+
+.isDisabled {
+  color: currentColor;
+  cursor: not-allowed;
+  opacity: 0.5;
+  text-decoration: none;
+}
+.center {
+  text-align: center;
+}
+.top {
+  vertical-align: top;
+}

@@ -1,0 +1,42 @@
+{
+  "sessions": [
+    {
+      "id": "78689ca0-7c4c-450f-aa2a-dcaf262ccf24",
+      "tabLayout": {
+        "type": "stack",
+        "width": 100,
+        "height": 100,
+        "tabs": [
+          {
+            "id": "bafd99b2-5856-4d5f-8ded-7bff2b5d2681",
+            "relativeUrl": "file://./tsconfig.json",
+            "additionalData": null
+          },
+          {
+            "id": "0f1710f6-26cc-4f9a-8c10-3e2315b5f793",
+            "relativeUrl": "file://./src/features/Outils/redux/OutilsServices.ts",
+            "additionalData": null
+          },
+          {
+            "id": "b78665f4-5857-49f6-a400-88f11806fb44",
+            "relativeUrl": "file://./src/features/Annee/redux/AnneeServices.ts",
+            "additionalData": null
+          },
+          {
+            "id": "5a4a06aa-d9d5-4892-8759-7e10c54f7b5d",
+            "relativeUrl": "file://./src/features/Etudiant/redux/EtudiantServices.ts",
+            "additionalData": null
+          }
+        ],
+        "subItems": [],
+        "activeItemIndex": 0
+      },
+      "lastUsed": 1547492587383,
+      "selectedTabId": "b78665f4-5857-49f6-a400-88f11806fb44",
+      "errorsExpanded": true,
+      "errorsDisplayMode": 1,
+      "fileTreeExpanded": true
+    }
+  ],
+  "relativePathToTsconfig": "./tsconfig.json"
+}
