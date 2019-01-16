@@ -4,6 +4,7 @@ import { Nav, NavItem } from "reactstrap";
 import Admin from "./features/Admin/redux/Admin";
 import AppState from "./features/AppState/redux/AppState";
 import Consult from "./features/Consult/redux/Consult";
+import EtudiantDetail from './features/Etudiant/redux/EtudiantDetail';
 //
 const Home = () => <AppState />;
 //
@@ -24,6 +25,7 @@ const AppRouter = () => (
       <Route path="/" exact={true} component={Home} />
       <Route path="/admin/" component={Admin} />
       <Route path="/consult/" component={Consult} />
+      <Route path="/etuddetail/:id" component={EtudiantDetail} />
     </div>
   </Router>
 );
