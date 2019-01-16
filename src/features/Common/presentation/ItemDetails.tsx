@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Table } from "reactstrap";
 import { BaseComponent } from "../../../components/BaseComponent";
-import { IOption, IWorkDoc } from "../../../data/DomainData";
+import { IControleAffectationDoc, IOption } from "../../../data/DomainData";
 //
-export interface IItemDetailProps<T extends IWorkDoc> {
+export interface IItemDetailProps<T extends IControleAffectationDoc> {
   addMode: boolean;
   items: T[];
   current: T;
@@ -18,7 +18,7 @@ export interface IItemDetailProps<T extends IWorkDoc> {
   onRemoveAttachment?: (name: string) => void;
 } // interface IItemDetailProps<T extends IItemDoc>
 //
-export class ItemDetail<T extends IWorkDoc> extends BaseComponent<
+export class ItemDetail<T extends IControleAffectationDoc> extends BaseComponent<
   IItemDetailProps<T>
 > {
   constructor(props?: any) {

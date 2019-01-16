@@ -1,168 +1,83 @@
 export interface IItemDoc {
-  _id: string;
-  _rev: string;
-  _deleted:boolean;
-} // interface IInfoDoc
-//
-export interface IItemAnnee  {
   _id?: string;
   _rev?: string;
+  _deleted?: boolean;
   _attachments?: any;
+} // interface IInfoDoc
+export interface IItemInfo extends IItemDoc {
   type?: string;
-  ownerid?:string;
+  ownerid?: string;
   observations?: string;
+} // interface IItemInfo
+export interface IItemSigleName extends IItemInfo {
+  sigle?: string;
+  name?: string;
+} // IItemSigleName
+//
+export interface IItemAnnee extends IItemSigleName {
   startdate?: string;
   enddate?: string;
-  sigle?:string;
-  name?: string;
 } // interface IItemAnnee
 //
-export interface IItemGroupe {
-  _id?: string;
-  _rev?: string;
-  _attachments?: any;
-  type?: string;
-  ownerid?:string;
-  observations?: string;
-  sigle?:string;
-  name?: string;
-} // interface IItemGroupe
+export interface IItemGroupe extends IItemSigleName {} // interface IItemGroupe
 //
-export interface IItemUnite  {
-  _id?: string;
-  _rev?: string;
-  _attachments?: any;
-  type?: string;
-  ownerid?:string;
-  observations?: string;
-  sigle?:string;
-  name?: string;
-} // interface IItemUnite
+export interface IItemUnite extends IItemSigleName {} // interface IItemUnite
 //
-export interface IItemSemestre {
-  _id?: string;
-  _rev?: string;
-  _attachments?: any;
-  type?: string;
-  ownerid?:string;
-  observations?: string;
-  sigle?:string;
-  name?: string;
-} // interface IItemUnite
+export interface IItemSemestre extends IItemSigleName {} // interface IItemUnite
 //
-export interface IItemMatiere  {
-  _id?: string;
-  _rev?: string;
-  _attachments?: any;
-  type?: string;
-  ownerid?:string;
-  observations?: string;
-  sigle?:string;
-  name?: string;
+export interface IItemMatiere extends IItemSigleName {
   uniteid?: string;
   modname?: string;
   coefficient?: number;
   ecs?: number;
-} // interface IInfoDoc
+} // interface IItemMatiere
 //
-export interface IItemEtudiant {
-  _id?: string;
-  _rev?: string;
-  _attachments?: any;
-  type?: string;
-  ownerid?:string;
-  observations?: string;
+export interface IItemEtudiant extends IItemInfo {
   lastname?: string;
   firstname?: string;
   email?: string;
   avatar?: string;
-  status?:string;
-}
-export interface IItemAffectation {
-  _id?: string;
-  _rev?: string;
-  _attachments?: any;
-  type?: string;
-  ownerid?:string;
-  observations?: string;
-  anneeid?:string;
-  semestreid?:string;
-  groupeid?:string; 
-  startdate?:string;
-  enddate?:string;
-}// interface IEtudAffectation
-export interface IItemEtudAffectation {
-  _id?: string;
-  _rev?: string;
-  _attachments?: any;
-  type?: string;
-  ownerid?:string;
-  observations?: string;
-  affectationid?:string;
-  etudiantid?:string;
-  startdate?:string;
-  enddate?:string;
-  anneeid?:string;
-  semestreid?:string;
-  groupeid?:string; 
-}
-export interface IItemControle  {
-  _id?: string;
-  _rev?: string;
-  _attachments?: any;
-  type?: string;
-  ownerid?:string;
-  observations?: string;
-  affectationid?:string;
-  matiereid?:string;
+  status?: string;
+} // interface IItemEtudiant
+export interface IItemBaseAffectation extends IItemInfo {
+  anneeid?: string;
+  semestreid?: string;
+  groupeid?: string;
+} // IItemBaseAffectation
+export interface IItemIntervalAffectation extends IItemBaseAffectation {
+  startdate?: string;
+  enddate?: string;
+} // IItemIntervalAffectation
+export interface IItemAffectation extends IItemIntervalAffectation {} // IItemAffectation
+export interface IItemEtudAffectation extends IItemIntervalAffectation {
+  affectationid?: string;
+  etudiantid?: string;
+} // interface  IItemEtudAffectation
+export interface IItemMatiereAffectation extends IItemBaseAffectation {
+  affectationid?: string;
+  uniteid?: string;
+  matiereid?: string;
+} // interface IItemMatiereAffectation
+export interface IItemControle extends IItemMatiereAffectation {
   date?: string;
   place?: string;
   duration?: string;
   coefficient?: number;
   name?: string;
-  uniteid?:string;
-  semestreid?:string;
-  anneeid?:string;
-  groupeid?:string;
 } // interface IInfoControle
-export interface IItemEvt  {
-  _id?: string;
-  _rev?: string;
-  _attachments?: any;
-  type?: string;
-  ownerid?:string;
-  observations?: string;
-  controleid?:string;
+export interface IItemControleAffectation extends IItemMatiereAffectation {
+  controleid?: string;
+  etudaffectationid?: string;
   etudiantid?:string;
+} // interface IItemControleAffectation
+export interface IItemEvt extends IItemControleAffectation {
   evttype?: number;
   duration?: string;
-  uniteid?:string;
-  matiereid?:string;
-  anneeid?:string;
-  groupeid?:string;
-  semestreid?:string;
-  affectationid?:string;
-  etudaffectationid?:string;
-}
-export interface IItemNote {
-  _id?: string;
-  _rev?: string;
-  _attachments?: any;
-  type?: string;
-  ownerid?:string;
-  observations?: string;
-  controleid?:string;
-  etudiantid?:string;
-  value?: number;
-  uniteid?:string;
-  matiereid?:string;
-  anneeid?:string;
-  groupeid?:string;
-  semestreid?:string;
-  affectationid?:string;
-  etudaffectationid?:string;
-}
-interface IAttInfo {
+} // interface IItemEvt
+export interface IItemNote extends IItemControleAffectation {
+  value?: number | null;
+} // interface IItemNote
+export interface IItemAttInfo {
   content_type?: string;
   data?: string;
   digest?: string;
@@ -171,5 +86,4 @@ interface IAttInfo {
   length?: number;
   revpos?: number;
   stub?: boolean;
-}
-
+} // interface IItemAttInfo

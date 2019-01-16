@@ -39,9 +39,9 @@ import {
   TYPE_UNITE
 } from "./impl/DomainData";
 import {
-  IAttInfo,
   IItemAffectation,
   IItemAnnee,
+  IItemAttInfo,
   IItemControle,
   IItemEtudAffectation,
   IItemEtudiant,
@@ -261,10 +261,12 @@ export class BaseDataManager {
     pRet.displaydate = x.displaydate;
     pRet.controlename = x.name;
     pRet.date = x.date;
+    pRet.displaydate = x.displaydate;
     pRet.matierename = x.matierename;
     pRet.semestrename = x.semestrename;
     pRet.anneename = x.anneename;
     pRet.groupename = x.groupename;
+    pRet.unitename = x.unitename;
     return pRet;
   } // convertEvtDocAsync
   protected async convertNoteDocAsync(p: IItemNote): Promise<INoteDoc> {
@@ -294,10 +296,12 @@ export class BaseDataManager {
     pRet.displaydate = xx.displaydate;
     pRet.controlename = xx.name;
     pRet.date = xx.date;
+    pRet.displaydate = xx.displaydate;
     pRet.matierename = xx.matierename;
     pRet.semestrename = xx.semestrename;
     pRet.anneename = xx.anneename;
     pRet.groupename = xx.groupename;
+    pRet.unitename = xx.unitename;
     return pRet;
   } // convertNoteDocAsync
   //
@@ -314,6 +318,8 @@ export class BaseDataManager {
     pRet.etudiantid = p.etudiantid ? p.etudiantid : "";
     pRet.startdate = p.startdate ? p.startdate : "";
     pRet.enddate = p.enddate ? p.enddate : "";
+    pRet.displayenddate = DateToDisplay(pRet.enddate);
+    pRet.displaystartdate = DateToDisplay(pRet.startdate);
     pRet.semestreid = p.semestreid ? p.semestreid : "";
     pRet.anneeid = p.anneeid ? p.anneeid : "";
     pRet.groupeid = p.groupeid ? p.groupeid : "";
@@ -347,6 +353,8 @@ export class BaseDataManager {
     pRet.anneename = an.name;
     const g = await this.fetchGroupeByIdAsync(pRet.groupeid);
     pRet.groupename = g.name;
+    pRet.displayenddate = DateToDisplay(pRet.enddate);
+    pRet.displaystartdate = DateToDisplay(pRet.startdate);
     this.affectationsMap.set(pRet.id, pRet);
     return pRet;
   } // convertAffectationDocAsync
@@ -414,6 +422,8 @@ export class BaseDataManager {
     pRet.enddate = p.enddate ? p.enddate : "";
     pRet.sigle = p.sigle ? p.sigle : "";
     pRet.name = p.name ? p.name : "";
+    pRet.displayenddate = DateToDisplay(pRet.enddate);
+    pRet.displaystartdate = DateToDisplay(pRet.startdate);
     pRet.attachments = this.getDocAttachments(p);
     this.anneesMap.set(pRet.id, pRet);
     return pRet;
@@ -479,7 +489,7 @@ export class BaseDataManager {
     if (aa) {
       // tslint:disable-next-line:forin
       for (const key in aa) {
-        const info: IAttInfo = aa[key];
+        const info: IItemAttInfo = aa[key];
         const pz: IAttachedDoc = {
           docid,
           name: key,

@@ -4,8 +4,8 @@ import { BaseComponent } from "src/components/BaseComponent";
 import {
   IAttachedDoc,
   IBaseDoc,
-  IEtudiantDoc,
-  IWorkDoc
+  IControleAffectationDoc,
+  IEtudiantDoc
 } from "src/data/DomainData";
 
 export interface IEtudiantItemsProps {
@@ -34,13 +34,13 @@ export class BaseEtudiantItems extends BaseComponent<IEtudiantItemsProps> {
       </Table>
     );
   } // render
-  protected getItems(): IWorkDoc[] {
+  protected getItems(): IControleAffectationDoc[] {
     return [];
   } // hasItems
   protected renderTableHeader(): React.ReactNode {
     return null;
   } // renderTableHeader
-  protected renderOneLine(p: IWorkDoc): React.ReactNode {
+  protected renderOneLine(p: IControleAffectationDoc): React.ReactNode {
     return null;
   } // renderOneLine
   protected renderAttachments(p: IBaseDoc): React.ReactNode {

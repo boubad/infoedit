@@ -8,7 +8,7 @@ export interface IAttachedDoc {
 export interface IBaseDoc {
   id: string;
   rev: string;
-  ownerid:string;
+  ownerid: string;
   observations: string;
   modified: boolean;
   loaded: boolean;
@@ -17,59 +17,46 @@ export interface IBaseDoc {
 export interface ISigleNamedDoc extends IBaseDoc {
   sigle: string;
   name: string;
-}
-export interface ISemestreDoc extends ISigleNamedDoc {
-  dummy?: any;
-} // interface IUniteDoc
-export interface IUniteDoc extends ISigleNamedDoc {
-  dummy?: any;
-} // interface IUniteDoc
-export interface IGroupeDoc extends ISigleNamedDoc {
-  dummy?: any;
-} // interface IGroupeDoc
+}// interface ISigleNamedDoc
 export interface IAnneeDoc extends ISigleNamedDoc {
   startdate: string;
   enddate: string;
-} // interface IMatiereDoc
+  displaystartdate: string;
+  displayenddate: string;
+} // interface IAnneeDoc
+export interface ISemestreDoc extends ISigleNamedDoc {} // interface IUniteDoc
+export interface IUniteDoc extends ISigleNamedDoc {} // interface IUniteDoc
+export interface IGroupeDoc extends ISigleNamedDoc {} // interface IGroupeDoc
 //
-export interface IMatiereDoc extends IBaseDoc {
-  sigle: string;
-  name: string;
+export interface IMatiereDoc extends ISigleNamedDoc {
   uniteid: string;
+  unitename: string;
   modname: string;
   coefficient: number;
   ecs: number;
-  unitename:string;
 } // interface IMatiereDoc
-export interface IWorkDoc extends IBaseDoc {
-  controleid: string;
+export interface IBaseAffectationDoc extends IBaseDoc {
+  anneeid: string;
+  anneename: string;
+  semestreid: string;
+  semestrename: string;
+  groupeid: string;
+  groupename: string;
+} //  interface IBaseAffectationDoc
+export interface IItemIntervalDoc extends IBaseAffectationDoc {
+  startdate: string;
+  enddate: string;
+  displaystartdate: string;
+  displayenddate: string;
+} // interface IItemIntervalDoc
+export interface IAffectationDoc extends IItemIntervalDoc {} // interface IAffectationDoc
+export interface IEtudAffectationDoc extends IItemIntervalDoc {
+  affectationid: string;
   etudiantid: string;
-  displaydate: string;
-  controlename: string;
   fullname: string;
   url: string;
-  date: string;
-  matierename: string;
-  semestrename: string;
-  anneename: string;
-  groupename: string;
-  uniteid: string;
-  matiereid: string;
-  anneeid: string;
-  semestreid: string;
-  groupeid: string;
-  affectationid:string;
-  etudaffectationid:string;
-} // interface IWorkDoc
-export interface IEvtDoc extends IWorkDoc {
-  genre: number;
-  genrestring: string;
-  duration: string;
-} // interface IEvtDoc
-export interface INoteDoc extends IWorkDoc {
-  value: number | null;
-  coefficient: number;
-} // interface INoteDoc
+  etudiantStatus: string;
+} // interface IEtudAffectationDoc
 export interface IEtudiantDoc extends IBaseDoc {
   lastname: string;
   firstname: string;
@@ -82,34 +69,14 @@ export interface IEtudiantDoc extends IBaseDoc {
   evts: IEvtDoc[];
   affectations: IEtudAffectationDoc[];
 } // interface IEtudiantDoc
-export interface IAffectationDoc extends IBaseDoc {
-  anneeid: string;
-  semestreid: string;
-  groupeid: string;
-  semestrename: string;
-  anneename: string;
-  groupename: string;
-  startdate:string;
-  enddate:string;
-} // interface IEtudAffectation
-export interface IEtudAffectationDoc extends IBaseDoc {
+export interface IItemMatiereAffectationDoc extends IBaseAffectationDoc {
   affectationid: string;
-  etudiantid: string;
-  startdate: string;
-  enddate: string;
-  semestrename: string;
-  anneename: string;
-  groupename: string;
-  fullname: string;
-  url: string;
-  anneeid: string;
-  semestreid: string;
-  groupeid: string;
-  etudiantStatus: string;
-}
-export interface IControleDoc extends IBaseDoc {
-  affectationid: string;
+  uniteid: string;
+  unitename: string;
   matiereid: string;
+  matierename: string;
+} // interface IItemMatiereAffectation
+export interface IControleDoc extends IItemMatiereAffectationDoc {
   date: string;
   displaydate: string;
   name: string;
@@ -118,15 +85,26 @@ export interface IControleDoc extends IBaseDoc {
   coefficient: number;
   notes: INoteDoc[];
   evts: IEvtDoc[];
-  matierename: string;
-  semestrename: string;
-  anneename: string;
-  groupename: string;
-  uniteid: string;
-  anneeid: string;
-  semestreid: string;
-  groupeid: string;
 } // interface IControleDoc
+export interface IControleAffectationDoc extends IItemMatiereAffectationDoc {
+  controleid: string;
+  controlename: string;
+  date: string;
+  displaydate: string;
+  etudaffectationid: string;
+  etudiantid: string;
+  fullname: string;
+  url: string;
+} // interface IItemControleAffectation
+export interface IEvtDoc extends IControleAffectationDoc {
+  genre: number;
+  genrestring: string;
+  duration: string;
+} // interface IEvtDoc
+export interface INoteDoc extends IControleAffectationDoc {
+  value: number | null;
+  coefficient: number;
+} // interface INoteDoc
 export interface IImportEtudiant {
   lastname?: string;
   firstname?: string;

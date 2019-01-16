@@ -11,7 +11,6 @@ const STRING_ETAG1 = "etag";
 const STRING_ETAG2 = "ETag";
 const STRING_FIND_IMPL = "_find";
 const STRING_BULK_DOCS = "_bulk_docs";
-const DATA_CHUNK_SIZE = 128;
 //
 const MAX_INT_VALUE = Number.MAX_SAFE_INTEGER;
 //
@@ -25,10 +24,17 @@ export class CouchDBManager implements IDataStore {
       this.baseurl += "/";
     }
     this.client = new FetchClient();
-  }
+  } // constructor
   public formBlobUrl(docid?: string, attname?: string): string {
-    if (docid && docid.length > 0 && attname && attname.length > 0) {
-      return this.baseurl + encodeURI(docid) + "/" + encodeURI(attname);
+    if (
+      docid &&
+      docid.trim().length > 0 &&
+      attname &&
+      attname.trim().length > 0
+    ) {
+      return (
+        this.baseurl + encodeURI(docid.trim()) + "/" + encodeURI(attname.trim())
+      );
     } else {
       return "";
     }
@@ -37,7 +43,7 @@ export class CouchDBManager implements IDataStore {
   public createDoc(doc: any): Promise<ICouchDBUpdateResponse> {
     let sUrl = this.baseurl;
     if (doc._id && doc._id.trim().length > 0) {
-      sUrl = this.baseurl + encodeURI(doc._id);
+      sUrl = this.baseurl + encodeURI(doc._id.trim());
       return this.client.performPut(sUrl, doc);
     }
     if (doc._id) {
@@ -48,23 +54,24 @@ export class CouchDBManager implements IDataStore {
   public findDocById(sid: string): Promise<ICouchDBDoc> {
     return this.client.performGet(this.formUrl(sid));
   } // findDocById
-  public async findDocRevision(sid: string): Promise<string> {
-    const hh = await this.client.performHead(this.formUrl(sid));
-    let sx = "";
-    if (hh.has(STRING_ETAG1)) {
-      const s = hh.get(STRING_ETAG1);
-      sx = s ? s : "";
-    } else if (hh.has(STRING_ETAG2)) {
-      const s = hh.get(STRING_ETAG2);
-      sx = s ? s : "";
-    }
-    const n = sx.length;
-    if (n > 2) {
-      sx = sx.slice(1, n - 1);
-    }
-    return sx;
+  public findDocRevision(sid: string): Promise<string> {
+    return this.client.performHead(this.formUrl(sid)).then((hh: Headers) => {
+      let sx = "";
+      if (hh.has(STRING_ETAG1)) {
+        const s = hh.get(STRING_ETAG1);
+        sx = s ? s : "";
+      } else if (hh.has(STRING_ETAG2)) {
+        const s = hh.get(STRING_ETAG2);
+        sx = s ? s : "";
+      }
+      const n = sx.length;
+      if (n > 2) {
+        sx = sx.slice(1, n - 1);
+      }
+      return sx;
+    });
   } // findDocRevision
-  public async maintainsDoc(ddoc: any): Promise<string> {
+  public maintainsDoc(ddoc: any): Promise<string> {
     const doc: any = {};
     for (const key in ddoc) {
       if (key === "_id") {
@@ -77,95 +84,112 @@ export class CouchDBManager implements IDataStore {
       }
     } // key
     if (!doc._id) {
-      const rsp = await this.createDoc(doc);
-      if (rsp.ok === true) {
-        return rsp.id as string;
-      } else {
-        throw new TypeError("Cannot create document");
-      }
-    } else {
-      const rev = await this.findDocRevision(doc._id);
-      if (rev.length < 1) {
-        const rsp = await this.createDoc(doc);
+      return this.createDoc(doc).then(rsp => {
         if (rsp.ok === true) {
           return rsp.id as string;
         } else {
           throw new TypeError("Cannot create document");
         }
-      } else {
-        const old = await this.findDocById(doc._id);
-        const aa = old._attachments;
-        if (aa) {
-          doc._attachments = aa;
-        }
-        const sUrl = this.formDocUrl(doc._id, rev);
-        const rsp = await this.client.performPut(sUrl, doc);
-        if (rsp.ok === true) {
-          return rsp.id as string;
+      });
+    } else {
+      return this.findDocRevision(doc._id).then(rev => {
+        if (rev.length < 1) {
+          delete doc._id;
+          return this.createDoc(doc).then(rsp => {
+            if (rsp.ok === true) {
+              return rsp.id as string;
+            } else {
+              throw new TypeError("Cannot create document");
+            }
+          });
         } else {
-          throw new TypeError("Cannot update document");
+          return this.findDocById(doc._id).then(old => {
+            const aa = old._attachments;
+            if (aa) {
+              doc._attachments = aa;
+            }
+            const sUrl = this.formDocUrl(doc._id, rev);
+            return this.client.performPut(sUrl, doc).then(rsp => {
+              if (rsp.ok === true) {
+                return rsp.id as string;
+              } else {
+                throw new TypeError("Cannot update document");
+              }
+            });
+          });
         }
-      }
+      });
     }
   } // maintainsDoc
-  public async removeDoc(id: string): Promise<void> {
-    const srev = await this.findDocRevision(id);
-    if (srev.length < 1) {
-      throw new TypeError("Document not found...");
-    } else {
-      const sUrl = this.formDocUrl(id, srev);
-      const rsp = await this.client.performDelete(sUrl);
-      if (rsp.ok === true) {
-        return;
+  public removeDoc(id: string): Promise<void> {
+    return this.findDocRevision(id).then(srev => {
+      if (srev.length < 1) {
+        throw new TypeError("Document not found...");
       } else {
-        throw new TypeError("Cannot delete document...");
+        const sUrl = this.formDocUrl(id, srev);
+        return this.client.performDelete(sUrl).then(rsp => {
+          if (rsp.ok === true) {
+            return;
+          } else {
+            throw new TypeError("Cannot delete document...");
+          }
+        });
       }
-    }
+    });
   } // deleteDoc
-  public async maintainsBlob(
+  public maintainsBlob(
     sid: string,
     attname: string,
     attype: string,
     bdata: Blob | Buffer
   ): Promise<string> {
-    const srev = await this.findDocRevision(sid);
-    if (srev.length < 1) {
-      throw new TypeError("Document not found...");
-    } else {
-      const url = this.formBlobUrl(sid, attname) + "?rev=" + srev;
-      const r = await this.client.performPutBlob(url, attype, bdata);
-      if (r.ok === true) {
-        const sRet = this.formBlobUrl(r.id, attname);
-        return sRet;
+    return this.findDocRevision(sid).then(srev => {
+      if (srev.length < 1) {
+        throw new TypeError("Document not found...");
       } else {
-        throw new TypeError("Cannot maintains blob...");
+        const url = this.formBlobUrl(sid, attname) + "?rev=" + srev;
+        return this.client.performPutBlob(url, attype, bdata).then(r => {
+          if (r.ok === true) {
+            return this.formBlobUrl(r.id, attname);
+          } else {
+            throw new TypeError("Cannot maintains blob...");
+          }
+        });
       }
-    }
+    });
   } // maintainsBlob
-  public async removeBlob(sid: string, attname: string): Promise<void> {
-    const srev = await this.findDocRevision(sid);
-    if (srev.length < 1) {
-      throw new TypeError("Document not found...");
-    } else {
-      const url = this.formAttachmentUrl(sid, attname, srev);
-      const rsp = await this.client.performDelete(url);
-      if (rsp.ok === true) {
-        return;
+  public removeBlob(sid: string, attname: string): Promise<void> {
+    return this.findDocRevision(sid).then(srev => {
+      if (srev.length < 1) {
+        throw new TypeError("Document not found...");
       } else {
-        throw new TypeError("Operation failed...");
+        const url = this.formAttachmentUrl(sid, attname, srev);
+        return this.client.performDelete(url).then(rsp => {
+          if (rsp.ok === true) {
+            return;
+          } else {
+            throw new TypeError("Operation failed...");
+          }
+        });
       }
-    }
+    });
   } // removeBlob
-  public async findDocsBySelector(
+  public findDocsBySelector(
     sel: any,
     start?: number,
     count?: number,
     fields?: string[],
     sort?: any
   ): Promise<any[]> {
+    if (count === undefined || count === null) {
+      return Promise.resolve([]);
+    }
+    if (count < 1) {
+      return Promise.resolve([]);
+    }
     const sUrl = this.formUrl(STRING_FIND_IMPL);
     const opts: any = {
-      limit: count && count > 0 ? count : DATA_CHUNK_SIZE,
+      limit: count,
       selector: sel,
       skip: start && start >= 0 ? start : 0
     };
@@ -175,18 +199,17 @@ export class CouchDBManager implements IDataStore {
     if (sort) {
       opts.sort = sort;
     }
-    const rsp: ICouchDBFindResponse<any> = await this.client.performPost(
-      sUrl,
-      opts
-    );
-    if (rsp.docs) {
-      return rsp.docs;
-    } else {
-      return [];
-      // reject(new Error("Cannot find data array..."));
-    }
+    return this.client
+      .performPost(sUrl, opts)
+      .then((rsp: ICouchDBFindResponse<any>) => {
+        if (rsp.docs) {
+          return rsp.docs;
+        } else {
+          return [];
+        }
+      });
   } // findDocsBySelector
-  public async findAllDocsBySelector(
+  public findAllDocsBySelector(
     sel: any,
     fields?: string[],
     sort?: any
@@ -203,44 +226,57 @@ export class CouchDBManager implements IDataStore {
     if (sort) {
       opts.sort = sort;
     }
-    const rsp = await this.client.performPost(sUrl, opts);
-    if (rsp.docs) {
-      return rsp.docs;
-    } else {
-      throw new TypeError("Cannot find data array...");
-    }
+    return this.client
+      .performPost(sUrl, opts)
+      .then((rsp: ICouchDBFindResponse<any>) => {
+        if (rsp.docs) {
+          return rsp.docs;
+        } else {
+          throw new TypeError("Cannot find data array...");
+        }
+      });
   } // findAllDocsBySelector
-  public async findDocsCountBySelector(sel: any): Promise<number> {
+  public findDocsCountBySelector(sel: any): Promise<number> {
     const offset = 0;
     const count = MAX_INT_VALUE;
     const fields = ["_id"];
-    const docs = await this.findDocsBySelector(sel, offset, count, fields);
-    if (docs) {
-      return docs.length;
-    } else {
-      throw new TypeError("Cannot get count...");
-    }
+    return this.findDocsBySelector(sel, offset, count, fields).then(docs => {
+      if (docs) {
+        return docs.length;
+      } else {
+        throw new TypeError("Cannot get count...");
+      }
+    });
   } // findDocsCountBySelector
-  public async maintainsManyDocs(docs: any[]): Promise<void> {
+  public maintainsManyDocs(docs: any[]): Promise<void> {
     const sUrl = this.formUrl(STRING_BULK_DOCS);
-    this.client.performPost(sUrl, { docs });
+    return this.client.performPost(sUrl, { docs }).then(rsp => {
+      if (!rsp) {
+        throw new TypeError("Cannot bulk update...");
+      }
+    });
   } //  maintainsManyDocs
-  public async removeDocsBySelector(sel: any): Promise<void> {
+  public removeDocsBySelector(sel: any): Promise<void> {
     const offset = 0;
     const count = MAX_INT_VALUE;
     const fields = ["_id", "_rev"];
-    const docs = await this.findDocsBySelector(sel, offset, count, fields);
-    const n = docs.length;
-    if (n < 1) {
-      return;
-    }
-    const rdocs: any[] = [];
-    for (let i = 0; i < n; i++) {
-      const x = docs[i];
-      rdocs.push({ _id: x._id, _rev: x._rev, _deleted: true });
-    } // i
-    const sUrl = this.formUrl(STRING_BULK_DOCS);
-    await this.client.performPost(sUrl, { docs: rdocs });
+    return this.findDocsBySelector(sel, offset, count, fields).then(docs => {
+      const n = docs.length;
+      if (n < 1) {
+        return;
+      }
+      const rdocs: any[] = [];
+      for (let i = 0; i < n; i++) {
+        const x = docs[i];
+        rdocs.push({ _id: x._id, _rev: x._rev, _deleted: true });
+      } // i
+      const sUrl = this.formUrl(STRING_BULK_DOCS);
+      return this.client.performPost(sUrl, { docs: rdocs }).then(rsp => {
+        if (!rsp) {
+          throw new TypeError("Cannot bulk update...");
+        }
+      });
+    });
   } // removeDocsBySelector
   private formUrl(uri: string): string {
     return this.baseurl + encodeURI(uri);

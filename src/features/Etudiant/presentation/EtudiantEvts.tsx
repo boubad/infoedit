@@ -1,12 +1,12 @@
 import * as React from "react";
-import { IEvtDoc, IWorkDoc } from '../../../data/DomainData';
+import { IControleAffectationDoc, IEvtDoc } from '../../../data/DomainData';
 import { BaseEtudiantItems } from './BaseEtudiantItems';
 
 export class EtudiantEvts extends BaseEtudiantItems {
   constructor(props?: any) {
     super(props);
   }
-  protected getItems(): IWorkDoc[] {
+  protected getItems(): IControleAffectationDoc[] {
     return this.props.current.evts;
   } // hasItems
   protected renderTableHeader(): React.ReactNode {
@@ -21,7 +21,7 @@ export class EtudiantEvts extends BaseEtudiantItems {
           </tr>
     );
   } // render
-  protected renderOneLine(px: IWorkDoc): React.ReactNode {
+  protected renderOneLine(px: IControleAffectationDoc): React.ReactNode {
     const p:IEvtDoc = px as IEvtDoc;
     return (
       <tr key={p.id}>

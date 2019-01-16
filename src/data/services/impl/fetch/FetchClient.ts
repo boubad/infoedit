@@ -14,42 +14,45 @@ const HTTP_ERR = 400;
 const HTTP_NOTFOUND = 404;
 //
 export class FetchClient implements IHttpClient {
-  public async isOnLine(url: string): Promise<boolean> {
-    try {
-      const response = await fetch(url, {
-        method: METHOD_HEAD,
-        mode: MODE_CORS
-      });
-      return response.status === HTTP_OK;
-    } catch (err) {
-      return false;
-    }
-  } // isOnLine
-  public async performHead(url: string): Promise<Headers> {
-    const response = await fetch(url, {
+  public isOnLine(url: string): Promise<boolean> {
+    return fetch(url, {
       method: METHOD_HEAD,
       mode: MODE_CORS
+    })
+      .then(response => {
+        return response.status === HTTP_OK;
+      })
+      .catch(err => {
+        return false;
+      });
+  } // isOnLine
+  public performHead(url: string): Promise<Headers> {
+    return fetch(url, {
+      method: METHOD_HEAD,
+      mode: MODE_CORS
+    }).then(response => {
+      return response.headers;
     });
-    return response.headers;
   } // performHead
-  public async performGet(url: string): Promise<any> {
-    const response = await fetch(url, {
+  public performGet(url: string): Promise<any> {
+    return fetch(url, {
       headers: new Headers({
         Accept: JSON_APPLICATION
       }),
       method: METHOD_GET,
       mode: MODE_CORS
+    }).then(response => {
+      if (response.status === HTTP_OK || response.status === HTTP_MODIFIED) {
+        return response.json();
+      } else if (response.status === HTTP_NOTFOUND) {
+        return {};
+      } else {
+        throw new TypeError("Cannot get url");
+      }
     });
-    if (response.status === HTTP_OK || response.status === HTTP_MODIFIED) {
-      return response.json();
-    } else if (response.status === HTTP_NOTFOUND) {
-      return {};
-    } else {
-      throw new TypeError("Cannot get url");
-    }
   } // performGet
-  public async performPut(url: string, data: any): Promise<any> {
-    const response = await fetch(url, {
+  public performPut(url: string, data: any): Promise<any> {
+    return fetch(url, {
       body: JSON.stringify(data),
       headers: new Headers({
         Accept: JSON_APPLICATION,
@@ -57,19 +60,20 @@ export class FetchClient implements IHttpClient {
       }),
       method: METHOD_PUT,
       mode: MODE_CORS
+    }).then(response => {
+      if (response.status < HTTP_ERR) {
+        return response.json();
+      } else {
+        throw new TypeError("Cannot put data");
+      }
     });
-    if (response.status < HTTP_ERR) {
-      return response.json();
-    } else {
-      throw new TypeError("Cannot put data");
-    }
   } // performPut
-  public async performPutBlob(
+  public performPutBlob(
     url: string,
     mime: string,
     data: Blob | Buffer
   ): Promise<any> {
-    const response = await fetch(url, {
+    return fetch(url, {
       body: data,
       headers: new Headers({
         Accept: JSON_APPLICATION,
@@ -77,15 +81,16 @@ export class FetchClient implements IHttpClient {
       }),
       method: METHOD_PUT,
       mode: MODE_CORS
+    }).then(response => {
+      if (response.status < HTTP_ERR) {
+        return response.json();
+      } else {
+        throw new TypeError("Cannot put Blob");
+      }
     });
-    if (response.status < HTTP_ERR) {
-      return response.json();
-    } else {
-      throw new TypeError("Cannot put Blob");
-    }
   } // performPut
-  public async performPost(url: string, data: any): Promise<any> {
-    const response = await fetch(url, {
+  public performPost(url: string, data: any): Promise<any> {
+    return fetch(url, {
       body: JSON.stringify(data),
       headers: new Headers({
         Accept: JSON_APPLICATION,
@@ -93,25 +98,27 @@ export class FetchClient implements IHttpClient {
       }),
       method: METHOD_POST,
       mode: MODE_CORS
+    }).then(response => {
+      if (response.status < HTTP_ERR) {
+        return response.json();
+      } else {
+        throw new TypeError("Cannot post data");
+      }
     });
-    if (response.status < HTTP_ERR) {
-      return response.json();
-    } else {
-      throw new TypeError("Cannot post data");
-    }
   } // performPost
-  public async performDelete(url: string): Promise<any> {
-    const response = await fetch(url, {
+  public performDelete(url: string): Promise<any> {
+    return fetch(url, {
       headers: new Headers({
         Accept: JSON_APPLICATION
       }),
       method: METHOD_DELETE,
       mode: MODE_CORS
+    }).then(response => {
+      if (response.status < HTTP_ERR) {
+        return response.json();
+      } else {
+        throw new TypeError("Cannot delete uri");
+      }
     });
-    if (response.status < HTTP_ERR) {
-      return response.json();
-    } else {
-      throw new TypeError("Cannot delete uri");
-    }
   } // performDelete
 } // class FetchClient

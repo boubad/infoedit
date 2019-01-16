@@ -165,7 +165,9 @@ export function GetGroupe(): IGroupeDoc {
         attachments: [],
         loaded: false,
         sigle: "",
-        ownerid:''
+        ownerid:'',
+        displaystartdate:'',
+        displayenddate:'',
       }
     );
   } // GetAnnee
@@ -189,7 +191,9 @@ export function GetGroupe(): IGroupeDoc {
         loaded: false,
         startdate:'',
         enddate:'',
-        ownerid:''
+        ownerid:'',
+        displaystartdate:'',
+        displayenddate:'',
       }
     );
   } // GetAffectation
@@ -218,7 +222,9 @@ export function GetGroupe(): IGroupeDoc {
         groupeid: "",
         semestreid: "",
         etudiantStatus:"",
-        ownerid:''
+        ownerid:'',
+        displaystartdate:'',
+        displayenddate:'',
       }
     );
   } // GetAffectation
@@ -255,6 +261,7 @@ export function GetGroupe(): IGroupeDoc {
         ownerid:'',
         affectationid:'',
         etudaffectationid:'',
+        unitename:'',
       }
     );
   } // GetEvt

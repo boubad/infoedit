@@ -1,12 +1,12 @@
 import * as React from "react";
-import { INoteDoc, IWorkDoc } from '../../../data/DomainData';
+import { IControleAffectationDoc, INoteDoc } from '../../../data/DomainData';
 import { BaseEtudiantItems } from "./BaseEtudiantItems";
 
 export class EtudiantNotes extends BaseEtudiantItems {
   constructor(props?: any) {
     super(props);
   }
-  protected getItems(): IWorkDoc[] {
+  protected getItems(): IControleAffectationDoc[] {
     return this.props.current.notes;
   } // hasItems
   protected renderTableHeader(): React.ReactNode {
@@ -21,7 +21,7 @@ export class EtudiantNotes extends BaseEtudiantItems {
       </tr>
     );
   } // renderTable
-  protected renderOneLine(px: IWorkDoc): React.ReactNode {
+  protected renderOneLine(px: IControleAffectationDoc): React.ReactNode {
     const p = px as INoteDoc;
     return (
       <tr key={p.id}>

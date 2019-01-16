@@ -6,11 +6,11 @@ import { EditCommandsComponent } from "../../../components/EditCommandsComponent
 import {
   IAttachedDoc,
   IBaseDoc,
-  IOption,
-  IWorkDoc
+  IControleAffectationDoc,
+  IOption
 } from "../../../data/DomainData";
 //
-export interface IBaseItemDetailComponentProps<T extends IWorkDoc> {
+export interface IBaseItemDetailComponentProps<T extends IControleAffectationDoc> {
   addMode: boolean;
   current: T;
   itemOptions?: IOption[];
@@ -22,7 +22,7 @@ export interface IBaseItemDetailComponentProps<T extends IWorkDoc> {
   onRemoveAttachment?: (name: string) => void;
 } // interface IBaseItemDetailComponentProps<T>
 //
-export class ItemDetailComponent<T extends IWorkDoc> extends BaseComponent<
+export class ItemDetailComponent<T extends IControleAffectationDoc> extends BaseComponent<
   IBaseItemDetailComponentProps<T>
 > {
   //
