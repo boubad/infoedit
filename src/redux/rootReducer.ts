@@ -34,10 +34,10 @@ export function rootReducer(
     });
   } // error
   return produce(state, pRet => {
-    pRet.affectations = affectationSubReducer(state,action);
+    pRet.affectations = affectationSubReducer(state.affectations,action);
     pRet.appstatus = appStatusSubReducer(state, action);
     pRet.appstate = appStateSubReducer(state, action);
-    pRet.annees = anneeSubReducer(state, action);
+    pRet.annees = anneeSubReducer(state.annees, action);
     pRet.controles = controleSubReducer(state,action);
     pRet.etudaffectations = etudAffectationSubReducer(state,action);
     pRet.etudiants = etudiantSubReducer(state,action);

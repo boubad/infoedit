@@ -1,6 +1,7 @@
 import { Dispatch } from "redux";
 import { createAction } from "redux-actions";
-import { IInfoState } from '../../../redux/InfoState';
+import { GetInitialAffectation } from "src/redux/StateProcs";
+import { IInfoState } from "../../../redux/InfoState";
 import { AffectationServices } from "./AffectationServices";
 //
 export const CHANGE_AFFECTATION_FIELD = "CHANGE_AFFECTATION_FIELD";
@@ -8,7 +9,15 @@ export const changeAffectationField = createAction(CHANGE_AFFECTATION_FIELD);
 //
 
 export const CREATE_AFFECTATION_ITEM = "CREATE_AFFECTATION_ITEM";
-export const createAffectationAction = createAction(CREATE_AFFECTATION_ITEM);
+const createAffectationAction = createAction(CREATE_AFFECTATION_ITEM);
+export function createAffectation(): any {
+  return (dispatch: Dispatch, getState: () => IInfoState) => {
+    const state = getState();
+    dispatch(
+      createAffectationAction({ affectation: GetInitialAffectation(state) })
+    );
+  };
+} // createAffectation
 //
 export const CANCEL_AFFECTATION_ITEM = "CANCEL_AFFECTATION_ITEM";
 export const cancelAffectationAction = createAction(CANCEL_AFFECTATION_ITEM);

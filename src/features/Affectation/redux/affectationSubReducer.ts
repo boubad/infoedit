@@ -2,9 +2,8 @@ import produce from "immer";
 import { GetAffectation } from 'src/data/DataProcs';
 import { IAffectationDoc } from 'src/data/DomainData';
 import { CHANGE_ANNEE_SUCCESS, CHANGE_SEMESTRE_SUCCESS } from 'src/features/AppState/redux/AppStateActions';
-import { IBaseState, IInfoState } from 'src/redux/InfoState';
+import { IBaseState } from 'src/redux/InfoState';
 import { IPayload } from 'src/redux/IPayload';
-import { GetInitialAffectation } from 'src/redux/StateProcs';
 import { InfoAction } from '../../../redux/IPayload';
 import {
   AFFECTATION_REMOVE_ATTACHMENT_BEGIN,
@@ -46,15 +45,13 @@ function refreshAffectation(
     }
     if (p.affectation) {
       pRet.current = p.affectation;
-    } else {
-      pRet.current = GetAffectation();
-    }
-    pRet.addMode = false;
+      pRet.addMode = false;
+    } 
   });
 } // refreshAffectation
 /////////////////////////////////////////////
 export function affectationSubReducer(
-  state: IInfoState,
+  state: IBaseState<IAffectationDoc>,
   action: InfoAction
 ): IBaseState<IAffectationDoc> {
   const p = action.payload ? action.payload : {};
@@ -64,14 +61,16 @@ export function affectationSubReducer(
     case AFFECTATION_SAVE_ATTACHMENT_BEGIN:
     case AFFECTATION_REMOVE_ATTACHMENT_BEGIN:
     case GOTO_PAGE_AFFECTATION_BEGIN:
-      return produce(state.affectations, pRet => {
+      return produce(state, pRet => {
         pRet.busy = true;
       });
     case CREATE_AFFECTATION_ITEM:
-      return produce(state.affectations, pRet => {
-        pRet.addMode = true;
-        pRet.previousId = pRet.current.id;
-        pRet.current = GetInitialAffectation(state);
+      return produce(state, pRet => {
+        if (p.affectation){
+          pRet.current = p.affectation;
+          pRet.addMode = true;
+          pRet.previousId = pRet.current.id;
+        }
         pRet.busy = false;
       });
     case AFFECTATION_REMOVE_ATTACHMENT_SUCCESS:
@@ -81,25 +80,23 @@ export function affectationSubReducer(
     case CHANGE_ANNEE_SUCCESS:
     case SAVE_AFFECTATION_ITEM_SUCCESS:
     case REMOVE_AFFECTATION_ITEM_SUCCESS:
-      return refreshAffectation(state.affectations, p);
+      return refreshAffectation(state, p);
     case SELECT_AFFECTATION_ITEM:
-    return produce(state.affectations, pRet => {
-      pRet.busy = false;
+    return produce(state, pRet => {
       if (p.id){
-        const id = p.id;
-        const px = state.affectations.pageData.find((x) =>{
-            return (x.id === id);
+        const px = state.pageData.find((x)=>{
+           return (x.id === p.id);
         });
-        if (px){
+        if (px !== undefined){
           pRet.current = Object.assign({},px);
           pRet.addMode = false;
-        }else {
-          pRet.current = GetAffectation();
+          pRet.previousId = "";
         }
-      }// id
+      }
+      pRet.busy = false;
     });
     case CANCEL_AFFECTATION_ITEM:
-      return produce(state.affectations, pRet => {
+      return produce(state, pRet => {
         pRet.busy = false;
         const id = pRet.previousId;
         pRet.addMode = false;
@@ -114,7 +111,7 @@ export function affectationSubReducer(
         pRet.previousId = "";
       });
     case CHANGE_AFFECTATION_FIELD:
-      return produce(state.affectations, pRet => {
+      return produce(state, pRet => {
         if (p.field && p.value ) {
           const val = p.value;
           const pz = Object.assign({}, pRet.current);
@@ -156,7 +153,7 @@ export function affectationSubReducer(
         pRet.busy = false;
       });
     default:
-      return produce(state.affectations, pRet => {
+      return produce(state, pRet => {
         pRet.busy = false;
       });
   } // type

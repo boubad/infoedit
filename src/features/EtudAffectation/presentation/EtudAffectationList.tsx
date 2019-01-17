@@ -1,4 +1,3 @@
-import * as moment from "moment";
 import * as React from "react";
 import { IEtudAffectationDoc } from "../../../data/DomainData";
 import { BaseListComponent } from "../../../features/Common/presentation/BaseListComponent";
@@ -43,7 +42,7 @@ export class EtudAffectationList extends BaseListComponent<
               onClick={this.onSelectItem.bind(this, px.id)}
               className={this.getDisabledStyle()}
             >
-              {moment(px.startdate).format("DD/MM/YYYY")}
+              {px.displaystartdate}
             </a>
           </td>
           <td>
@@ -52,7 +51,7 @@ export class EtudAffectationList extends BaseListComponent<
               onClick={this.onSelectItem.bind(this, px.id)}
               className={this.getDisabledStyle()}
             >
-              {moment(px.enddate).format("DD/MM/YYYY")}
+              {px.displayenddate}
             </a>
           </td>
           <td>{px.observations}</td>
@@ -69,12 +68,12 @@ export class EtudAffectationList extends BaseListComponent<
           </td>
           <td>
             <a href="#" onClick={this.onSelectItem.bind(this, px.id)}>
-              {moment(px.startdate).format("DD/MM/YYYY")}
+              {px.displaystartdate}
             </a>
           </td>
           <td>
             <a href="#" onClick={this.onSelectItem.bind(this, px.id)}>
-              {moment(px.enddate).format("DD/MM/YYYY")}
+              {px.displayenddate}
             </a>
           </td>
           <td>{px.observations}</td>

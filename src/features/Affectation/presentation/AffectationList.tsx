@@ -1,5 +1,4 @@
 import * as React from "react";
-import { DateToDisplay } from "../../../data/DataProcs";
 import { IAffectationDoc } from "../../../data/DomainData";
 import { BaseListComponent } from "../../../features/Common/presentation/BaseListComponent";
 //
@@ -33,8 +32,8 @@ export class AffectationList extends BaseListComponent<IAffectationDoc> {
               {px.groupename}
             </a>
           </td>
-          <td>{DateToDisplay(px.startdate)}</td>
-          <td>{DateToDisplay(px.enddate)}</td>
+          <td>{px.displaystartdate}</td>
+          <td>{px.displayenddate}</td>
           <td>{px.observations}</td>
         </tr>
       );
@@ -46,8 +45,8 @@ export class AffectationList extends BaseListComponent<IAffectationDoc> {
               {px.groupename}
             </a>
           </td>
-          <td>{DateToDisplay(px.startdate)}</td>
-          <td>{DateToDisplay(px.enddate)}</td>
+          <td>{px.displaystartdate}</td>
+          <td>{px.displayenddate}</td>
           <td>{px.observations}</td>
         </tr>
       );

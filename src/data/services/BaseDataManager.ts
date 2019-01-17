@@ -318,8 +318,6 @@ export class BaseDataManager {
     pRet.etudiantid = p.etudiantid ? p.etudiantid : "";
     pRet.startdate = p.startdate ? p.startdate : "";
     pRet.enddate = p.enddate ? p.enddate : "";
-    pRet.displayenddate = DateToDisplay(pRet.enddate);
-    pRet.displaystartdate = DateToDisplay(pRet.startdate);
     pRet.semestreid = p.semestreid ? p.semestreid : "";
     pRet.anneeid = p.anneeid ? p.anneeid : "";
     pRet.groupeid = p.groupeid ? p.groupeid : "";
@@ -331,6 +329,12 @@ export class BaseDataManager {
     pRet.anneename = aff.anneename;
     pRet.semestrename = aff.semestrename;
     pRet.groupename = aff.groupename;
+    if (pRet.startdate.length < 1 || pRet.enddate.length){
+      pRet.startdate = aff.startdate;
+      pRet.enddate = aff.enddate;
+    }
+    pRet.displayenddate = DateToDisplay(pRet.enddate);
+    pRet.displaystartdate = DateToDisplay(pRet.startdate);
     return pRet;
   } // convertEtudAffectationDocAsync
   protected async convertAffectationDocAsync(
@@ -347,10 +351,15 @@ export class BaseDataManager {
     pRet.groupeid = p.groupeid ? p.groupeid : "";
     pRet.startdate = p.startdate ? p.startdate : "";
     pRet.enddate = p.enddate ? p.enddate : "";
+    
     const sem = await this.fetchSemestreByIdAsync(pRet.semestreid);
     pRet.semestrename = sem.name;
     const an = await this.fetchAnneeByIdAsync(pRet.anneeid);
     pRet.anneename = an.name;
+    if (pRet.startdate.length < 1 || pRet.enddate.length < 1){
+      pRet.startdate = an.startdate;
+      pRet.enddate = an.enddate;
+    }
     const g = await this.fetchGroupeByIdAsync(pRet.groupeid);
     pRet.groupename = g.name;
     pRet.displayenddate = DateToDisplay(pRet.enddate);

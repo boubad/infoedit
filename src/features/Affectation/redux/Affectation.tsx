@@ -7,7 +7,7 @@ import { Affectation, IAffectationsProps } from "../presentation/Affectation";
 import {
   cancelAffectationAction,
   changeAffectationField,
-  createAffectationAction,
+  createAffectation,
   gotoPageAffectation,
   removeAffectation,
   removeAffectationAttachment,
@@ -100,10 +100,10 @@ function mapDispatchToProps(dispatch: InfoDispatch) {
       dispatch(gotoPageAffectation(page));
     },
     selectItem: (docid: string) => {
-      dispatch(selectAffectation({ id: docid }));
+      dispatch(selectAffectation({id:docid}));
     },
     createItem: () => {
-      dispatch(createAffectationAction());
+      dispatch(createAffectation());
     },
     onFieldChanged: (value: any, field: string) => {
       dispatch(changeAffectationField({ field, value }));
@@ -112,7 +112,7 @@ function mapDispatchToProps(dispatch: InfoDispatch) {
     onEditCommand: (mode: string) => {
       switch (mode) {
         case "create":
-          dispatch(createAffectationAction());
+          dispatch(createAffectation());
           break;
         case "cancel":
           dispatch(cancelAffectationAction());

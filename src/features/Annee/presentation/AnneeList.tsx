@@ -1,5 +1,4 @@
 import * as React from "react";
-import { DateToDisplay } from "../../../data/DataProcs";
 import { IAnneeDoc } from "../../../data/DomainData";
 import { BaseListComponent } from "../../../features/Common/presentation/BaseListComponent";
 
@@ -41,7 +40,7 @@ export class AnneeList extends BaseListComponent<IAnneeDoc> {
               onClick={this.onSelectItem.bind(this, px.id)}
               className={this.getDisabledStyle()}
             >
-              {DateToDisplay(px.startdate)}
+              {px.displaystartdate}
             </a>
           </td>
           <td>
@@ -50,7 +49,7 @@ export class AnneeList extends BaseListComponent<IAnneeDoc> {
               onClick={this.onSelectItem.bind(this, px.id)}
               className={this.getDisabledStyle()}
             >
-              {DateToDisplay(px.enddate)}
+              {px.displayenddate}
             </a>
           </td>
           <td>
@@ -75,12 +74,12 @@ export class AnneeList extends BaseListComponent<IAnneeDoc> {
           </td>
           <td>
             <a href="#" onClick={this.onSelectItem.bind(this, px.id)}>
-              {DateToDisplay(px.startdate)}
+              {px.displaystartdate}
             </a>
           </td>
           <td>
             <a href="#" onClick={this.onSelectItem.bind(this, px.id)}>
-              {DateToDisplay(px.enddate)}
+              {px.displayenddate}
             </a>
           </td>
           <td>
