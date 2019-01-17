@@ -73,6 +73,11 @@ export interface IOutilsState {
   readonly etudAffectations: IEtudAffectationDoc[];
  
 } // interface IOutilsState
+export interface IDetailState {
+  busy:boolean;
+  ficheEtudiant:IEtudiantDoc;
+  ficheControle:IControleDoc;
+}// interface IDetailState
 export interface IInfoState {
   readonly appstatus: IAppStatus;
   readonly appdata: IAppData;
@@ -87,5 +92,6 @@ export interface IInfoState {
   readonly affectations: IBaseState<IAffectationDoc>;
   readonly etudaffectations: IBaseState<IEtudAffectationDoc>;
   readonly outils: IOutilsState;
+  readonly details: IDetailState;
 } // interface IInfoState
 //

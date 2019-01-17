@@ -1,4 +1,4 @@
-// import { push } from 'connected-react-router';
+import { push } from 'connected-react-router';
 import { Dispatch } from "redux";
 import { createAction } from "redux-actions";
 import { IInfoState } from '../../../redux/InfoState';
@@ -66,8 +66,8 @@ export function showEtudiant(id: string): any {
       const doRequest = ControleServices.showEtudiantAsync(getState(), id);
       doRequest.then(
         res => {
+          dispatch(push('/etuddetail/'));
           dispatch(showEtudiantSuccessAction(res));
-        // dispatch(push('/etuddetail/'));
           resolve(res);
         },
         err => {

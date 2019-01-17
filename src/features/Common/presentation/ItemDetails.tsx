@@ -71,7 +71,7 @@ export class ItemDetail<T extends IControleAffectationDoc> extends BaseComponent
       );
     } else {
       return (
-        <a href="#" onClick={this.onShowDetail.bind(this, p.id)}>
+        <a href="#" onClick={this.onShowDetail.bind(this, p.etudiantid)}>
           <img src={p.url} alt={p.fullname} height={this.getThumbHeight()} />
         </a>
       );

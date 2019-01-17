@@ -29,7 +29,8 @@ export class ItemChoiceComponent extends BaseComponent<IItemChoiceComponentProps
       <FormGroup>
         <Label for={this.props.propname}>{this.props.prompt}</Label>
         <Input
-          className={this.getLinkStyle(this.props.busy)}
+          className={this.getInfoStyle()}
+          readOnly={this.props.busy}
           id={this.props.propname}
           type="select"
           onChange={this.onChange}

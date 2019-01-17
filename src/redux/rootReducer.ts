@@ -9,6 +9,7 @@ import { appStatusSubReducer } from "../features/AppStatus/redux/statusSubReduce
 import { controleSubReducer } from '../features/Controle/redux/controleSubReducer';
 import { etudAffectationSubReducer } from '../features/EtudAffectation/redux/etudAffectationSubReducer';
 import { etudiantSubReducer } from '../features/Etudiant/redux/etudiantSubReducer';
+import { detailsSubReducer } from '../features/FicheEtudiant/redux/detailsSubReduder';
 import { groupeSubReducer } from "../features/Groupe/redux/groupeSubReducer";
 import { matiereSubReducer } from "../features/Matiere/redux/matiereSubReducer";
 import { outilsSubReducer } from '../features/Outils/redux/outilsSubReducer';
@@ -31,6 +32,7 @@ export const createRootReducer = (history:History<any>) => {
     matieres: matiereSubReducer,
     outils : outilsSubReducer,
     semestres :semestreSubReducer,
-    unites : uniteSubReducer
+    unites : uniteSubReducer,
+    details: detailsSubReducer
   });
 };

@@ -69,7 +69,8 @@ export class InputNumberComponent extends BaseComponent<
     const p = this.props;
     return (
       <Input
-        className={this.getLinkStyle(this.state.busy)}
+      className={this.getInfoStyle()}
+      readOnly={this.props.busy}
         id={p.propname}
         type="text"
         value={this.state.text}

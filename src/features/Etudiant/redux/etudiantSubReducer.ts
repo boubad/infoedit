@@ -3,7 +3,6 @@ import produce from "immer";
 import { IMPORT_ETUDIANT_SUCCESS, REFRESHANNEESEMESTRE_STATUS_SUCCESS } from 'src/features/Outils/redux/OutilsActions';
 import { GetEtudiant } from '../../../data/DataProcs';
 import { IEtudiantDoc } from '../../../data/DomainData';
-import { SHOW_ETUDIANT, SHOW_ETUDIANT_BEGIN } from '../../../features/Controle/redux/ControleActions';
 import { IEtudiantState } from '../../../redux/InfoState';
 import { GetInitialEtudiantState } from '../../../redux/initialState';
 import { IPayload } from '../../../redux/IPayload';
@@ -90,7 +89,6 @@ export function etudiantSubReducer(
   }
   const p = action.payload ? action.payload : {};
   switch (action.type) {
-    case SHOW_ETUDIANT_BEGIN:
     case CHANGESTATUS_ETUDIANT_BEGIN:
     case SELECT_ETUDIANT_BEGIN:
     case SAVE_ETUDIANT_ITEM_BEGIN:
@@ -102,14 +100,6 @@ export function etudiantSubReducer(
       return produce(state, pRet => {
         pRet.busy = true;
       });
-    case SHOW_ETUDIANT: {
-      return produce(state, pRet => {
-        if (p.etudiant){
-          pRet.current = p.etudiant;
-        }
-        pRet.busy = false;
-      });
-    }
     case CREATE_ETUDIANT_ITEM:
       return produce(state, pRet => {
         if (p.etudiant){

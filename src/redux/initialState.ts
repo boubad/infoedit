@@ -26,6 +26,7 @@ import {
   IAppStatus,
   IBaseState,
   IControleState,
+  IDetailState,
   IEtudiantState,
   IInfoState,
   IOutilsState
@@ -220,6 +221,13 @@ export function GetInitialOutilsState(): IOutilsState {
     importedEtudiants: []
   };
 } // GetInitialOutilsState
+export function GetInitialDetailState(): IDetailState {
+  return ({
+    busy:false,
+    ficheControle: GetControle(),
+    ficheEtudiant: GetEtudiant()
+  });
+}
 //
 export  const initialState: IInfoState = {
   appdata: GetInitialAppData(),
@@ -236,6 +244,7 @@ export  const initialState: IInfoState = {
   semestres: GetInitialSemestreState(),
   affectations: GetInitialAffectationState(),
   etudaffectations: GetInitialEtudAffectationState(),
-  outils: GetInitialOutilsState()
+  outils: GetInitialOutilsState(),
+  details: GetInitialDetailState()
 }; // initialDataModel
 //

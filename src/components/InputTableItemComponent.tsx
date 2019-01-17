@@ -48,7 +48,8 @@ export class InputTableItemComponent extends BaseComponent<
   public render() {
     return (
       <Input
-        className={this.getLinkStyle(this.state.busy)}
+      className={this.getInfoStyle()}
+      readOnly={this.props.busy}
         type="text"
         value={this.state.text}
         onChange={this.onChanged}

@@ -22,7 +22,8 @@ export class InputFileComponent extends BaseComponent<IInputFileComponentProps> 
     if (accept.length > 0) {
       return (
         <Input
-          className={this.getLinkStyle(this.props.busy)}
+        className={this.getInfoStyle()}
+        readOnly={this.props.busy}
           type="file"
           accept={accept}
           onChange={this.handleChange}

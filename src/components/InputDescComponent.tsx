@@ -23,7 +23,8 @@ export class InputDescComponent extends InputItemComponent {
     
       return (
         <Input
-        className={this.getLinkStyle(this.state.busy)}
+        className={this.getInfoStyle()}
+        readOnly={this.props.busy}
           id={p.propname}
           type="textarea"
           value={this.state.text}

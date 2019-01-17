@@ -10,7 +10,8 @@ export class InputEmailComponent extends InputItemComponent {
     const p = this.props;
       return (
         <Input
-          className={this.getLinkStyle(this.state.busy)}
+        className={this.getInfoStyle()}
+         readOnly={this.props.busy}
           id={p.propname}
           type="email"
           value={this.state.text}

@@ -64,7 +64,7 @@ export class InputItemComponent extends BaseComponent<
     return (
       <Input
         className={this.getInfoStyle()}
-        readOnly={this.state.busy}
+        readOnly={this.props.busy}
         id={p.propname}
         type="text"
         value={this.state.text}
