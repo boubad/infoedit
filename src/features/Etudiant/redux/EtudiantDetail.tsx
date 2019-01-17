@@ -37,17 +37,9 @@ const selector = createSelector(
 );
 //
 function mapStateToProps(
-  state: IInfoState,
-  ownerProps?: any
+  state: IInfoState
 ): IEtudiantDetailProps {
-  const pRet = selector(state) as IEtudiantDetailProps;
-  if (ownerProps) {
-    const xx = Object.assign(pRet, ownerProps);
-    return xx;
-  } else {
-    return pRet;
-  } // ownerProps
-  return pRet;
+  return selector(state);
 } // mapStateToProps
 function mapDispatchToProps(dispatch: Dispatch<FluxStandardAction<IPayload>>) {
   return {

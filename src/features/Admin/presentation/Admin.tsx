@@ -2,19 +2,19 @@ import classnames from "classnames";
 import * as React from "react";
 import { Nav, NavItem, NavLink, TabContent, Table, TabPane } from "reactstrap";
 
-import ImportEtudiants from 'src/features/Outils/redux/ImportEtudiants';
 import { BaseComponent } from "../../../components/BaseComponent";
 import Affectation from '../../../features/Affectation/redux/Affectation';
 import Annee from "../../../features/Annee/redux/Annee";
 import AppState from '../../../features/AppState/redux/AppState';
-import StatusComponent from "../../../features/Common/redux/StatusComponent";
 import EtudAffectation from '../../../features/EtudAffectation/redux/EtudAffectation';
 import Etudiant from '../../../features/Etudiant/redux/Etudiant';
 import Groupe from "../../../features/Groupe/redux/Groupe";
 import Matiere from "../../../features/Matiere/redux/Matiere";
 import ChangeStatus from '../../../features/Outils/redux/ChangeStatus';
+import ImportEtudiants from '../../../features/Outils/redux/ImportEtudiants';
 import Semestre from "../../../features/Semestre/redux/Semestre";
 import Unite from "../../../features/Unite/redux/Unite";
+import StatusComponent from "../../AppStatus/redux/StatusComponent";
 ////////////////////////
 export interface IAdminProps {
   hasStatus: boolean;

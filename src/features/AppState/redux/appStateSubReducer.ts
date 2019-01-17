@@ -3,7 +3,8 @@ import {
   REMOVE_SEMESTRE_ITEM_SUCCESS,
   SAVE_SEMESTRE_ITEM_SUCCESS
 } from "../../../features/Semestre/redux/SemestreActions";
-import { IAppState, IInfoState } from "../../../redux/InfoState";
+import { IAppState } from "../../../redux/InfoState";
+import { GetInitialAppState } from "../../../redux/initialState";
 import { InfoAction } from "../../../redux/IPayload";
 import {
   REMOVE_AFFECTATION_ITEM_SUCCESS,
@@ -45,11 +46,11 @@ import {
 } from "./AppStateActions";
 /////////////////////////////////////////////
 export function appStateSubReducer(
-  state: IInfoState,
+  state: IAppState,
   action: InfoAction
 ): IAppState {
-  if (state === undefined || state === null) {
-    return state;
+  if (!state) {
+    return GetInitialAppState();
   }
   const p =
     action.payload !== undefined && action.payload !== null
@@ -62,7 +63,7 @@ export function appStateSubReducer(
     case CHANGE_UNITE_BEGIN:
     case CHANGE_MATIERE_BEGIN:
     case CHANGE_GROUPE_BEGIN:
-      return produce(state.appstate, pRet => {
+      return produce(state, pRet => {
         pRet.busy = true;
       });
     case REFRESH_ALL_SUCCESS:
@@ -85,7 +86,7 @@ export function appStateSubReducer(
     case REMOVE_ETUDIANT_ITEM_SUCCESS:
     case SAVE_AFFECTATION_ITEM_SUCCESS:
     case REMOVE_AFFECTATION_ITEM_SUCCESS:
-      return produce(state.appstate, pRet => {
+      return produce(state, pRet => {
         pRet.busy = false;
         if (p.anneeStartDate) {
           pRet.anneeStartDate = p.anneeStartDate;
@@ -131,7 +132,7 @@ export function appStateSubReducer(
           const xx = pRet.anneesOptions.find(x => {
             return x.id === anneeid;
           });
-          if (!xx ) {
+          if (!xx) {
             anneeid = "";
             pRet.anneeid = "";
           }
@@ -197,7 +198,7 @@ export function appStateSubReducer(
         } // aff
       });
     default:
-      return produce(state.appstate, pRet => {
+      return produce(state, pRet => {
         pRet.busy = false;
       });
   } // type

@@ -7,9 +7,9 @@ import {
   CHANGE_SEMESTRE_SUCCESS,
   REFRESH_ALL_SUCCESS
 } from "../../../features/AppState/redux/AppStateActions";
-import { IBaseState, IInfoState } from "../../../redux/InfoState";
+import { IBaseState } from "../../../redux/InfoState";
+import { GetInitialSemestreState } from '../../../redux/initialState';
 import { IPayload } from "../../../redux/IPayload";
-import { GetInitialSemestre } from "../../../redux/StateProcs";
 import {
   CANCEL_SEMESTRE_ITEM,
   CHANGE_SEMESTRE_FIELD,
@@ -23,6 +23,7 @@ import {
   SAVE_SEMESTRE_ITEM_BEGIN,
   SAVE_SEMESTRE_ITEM_SUCCESS,
   SELECT_SEMESTRE_ITEM,
+  SELECT_SEMESTRE_ITEM_BEGIN,
   SEMESTRE_REMOVE_ATTACHMENT_BEGIN,
   SEMESTRE_REMOVE_ATTACHMENT_SUCCESS,
   SEMESTRE_SAVE_ATTACHMENT_BEGIN,
@@ -61,25 +62,32 @@ function refreshSemestre(
 } // refreshSemestre
 /////////////////////////////////////////////
 export function semestreSubReducer(
-  state: IInfoState,
+  state: IBaseState<ISemestreDoc>,
   action: FluxStandardAction<IPayload>
 ): IBaseState<ISemestreDoc> {
+  if (!state){
+    return GetInitialSemestreState();
+  }
   const p = action.payload ? action.payload : {};
   switch (action.type) {
+    case SELECT_SEMESTRE_ITEM_BEGIN:
     case SAVE_SEMESTRE_ITEM_BEGIN:
     case REMOVE_SEMESTRE_ITEM_BEGIN:
     case SEMESTRE_SAVE_ATTACHMENT_BEGIN:
     case SEMESTRE_REMOVE_ATTACHMENT_BEGIN:
     case GOTO_PAGE_SEMESTRE_BEGIN:
     case REFRESH_SEMESTRE_BEGIN:
-      return produce(state.semestres, pRet => {
+      return produce(state, pRet => {
         pRet.busy = true;
       });
     case CREATE_SEMESTRE_ITEM:
-      return produce(state.semestres, pRet => {
-        pRet.addMode = true;
+      return produce(state, pRet => {
+        if (p.semestre){
+          pRet.addMode = true;
+          pRet.previousId = pRet.current.id;
+          pRet.current = p.semestre;
+        }
         pRet.busy = false;
-        pRet.current = GetInitialSemestre(state);
       });
     case REFRESH_ALL_SUCCESS:
     case SAVE_SEMESTRE_ITEM_SUCCESS:
@@ -89,25 +97,16 @@ export function semestreSubReducer(
     case SEMESTRE_SAVE_ATTACHMENT_SUCCESS:
     case GOTO_PAGE_SEMESTRE_SUCCESS:
     case CHANGE_SEMESTRE_SUCCESS:
-      return refreshSemestre(state.semestres, p);
+      return refreshSemestre(state, p);
     case SELECT_SEMESTRE_ITEM:
-      return produce(state.semestres, pRet => {
+      return produce(state, pRet => {
+        if (p.semestre){
+          pRet.current = p.semestre;
+        }
         pRet.busy = false;
-        if (p.id) {
-          const id = p.id;
-          const px = state.semestres.pageData.find(x => {
-            return x.id === id;
-          });
-          if (px) {
-            pRet.current = Object.assign({}, px);
-            pRet.addMode = false;
-          } else {
-            pRet.current = GetSemestre();
-          }
-        } // id
       });
     case CANCEL_SEMESTRE_ITEM:
-      return produce(state.semestres, pRet => {
+      return produce(state, pRet => {
         pRet.busy = false;
         const id = pRet.previousId;
         pRet.addMode = false;
@@ -122,7 +121,7 @@ export function semestreSubReducer(
         pRet.previousId = "";
       });
     case CHANGE_SEMESTRE_FIELD:
-      return produce(state.semestres, pRet => {
+      return produce(state, pRet => {
         if (p.field && p.value) {
           const val = p.value;
           const pz = pRet.current;
@@ -146,7 +145,7 @@ export function semestreSubReducer(
         pRet.busy = false;
       });
     default:
-      return produce(state.semestres, pRet => {
+      return produce(state, pRet => {
         pRet.busy = false;
       });
   } // type

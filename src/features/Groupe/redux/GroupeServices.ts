@@ -2,8 +2,30 @@ import { IGroupeDoc } from '../../../data/DomainData';
 import { BaseServices } from '../../../redux/BaseServices';
 import { IInfoState } from '../../../redux/InfoState';
 import { IPayload } from '../../../redux/IPayload';
+import { GetInitialGroupe } from '../../../redux/StateProcs';
 
 export class GroupeServices {
+  //
+  public static createGroupe(state: IInfoState): IPayload {
+    return { groupe: GetInitialGroupe(state) };
+  } // createGroupe
+  public static async selectGroupeAsync(
+    state: IInfoState,
+    id: string
+  ): Promise<IPayload> {
+    const sid = id.trim();
+    if (sid.length < 1) {
+      return { groupe: GetInitialGroupe(state) };
+    }
+    let px = state.groupes.pageData.find(x => {
+      return x.id === sid;
+    });
+    if (px === undefined) {
+      const pMan = BaseServices.getPersistManager(state);
+      px = await pMan.fetchGroupeByIdAsync(sid);
+    }
+    return { groupe: px };
+  } // selectGroupeAsync
   //
   public static async saveGroupeAsync(state: IInfoState): Promise<IPayload> {
     const pMan = BaseServices.getPersistManager(state);

@@ -2,9 +2,31 @@ import { IMatiereDoc } from "../../../data/DomainData";
 import { BaseServices } from "../../../redux/BaseServices";
 import { IInfoState } from "../../../redux/InfoState";
 import { IPayload } from "../../../redux/IPayload";
+import { GetInitialMatiere } from '../../../redux/StateProcs';
 
 //
 export class MatiereServices {
+  public static createMatiere(state: IInfoState): IPayload {
+    return { matiere: GetInitialMatiere(state) };
+  } // createGroupe
+  public static async selectMatiereAsync(
+    state: IInfoState,
+    id: string
+  ): Promise<IPayload> {
+    const sid = id.trim();
+    if (sid.length < 1) {
+      return { matiere: GetInitialMatiere(state) };
+    }
+    let px = state.matieres.pageData.find(x => {
+      return x.id === sid;
+    });
+    if (px === undefined) {
+      const pMan = BaseServices.getPersistManager(state);
+      px = await pMan.fetchMatiereByIdAsync(sid);
+    }
+    return { groupe: px };
+  } // selectMatiereAsync
+  //
   public static async saveMatiereAsync(state: IInfoState): Promise<IPayload> {
     const pMan = BaseServices.getPersistManager(state);
     const p = state.matieres.current;

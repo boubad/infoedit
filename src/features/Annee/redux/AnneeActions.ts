@@ -7,14 +7,45 @@ export const CHANGE_ANNEE_FIELD = "CHANGE_ANNEE_FIELD";
 export const changeAnneeField = createAction(CHANGE_ANNEE_FIELD);
 //
 export const CREATE_ANNEE_ITEM = "CREATE_ANNEE_ITEM";
-export const createAnneeAction = createAction(CREATE_ANNEE_ITEM);
+const createAnneeAction = createAction(CREATE_ANNEE_ITEM);
+export function createAnnee(): any {
+  return (dispatch: Dispatch, getState: () => IInfoState) => {
+    const state = getState();
+    dispatch(
+      createAnneeAction({ annee: AnneeServices.createAnnee(state) })
+    );
+  };
+} // createAnnee
 //
 export const CANCEL_ANNEE_ITEM = "CANCEL_ANNEE_ITEM";
 export const cancelAnneeAction = createAction(CANCEL_ANNEE_ITEM);
 //
+export const SELECT_ANNEE_ITEM_BEGIN = "SELECT_ANNEE_ITEM_BEGIN";
+const selectAnneeBeginAction = createAction(SELECT_ANNEE_ITEM_BEGIN);
 export const SELECT_ANNEE_ITEM = "SELECT_ANNEE_ITEM";
-export const selectAnnee = createAction(SELECT_ANNEE_ITEM);
+export const selectAnneeSuccessAction = createAction(SELECT_ANNEE_ITEM);
+export const SELECT_ANNEE_ITEM_FAIL = "SELECT_ANNEE_ITEM_FAIL";
+const selectAnneeFailAction = createAction(SELECT_ANNEE_ITEM_FAIL);
 //
+export function selectAnnee(id:string): any {
+  return (dispatch: Dispatch, getState: () => IInfoState) => {
+    dispatch(selectAnneeBeginAction());
+    const promise = new Promise((resolve, reject) => {
+      const doRequest = AnneeServices.selectAnneeAsync(getState(),id);
+      doRequest.then(
+        res => {
+          dispatch(selectAnneeSuccessAction(res));
+          resolve(res);
+        },
+        err => {
+          dispatch(selectAnneeFailAction(err));
+          reject(err);
+        }
+      );
+    });
+    return promise;
+  };
+} // selectAnnee
 ///////////////////////////////////////////////////
 export const SAVE_ANNEE_ITEM_BEGIN = "SAVE_ANNEE_ITEM_BEGIN";
 const saveAnneeBeginAction = createAction(SAVE_ANNEE_ITEM_BEGIN);

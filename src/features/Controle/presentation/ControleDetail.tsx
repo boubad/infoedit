@@ -40,6 +40,8 @@ interface IControleDetailProps {
   onEvtEditCommand?: (arg: string) => void;
   onEvtSaveAttachment?: (name: string, mime: string, data: Blob) => void;
   onEvtRemoveAttachment?: (name: string) => void;
+  //
+  onShowDetail?: (id:string) => void;
 } // interface IControleDetailProps
 
 interface IControleDetailState {
@@ -120,6 +122,7 @@ export default class ControleDetail extends BaseComponent<
               onEditCommand={p.onNoteEditCommand}
               onSaveAttachment={p.onSaveAttachment}
               onRemoveAttachment={p.onNoteRemoveAttachment}
+              onShowDetail={p.onShowDetail}
             />
           </TabPane>
           <TabPane tabId="3">
@@ -135,6 +138,7 @@ export default class ControleDetail extends BaseComponent<
               onEditCommand={p.onEvtEditCommand}
               onSaveAttachment={p.onEvtSaveAttachment}
               onRemoveAttachment={p.onEvtRemoveAttachment}
+              onShowDetail={p.onShowDetail}
             />
           </TabPane>
         </TabContent>

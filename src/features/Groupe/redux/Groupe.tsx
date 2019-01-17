@@ -8,7 +8,7 @@ import { Groupe, IGroupesProps } from "../presentation/Groupe";
 import {
   cancelGroupeAction,
   changeGroupeField,
-  createGroupeAction,
+  createGroupe,
   gotoPageGroupe,
   removeGroupe,
   removeGroupeAttachment,
@@ -85,10 +85,10 @@ function mapDispatchToProps(dispatch: InfoDispatch) {
       dispatch(gotoPageGroupe(page));
     },
     selectItem: (docid: string) => {
-      dispatch(selectGroupe({ id: docid }));
+      dispatch(selectGroupe(docid));
     },
     createItem: () => {
-      dispatch(createGroupeAction({}));
+      dispatch(createGroupe());
     },
     onFieldChanged: (val: any, field: string) => {
       dispatch(changeGroupeField({ field, value: val }));
@@ -97,7 +97,7 @@ function mapDispatchToProps(dispatch: InfoDispatch) {
     onEditCommand: (mode: string) => {
       switch (mode) {
         case "create":
-          dispatch(createGroupeAction({}));
+          dispatch(createGroupe());
           break;
         case "cancel":
           dispatch(cancelGroupeAction({}));

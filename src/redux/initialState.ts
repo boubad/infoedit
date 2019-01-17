@@ -11,23 +11,43 @@ import {
   GetSemestre,
   GetUnite
 } from "../data/DataProcs";
-import { IInfoState } from "./InfoState";
-
-//
-export const initialState: IInfoState = {
-  appdata: {
+import {
+  IAffectationDoc,
+  IAnneeDoc,
+  IEtudAffectationDoc,
+  IGroupeDoc,
+  IMatiereDoc,
+  ISemestreDoc,
+  IUniteDoc
+} from "../data/DomainData";
+import {
+  IAppData,
+  IAppState,
+  IAppStatus,
+  IBaseState,
+  IControleState,
+  IEtudiantState,
+  IInfoState,
+  IOutilsState
+} from "./InfoState";
+///////////////////////////////////
+export function GetInitialAppData(): IAppData {
+  return {
     dataServerUrl: "http://services.diarra.ovh:5984",
     databaseName: "gteinfo"
-  },
-  appstatus: {
+  };
+} // GetInitialAppData
+export function GetInitialAppStatus(): IAppStatus {
+  return {
     error: "",
     status: ""
-  },
-  // tslint:disable-next-line:object-literal-sort-keys
-  appstate: {
+  };
+} // GetInitialAppStatus
+export function GetInitialAppState(): IAppState {
+  return {
     anneeid: "",
     anneesOptions: [],
-    busy:false,
+    busy: false,
     groupeid: "",
     groupesOptions: [],
     matiereid: "",
@@ -41,11 +61,60 @@ export const initialState: IInfoState = {
     anneeEndDate: "",
     semestreStartDate: "",
     semestreEndDate: "",
-    affectationid:'',
-    affectations:[],
-    ownerid:''
-  },
-  etudiants: {
+    affectationid: "",
+    affectations: [],
+    ownerid: ""
+  };
+} // getInitialAppState
+export function GetInitialAnneeState(): IBaseState<IAnneeDoc> {
+  return {
+    addMode: false,
+    busy: false,
+    displayPages: 5,
+    // tslint:disable-next-line:object-literal-sort-keys
+    current: GetAnnee(),
+    currentPage: 0,
+    itemsCount: 0,
+    pagesCount: 0,
+    pageData: [],
+    pageSize: 20,
+    previousId: ""
+  };
+} // GetInitialAnneeState
+export function GetInitialAffectationState(): IBaseState<IAffectationDoc> {
+  return {
+    addMode: false,
+    busy: false,
+    displayPages: 5,
+    // tslint:disable-next-line:object-literal-sort-keys
+    current: GetAffectation(),
+    currentPage: 0,
+    itemsCount: 0,
+    pagesCount: 0,
+    pageData: [],
+    pageSize: 20,
+    previousId: ""
+  };
+} // GetInitialAffectationState
+export function GetInitialEtudAffectationState(): IBaseState<
+  IEtudAffectationDoc
+> {
+  return {
+    addMode: false,
+    busy: false,
+    displayPages: 5,
+    // tslint:disable-next-line:object-literal-sort-keys
+    current: GetEtudAffectation(),
+    currentPage: 0,
+    itemsCount: 0,
+    pagesCount: 0,
+    pageData: [],
+    pageSize: 20,
+    previousId: ""
+  };
+} // GetInitialEtudAffectationState
+export function GetInitialEtudiantState(): IEtudiantState {
+  return {
     addMode: false,
     busy: false,
     displayPages: 5,
@@ -60,9 +129,10 @@ export const initialState: IInfoState = {
     evt: GetEvt(),
     note: GetNote(),
     etudiantStatus: ""
-  },
-  // tslint:disable-next-line:object-literal-sort-keys
-  controles: {
+  };
+} // GetInitialEtudiantState
+export function GetInitialControleState(): IControleState {
+  return {
     addMode: false,
     busy: false,
     displayPages: 5,
@@ -77,10 +147,12 @@ export const initialState: IInfoState = {
     evt: GetEvt(),
     evtAddMode: false,
     note: GetNote(),
-    etudiantsOptions:[],
-    etudAffectations: [],
-  },
-  matieres: {
+    etudiantsOptions: [],
+    etudAffectations: []
+  };
+} // GetControleInitialState
+export function GetInitialMatiereState(): IBaseState<IMatiereDoc> {
+  return {
     addMode: false,
     busy: false,
     displayPages: 5,
@@ -91,22 +163,11 @@ export const initialState: IInfoState = {
     pagesCount: 0,
     pageData: [],
     pageSize: 20,
-    previousId: "",
-  },
-  annees: {
-    addMode: false,
-    busy: false,
-    displayPages: 5,
-    // tslint:disable-next-line:object-literal-sort-keys
-    current: GetAnnee(),
-    currentPage: 0,
-    itemsCount: 0,
-    pagesCount: 0,
-    pageData: [],
-    pageSize: 20,
-    previousId: "",
-  },
-  groupes: {
+    previousId: ""
+  };
+} // GetInitialMatiereState
+export function GetInitialGroupeState(): IBaseState<IGroupeDoc> {
+  return {
     addMode: false,
     busy: false,
     displayPages: 5,
@@ -117,9 +178,11 @@ export const initialState: IInfoState = {
     pagesCount: 0,
     pageData: [],
     pageSize: 20,
-    previousId: "",
-  },
-  unites: {
+    previousId: ""
+  };
+} // GetInitialGroupeState
+export function GetInitialUniteState(): IBaseState<IUniteDoc> {
+  return {
     addMode: false,
     busy: false,
     displayPages: 5,
@@ -130,9 +193,11 @@ export const initialState: IInfoState = {
     pagesCount: 0,
     pageData: [],
     pageSize: 20,
-    previousId: "",
-  },
-  semestres: {
+    previousId: ""
+  };
+} //  GetInitialUniteState
+export function GetInitialSemestreState(): IBaseState<ISemestreDoc> {
+  return {
     addMode: false,
     busy: false,
     displayPages: 5,
@@ -143,41 +208,34 @@ export const initialState: IInfoState = {
     pagesCount: 0,
     pageData: [],
     pageSize: 20,
-    previousId: "",
-  },
-  affectations: {
-    addMode: false,
-    busy: false,
-    displayPages: 5,
-    // tslint:disable-next-line:object-literal-sort-keys
-    current: GetAffectation(),
-    currentPage: 0,
-    itemsCount: 0,
-    pagesCount: 0,
-    pageData: [],
-    pageSize: 20,
-    previousId: "",
-  },
-  etudaffectations: {
-    addMode: false,
-    busy: false,
-    displayPages: 5,
-    // tslint:disable-next-line:object-literal-sort-keys
-    current: GetEtudAffectation(),
-    currentPage: 0,
-    itemsCount: 0,
-    pagesCount: 0,
-    pageData: [],
-    pageSize: 20,
-    previousId: "",
-  },
-  outils: {
+    previousId: ""
+  };
+} // GetInitialSemestreState
+export function GetInitialOutilsState(): IOutilsState {
+  return {
     freeEtudiantsOpts: [],
     // tslint:disable-next-line:object-literal-sort-keys
     busy: false,
-    etudAffectations:[],
-    importedEtudiants: [],
-    
-  }
+    etudAffectations: [],
+    importedEtudiants: []
+  };
+} // GetInitialOutilsState
+//
+export  const initialState: IInfoState = {
+  appdata: GetInitialAppData(),
+  appstatus: GetInitialAppStatus(),
+  // tslint:disable-next-line:object-literal-sort-keys
+  appstate: GetInitialAppState(),
+  etudiants: GetInitialEtudiantState(),
+  // tslint:disable-next-line:object-literal-sort-keys
+  controles: GetInitialControleState(),
+  matieres: GetInitialMatiereState(),
+  annees: GetInitialAnneeState(),
+  groupes: GetInitialGroupeState(),
+  unites: GetInitialUniteState(),
+  semestres: GetInitialSemestreState(),
+  affectations: GetInitialAffectationState(),
+  etudaffectations: GetInitialEtudAffectationState(),
+  outils: GetInitialOutilsState()
 }; // initialDataModel
 //

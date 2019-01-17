@@ -1,19 +1,51 @@
 import { Dispatch } from "redux";
 import { createAction } from "redux-actions";
 import { IInfoState } from "src/redux/InfoState";
+import { GetInitialSemestre } from '../../../redux/StateProcs';
 import { SemestreServices } from "./SemestreServices";
 //
 export const CHANGE_SEMESTRE_FIELD = "CHANGE_SEMESTRE_FIELD";
 export const changeSemestreField = createAction(CHANGE_SEMESTRE_FIELD);
 //
 export const CREATE_SEMESTRE_ITEM = "CREATE_SEMESTRE_ITEM";
-export const createSemestreAction = createAction(CREATE_SEMESTRE_ITEM);
+const createSemestreAction = createAction(CREATE_SEMESTRE_ITEM);
+export function createSemestre(): any {
+  return (dispatch: Dispatch, getState: () => IInfoState) => {
+    const state = getState();
+    dispatch(
+      createSemestreAction({ semestre: GetInitialSemestre(state) })
+    );
+  };
+} // createSemestre
 //
 export const CANCEL_SEMESTRE_ITEM = "CANCEL_SEMESTRE_ITEM";
 export const cancelSemestreAction = createAction(CANCEL_SEMESTRE_ITEM);
 //
+export const SELECT_SEMESTRE_ITEM_BEGIN = "SELECT_SEMESTRE_ITEM_BEGIN";
+const selectSemestreBeginAction = createAction(SELECT_SEMESTRE_ITEM_BEGIN);
 export const SELECT_SEMESTRE_ITEM = "SELECT_SEMESTRE_ITEM";
-export const selectSemestre = createAction(SELECT_SEMESTRE_ITEM);
+const selectSemestreSuccessAction = createAction(SELECT_SEMESTRE_ITEM);
+export const SELECT_SEMESTRE_ITEM_FAIL = "SELECT_SEMESTRE_ITEM_FAIL";
+const selectSemestreFailAction = createAction(SELECT_SEMESTRE_ITEM_FAIL);
+export function selectSemestre(id:string): any {
+  return (dispatch: Dispatch, getState: () => IInfoState) => {
+    dispatch(selectSemestreBeginAction());
+    const promise = new Promise((resolve, reject) => {
+      const doRequest = SemestreServices.selectSemestreAsync(getState(),id);
+      doRequest.then(
+        res => {
+          dispatch(selectSemestreSuccessAction(res));
+          resolve(res);
+        },
+        err => {
+          dispatch(selectSemestreFailAction(err));
+          reject(err);
+        }
+      );
+    });
+    return promise;
+  };
+} // selectSemestre
 ///////////////////////////////////////////////////
 export const SAVE_SEMESTRE_ITEM_BEGIN = "SAVE_SEMESTRE_ITEM_BEGIN";
 const saveSemestreBeginAction = createAction(SAVE_SEMESTRE_ITEM_BEGIN);

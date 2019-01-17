@@ -56,10 +56,10 @@ function mapDispatchToProps(dispatch: InfoDispatch) {
       dispatch(gotoPageUnite(page));
     },
     selectItem: (docid:string) =>{
-      dispatch(selectUnite({id:docid}));
+      dispatch(selectUnite(docid));
     },
     createItem: () => {
-      dispatch(createUniteAction({}));
+      dispatch(createUniteAction());
     },
     onFieldChanged: (val: any, field: string) => {
       dispatch(changeUniteField({ field, value: val }));

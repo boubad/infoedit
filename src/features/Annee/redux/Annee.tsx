@@ -7,7 +7,7 @@ import { Annee, IAnneeProps } from "../presentation/Annee";
 import {
   cancelAnneeAction,
   changeAnneeField,
-  createAnneeAction,
+  createAnnee,
   gotoPageAnnee,
   removeAnnee,
   removeAnneeAttachment,
@@ -83,10 +83,10 @@ function mapDispatchToProps(dispatch: InfoDispatch) {
       dispatch(gotoPageAnnee(page));
     },
     selectItem: (docid: string) => {
-      dispatch(selectAnnee({ id: docid }));
+      dispatch(selectAnnee(docid));
     },
     createItem: () => {
-      dispatch(createAnneeAction({}));
+      dispatch(createAnnee());
     },
     onFieldChanged: (val: any, field: string) => {
       dispatch(changeAnneeField({ field, value: val }));
@@ -95,7 +95,7 @@ function mapDispatchToProps(dispatch: InfoDispatch) {
     onEditCommand: (mode: string) => {
       switch (mode) {
         case "create":
-          dispatch(createAnneeAction({}));
+          dispatch(createAnnee());
           break;
         case "cancel":
           dispatch(cancelAnneeAction({}));

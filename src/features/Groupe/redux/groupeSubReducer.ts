@@ -6,9 +6,9 @@ import {
   CHANGE_GROUPE_SUCCESS,
   REFRESH_ALL_SUCCESS
 } from "../../../features/AppState/redux/AppStateActions";
-import { IBaseState, IInfoState } from "../../../redux/InfoState";
+import { IBaseState } from "../../../redux/InfoState";
+import { GetInitialGroupeState } from "../../../redux/initialState";
 import { IPayload } from "../../../redux/IPayload";
-import { GetInitialGroupe } from "../../../redux/StateProcs";
 import {
   CANCEL_GROUPE_ITEM,
   CHANGE_GROUPE_FIELD,
@@ -22,7 +22,8 @@ import {
   REMOVE_GROUPE_ITEM_SUCCESS,
   SAVE_GROUPE_ITEM_BEGIN,
   SAVE_GROUPE_ITEM_SUCCESS,
-  SELECT_GROUPE_ITEM
+  SELECT_GROUPE_ITEM,
+  SELECT_GROUPE_ITEM_BEGIN
 } from "./GroupeActions";
 ////////////////////////////////////
 function refreshGroupe(
@@ -57,23 +58,30 @@ function refreshGroupe(
 } // refreshGroupe
 /////////////////////////////////////////////
 export function groupeSubReducer(
-  state: IInfoState,
+  state: IBaseState<IGroupeDoc>,
   action: FluxStandardAction<IPayload>
 ): IBaseState<IGroupeDoc> {
+  if (!state) {
+    return GetInitialGroupeState();
+  }
   const p = action.payload ? action.payload : {};
   switch (action.type) {
+    case SELECT_GROUPE_ITEM_BEGIN:
     case SAVE_GROUPE_ITEM_BEGIN:
     case REMOVE_GROUPE_ITEM_BEGIN:
     case GROUPE_SAVE_ATTACHMENT_BEGIN:
     case GROUPE_REMOVE_ATTACHMENT_BEGIN:
-      return produce(state.groupes, pRet => {
+      return produce(state, pRet => {
         pRet.busy = true;
       });
     case CREATE_GROUPE_ITEM:
-      return produce(state.groupes, pRet => {
-        pRet.addMode = true;
+      return produce(state, pRet => {
+        if (p.groupe) {
+          pRet.previousId = pRet.current.id;
+          pRet.current = p.groupe;
+          pRet.addMode = true;
+        }
         pRet.busy = false;
-        pRet.current = GetInitialGroupe(state);
       });
     case REFRESH_ALL_SUCCESS:
     case SAVE_GROUPE_ITEM_SUCCESS:
@@ -82,25 +90,17 @@ export function groupeSubReducer(
     case GROUPE_SAVE_ATTACHMENT_SUCCESS:
     case GOTO_PAGE_GROUPE_SUCCESS:
     case CHANGE_GROUPE_SUCCESS:
-      return refreshGroupe(state.groupes, p);
+      return refreshGroupe(state, p);
     case SELECT_GROUPE_ITEM:
-      return produce(state.groupes, pRet => {
+      return produce(state, pRet => {
+        if (p.groupe) {
+          pRet.current = p.groupe;
+          pRet.addMode = false;
+        }
         pRet.busy = false;
-        if (p.id) {
-          const id = p.id;
-          const px = state.groupes.pageData.find(x => {
-            return x.id === id;
-          });
-          if (px) {
-            pRet.current = Object.assign({}, px);
-            pRet.addMode = false;
-          } else {
-            pRet.current = GetGroupe();
-          }
-        } // id
       });
     case CANCEL_GROUPE_ITEM:
-      return produce(state.groupes, pRet => {
+      return produce(state, pRet => {
         pRet.busy = false;
         const id = pRet.previousId;
         pRet.addMode = false;
@@ -115,7 +115,7 @@ export function groupeSubReducer(
         pRet.previousId = "";
       });
     case CHANGE_GROUPE_FIELD:
-      return produce(state.groupes, pRet => {
+      return produce(state, pRet => {
         if (p.field && p.value) {
           const val = p.value;
           const pz = pRet.current;
@@ -139,7 +139,7 @@ export function groupeSubReducer(
         pRet.busy = false;
       });
     default:
-      return produce(state.groupes, pRet => {
+      return produce(state, pRet => {
         pRet.busy = false;
       });
   } // type

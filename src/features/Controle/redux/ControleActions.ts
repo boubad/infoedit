@@ -1,23 +1,42 @@
+// import { push } from 'connected-react-router';
 import { Dispatch } from "redux";
 import { createAction } from "redux-actions";
 import { IInfoState } from '../../../redux/InfoState';
+import { GetInitialEvt } from '../../../redux/StateProcs';
 import { ControleServices } from "./ControleServices";
 ///////////////////////////////
 export const CHANGE_CONTROLE_FIELD = "CHANGE_CONTROLE_FIELD";
 export const changeControleFieldAction = createAction(CHANGE_CONTROLE_FIELD);
 //
 export const CREATE_CONTROLE_ITEM = "CREATE_CONTROLE_ITEM";
-export const createControleAction = createAction(CREATE_CONTROLE_ITEM);
+const createControleAction = createAction(CREATE_CONTROLE_ITEM);
+export function createControle(): any {
+  return (dispatch: Dispatch, getState: () => IInfoState) => {
+    const state = getState();
+    dispatch(
+      createControleAction({ annee: ControleServices.createControle(state) })
+    );
+  };
+} // createControle
 //
 export const CANCEL_CONTROLE_ITEM = "CANCEL_CONTROLE_ITEM";
 export const cancelControleAction = createAction(CANCEL_CONTROLE_ITEM);
 //
 
 export const CREATE_CONTROLE_EVT = "CREATE_CONTROLE_EVT";
-export const createControleEvtAction = createAction(CREATE_CONTROLE_EVT);
+const createControleEvtAction = createAction(CREATE_CONTROLE_EVT);
+export function createControleEvt(): any {
+  return (dispatch: Dispatch, getState: () => IInfoState) => {
+    const state = getState();
+    dispatch(
+      createControleEvtAction({ evt: GetInitialEvt(state) })
+    );
+  };
+} // createControle
 //
 export const CANCEL_CONTROLE_EVT = "CANCEL_CONTROLE_EVT";
 export const cancelControleEvtAction = createAction(CANCEL_CONTROLE_EVT);
+
 //
 
 export const CHANGE_CONTROLE_EVT_FIELD = "CHANGE_CONTROLE_EVT_FIELD";
@@ -32,13 +51,41 @@ export const changeControleNoteFieldAction = createAction(
 //
 export const CANCEL_CONTROLE_NOTE = "CANCEL_CONTROLE_NOTE";
 export const cancelControleNoteAction = createAction(CANCEL_CONTROLE_NOTE);
+///////////////////////////////////////
+export const SHOW_ETUDIANT_BEGIN = "SHOW_ETUDIANT_BEGIN";
+const showEtudiantBeginAction = createAction(SHOW_ETUDIANT_BEGIN);
+export const SHOW_ETUDIANT = "SHOW_ETUDIANT";
+const showEtudiantSuccessAction = createAction(SHOW_ETUDIANT);
+export const SHOW_ETUDIANT_FAIL = "SHOW_ETUDIANT_FAIL";
+const showEtudiantFailAction = createAction(SHOW_ETUDIANT_FAIL);
+//
+export function showEtudiant(id: string): any {
+  return (dispatch: Dispatch, getState: () => IInfoState) => {
+    dispatch(showEtudiantBeginAction());
+    const promise = new Promise((resolve, reject) => {
+      const doRequest = ControleServices.showEtudiantAsync(getState(), id);
+      doRequest.then(
+        res => {
+          dispatch(showEtudiantSuccessAction(res));
+        // dispatch(push('/etuddetail/'));
+          resolve(res);
+        },
+        err => {
+          dispatch(showEtudiantFailAction(err));
+          reject(err);
+        }
+      );
+    });
+    return promise;
+  };
+} // showEtudiant
 /////////////////////////////
 export const SELECT_CONTROLE_EVT_BEGIN = "SELECT_CONTROLE_EVT_BEGIN";
-export const selectControleEvtBeginAction = createAction(SELECT_CONTROLE_EVT_BEGIN);
+const selectControleEvtBeginAction = createAction(SELECT_CONTROLE_EVT_BEGIN);
 export const SELECT_CONTROLE_EVT = "SELECT_CONTROLE_EVT";
 export const selectControleEvtAction = createAction(SELECT_CONTROLE_EVT);
 export const SELECT_CONTROLE_EVT_FAIL = "SELECT_CONTROLE_EVT_FAIL";
-export const selectControleEvtFailAction = createAction(SELECT_CONTROLE_EVT_FAIL);
+const selectControleEvtFailAction = createAction(SELECT_CONTROLE_EVT_FAIL);
 //
 export function selectControleEvt(id: string): any {
   return (dispatch: Dispatch, getState: () => IInfoState) => {
@@ -58,7 +105,7 @@ export function selectControleEvt(id: string): any {
     });
     return promise;
   };
-} // changeControle
+} // selectControleEvt
 /////////////////////////////
 export const SELECT_CONTROLE_NOTE_BEGIN = "SELECT_CONTROLE_NOTE_BEGIN";
 export const selectControleNoteBeginAction = createAction(SELECT_CONTROLE_NOTE_BEGIN);

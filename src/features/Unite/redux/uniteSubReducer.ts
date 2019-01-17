@@ -5,9 +5,9 @@ import {
   CHANGE_UNITE_SUCCESS,
   REFRESH_ALL_SUCCESS
 } from "../../../features/AppState/redux/AppStateActions";
-import { IBaseState, IInfoState } from "../../../redux/InfoState";
+import { IBaseState } from "../../../redux/InfoState";
+import { GetInitialUniteState } from '../../../redux/initialState';
 import { InfoAction, IPayload } from "../../../redux/IPayload";
-import { GetInitialUnite } from "../../../redux/StateProcs";
 import {
   CANCEL_UNITE_ITEM,
   CHANGE_UNITE_FIELD,
@@ -19,6 +19,7 @@ import {
   SAVE_UNITE_ITEM_BEGIN,
   SAVE_UNITE_ITEM_SUCCESS,
   SELECT_UNITE_ITEM,
+  SELECT_UNITE_ITEM_BEGIN,
   UNITE_REMOVE_ATTACHMENT_BEGIN,
   UNITE_REMOVE_ATTACHMENT_SUCCESS,
   UNITE_SAVE_ATTACHMENT_BEGIN,
@@ -55,24 +56,31 @@ function refreshUnite(
 } // refreshUnite
 /////////////////////////////////////////////
 export function uniteSubReducer(
-  state: IInfoState,
+  state:IBaseState<IUniteDoc>,
   action: InfoAction
 ): IBaseState<IUniteDoc> {
+  if (!state){
+    return GetInitialUniteState();
+  }
   const p = action.payload ? action.payload : {};
   switch (action.type) {
+    case SELECT_UNITE_ITEM_BEGIN:
     case SAVE_UNITE_ITEM_BEGIN:
     case REMOVE_UNITE_ITEM_BEGIN:
     case UNITE_SAVE_ATTACHMENT_BEGIN:
     case UNITE_REMOVE_ATTACHMENT_BEGIN:
     case GOTO_PAGE_UNITE_BEGIN:
-      return produce(state.unites, pRet => {
+      return produce(state, pRet => {
         pRet.busy = true;
       });
     case CREATE_UNITE_ITEM:
-      return produce(state.unites, pRet => {
-        pRet.addMode = true;
+      return produce(state, pRet => {
+        if (p.unite){
+          pRet.addMode = true;
+          pRet.previousId = pRet.current.id;
+          pRet.current = p.unite;
+        }
         pRet.busy = false;
-        pRet.current = GetInitialUnite(state);
       });
     case REFRESH_ALL_SUCCESS:
     case UNITE_REMOVE_ATTACHMENT_SUCCESS:
@@ -82,25 +90,17 @@ export function uniteSubReducer(
     case SAVE_UNITE_ITEM_SUCCESS:
     case REMOVE_UNITE_ITEM_SUCCESS:
     case CHANGE_UNITE_SUCCESS:
-      return refreshUnite(state.unites, p);
+      return refreshUnite(state, p);
     case SELECT_UNITE_ITEM:
-      return produce(state.unites, pRet => {
+      return produce(state, pRet => {
+        if (p.unite){
+          pRet.current = p.unite;
+          pRet.addMode = false;
+        }
         pRet.busy = false;
-        if (p.id) {
-          const id = p.id;
-          const px = state.unites.pageData.find(x => {
-            return x.id === id;
-          });
-          if (px) {
-            pRet.current = Object.assign({}, px);
-            pRet.addMode = false;
-          } else {
-            pRet.current = GetUnite();
-          }
-        } // id
       });
     case CANCEL_UNITE_ITEM:
-      return produce(state.unites, pRet => {
+      return produce(state, pRet => {
         pRet.busy = false;
         const id = pRet.previousId;
         pRet.addMode = false;
@@ -115,7 +115,7 @@ export function uniteSubReducer(
         pRet.previousId = "";
       });
     case CHANGE_UNITE_FIELD:
-      return produce(state.unites, pRet => {
+      return produce(state, pRet => {
         if (p.field && p.value) {
           const val = p.value;
           const pz = pRet.current;
@@ -139,7 +139,7 @@ export function uniteSubReducer(
         pRet.busy = false;
       });
     default:
-      return produce(state.unites, pRet => {
+      return produce(state, pRet => {
         pRet.busy = false;
       });
   } // type

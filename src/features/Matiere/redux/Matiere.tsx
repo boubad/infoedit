@@ -9,7 +9,7 @@ import { IMatieresProps, Matiere } from "../presentation/Matiere";
 import {
   cancelMatiereAction,
   changeMatiereField,
-  createMatiereAction,
+  createMatiere,
   gotoPageMatiere,
   removeMatiere,
   removeMatiereAttachment,
@@ -99,10 +99,10 @@ function mapDispatchToProps(dispatch: Dispatch<FluxStandardAction<IPayload>>) {
       dispatch(gotoPageMatiere(page));
     },
     selectItem: (docid: string) => {
-      dispatch(selectMatiere({ id: docid }));
+      dispatch(selectMatiere(docid));
     },
     createItem: () => {
-      dispatch(createMatiereAction({}));
+      dispatch(createMatiere());
     },
     onFieldChanged: (val: any, field: string) => {
       dispatch(changeMatiereField({ field, value: val }));
@@ -111,7 +111,7 @@ function mapDispatchToProps(dispatch: Dispatch<FluxStandardAction<IPayload>>) {
     onEditCommand: (mode: string) => {
       switch (mode) {
         case "create":
-          dispatch(createMatiereAction({}));
+          dispatch(createMatiere());
           break;
         case "cancel":
           dispatch(cancelMatiereAction({}));

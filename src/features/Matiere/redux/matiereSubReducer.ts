@@ -9,8 +9,7 @@ import {
 } from "src/features/AppState/redux/AppStateActions";
 import { IBaseState } from "src/redux/InfoState";
 import { IPayload } from "src/redux/IPayload";
-import { GetInitialMatiere } from "src/redux/StateProcs";
-import { IInfoState } from "../../../redux/InfoState";
+import { GetInitialMatiereState } from "../../../redux/initialState";
 import { InfoAction } from "../../../redux/IPayload";
 import {
   CANCEL_MATIERE_ITEM,
@@ -27,7 +26,8 @@ import {
   REMOVE_MATIERE_ITEM_SUCCESS,
   SAVE_MATIERE_ITEM_BEGIN,
   SAVE_MATIERE_ITEM_SUCCESS,
-  SELECT_MATIERE_ITEM
+  SELECT_MATIERE_ITEM,
+  SELECT_MATIERE_ITEM_BEGIN
 } from "./MatiereActions";
 ////////////////////////////////////
 function refreshMatiere(
@@ -62,28 +62,35 @@ function refreshMatiere(
 } // refreshMatiere
 /////////////////////////////////////////////
 export function matiereSubReducer(
-  state: IInfoState,
+  state: IBaseState<IMatiereDoc>,
   action: InfoAction
 ): IBaseState<IMatiereDoc> {
+  if (!state) {
+    return GetInitialMatiereState();
+  }
   const p =
     action.payload !== undefined && action.payload !== null
       ? action.payload
       : {};
   switch (action.type) {
+    case SELECT_MATIERE_ITEM_BEGIN:
     case SAVE_MATIERE_ITEM_BEGIN:
     case REMOVE_MATIERE_ITEM_BEGIN:
     case MATIERE_SAVE_ATTACHMENT_BEGIN:
     case MATIERE_REMOVE_ATTACHMENT_BEGIN:
     case GOTO_PAGE_MATIERE_BEGIN:
     case REFRESH_MATIERE_BEGIN:
-      return produce(state.matieres, pRet => {
+      return produce(state, pRet => {
         pRet.busy = true;
       });
     case CREATE_MATIERE_ITEM:
-      return produce(state.matieres, pRet => {
-        pRet.addMode = true;
+      return produce(state, pRet => {
+        if (p.matiere) {
+          pRet.addMode = true;
+          pRet.previousId = pRet.current.id;
+          pRet.current = p.matiere;
+        }
         pRet.busy = false;
-        pRet.current = GetInitialMatiere(state);
       });
     case REFRESH_ALL_SUCCESS:
     case MATIERE_REMOVE_ATTACHMENT_SUCCESS:
@@ -93,25 +100,17 @@ export function matiereSubReducer(
     case CHANGE_UNITE_SUCCESS:
     case REMOVE_MATIERE_ITEM_SUCCESS:
     case SAVE_MATIERE_ITEM_SUCCESS:
-      return refreshMatiere(state.matieres, p);
+      return refreshMatiere(state, p);
     case SELECT_MATIERE_ITEM:
-      return produce(state.matieres, pRet => {
+      return produce(state, pRet => {
+        if (p.matiere) {
+          pRet.addMode = false;
+          pRet.current = p.matiere;
+        }
         pRet.busy = false;
-        if (p.id) {
-          const id = p.id;
-          const px = state.matieres.pageData.find(x => {
-            return x.id === id;
-          });
-          if (px !== undefined) {
-            pRet.current = Object.assign({}, px);
-            pRet.addMode = false;
-          } else {
-            pRet.current = GetMatiere();
-          }
-        } // id
       });
     case CANCEL_MATIERE_ITEM:
-      return produce(state.matieres, pRet => {
+      return produce(state, pRet => {
         pRet.busy = false;
         const id = pRet.previousId;
         pRet.addMode = false;
@@ -126,7 +125,7 @@ export function matiereSubReducer(
         pRet.previousId = "";
       });
     case CHANGE_MATIERE_FIELD:
-      return produce(state.matieres, pRet => {
+      return produce(state, pRet => {
         if (p.field && p.value) {
           const val = p.value;
           const pz = pRet.current;
@@ -166,7 +165,7 @@ export function matiereSubReducer(
         pRet.busy = false;
       });
     default:
-      return produce(state.matieres, pRet => {
+      return produce(state, pRet => {
         pRet.busy = false;
       });
   } // type

@@ -25,6 +25,7 @@ export interface IControleEvtsProps {
   onEditCommand?: (arg: string) => void;
   onSaveAttachment?: (name: string, mime: string, data: Blob) => void;
   onRemoveAttachment?: (name: string) => void;
+  onShowDetail?: (id:string) => void;
 } // IControleEvtsProps
 //
 export class ControleEvts2 extends BaseComponent<IControleEvtsProps> {
@@ -191,7 +192,7 @@ export class ControleEvts2 extends BaseComponent<IControleEvtsProps> {
       );
     } else {
       return (
-        <a href="#" onClick={this.onSelectItem.bind(this, p.id)}>
+        <a href="#" onClick={this.onShowDetail.bind(this, p.id)}>
           <img src={p.url} alt={p.fullname} height={48} />
         </a>
       );
@@ -214,6 +215,14 @@ export class ControleEvts2 extends BaseComponent<IControleEvtsProps> {
       this.props.onSelectItem(id);
     }
   } // onSelectItem
+  private onShowDetail(id: string, e?: any) {
+    if (
+      this.props.onShowDetail !== undefined &&
+      this.props.onShowDetail !== null
+    ) {
+      this.props.onShowDetail(id);
+    }
+  } // onShowDetail
   private renderTableHeader(): React.ReactNode {
     return (
       <tr>

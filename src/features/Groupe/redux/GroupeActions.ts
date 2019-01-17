@@ -1,19 +1,51 @@
 import { Dispatch } from "redux";
 import { createAction } from "redux-actions";
 import { IInfoState } from "../../../redux/InfoState";
+import { GetInitialGroupe } from '../../../redux/StateProcs';
 import { GroupeServices } from "./GroupeServices";
 //
 export const CHANGE_GROUPE_FIELD = "CHANGE_GROUPE_FIELD";
 export const changeGroupeField = createAction(CHANGE_GROUPE_FIELD);
 //
 export const CREATE_GROUPE_ITEM = "CREATE_GROUPE_ITEM";
-export const createGroupeAction = createAction(CREATE_GROUPE_ITEM);
+const createGroupeAction = createAction(CREATE_GROUPE_ITEM);
+export function createGroupe(): any {
+  return (dispatch: Dispatch, getState: () => IInfoState) => {
+    const state = getState();
+    dispatch(
+      createGroupeAction({ groupe: GetInitialGroupe(state) })
+    );
+  };
+} // createGroupe
 //
 export const CANCEL_GROUPE_ITEM = "CANCEL_GROUPE_ITEM";
 export const cancelGroupeAction = createAction(CANCEL_GROUPE_ITEM);
-//
+////////////////////////////////////
+export const SELECT_GROUPE_ITEM_BEGIN = "SELECT_GROUPE_ITEM_BEGIN";
+const selectGroupeBeginAction = createAction(SELECT_GROUPE_ITEM_BEGIN);
 export const SELECT_GROUPE_ITEM = "SELECT_GROUPE_ITEM";
-export const selectGroupe = createAction(SELECT_GROUPE_ITEM);
+const selectGroupeSuccessAction = createAction(SELECT_GROUPE_ITEM);
+export const SELECT_GROUPE_ITEM_FAIL = "SELECT_GROUPE_ITEM_FAIL";
+const selectGroupeFailAction = createAction(SELECT_GROUPE_ITEM_FAIL);
+export function selectGroupe(id:string): any {
+  return (dispatch: Dispatch, getState: () => IInfoState) => {
+    dispatch(selectGroupeBeginAction());
+    const promise = new Promise((resolve, reject) => {
+      const doRequest = GroupeServices.selectGroupeAsync(getState(),id);
+      doRequest.then(
+        res => {
+          dispatch(selectGroupeSuccessAction(res));
+          resolve(res);
+        },
+        err => {
+          dispatch(selectGroupeFailAction(err));
+          reject(err);
+        }
+      );
+    });
+    return promise;
+  };
+} // selectGroupe
 //////////////////////////////////////////////////////
 export const SAVE_GROUPE_ITEM_BEGIN = "SAVE_GROUPE_ITEM_BEGIN";
 const saveGroupeBeginAction = createAction(SAVE_GROUPE_ITEM_BEGIN);

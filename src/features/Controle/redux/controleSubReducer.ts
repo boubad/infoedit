@@ -1,7 +1,7 @@
 import produce from "immer";
 import { GetControle, GetEvt, GetNote } from "../../../data/DataProcs";
 import { IControleDoc } from "../../../data/DomainData";
-import { REMOVE_ANNEE_ITEM_SUCCESS } from '../../../features/Annee/redux/AnneeActions';
+import { REMOVE_ANNEE_ITEM_SUCCESS } from "../../../features/Annee/redux/AnneeActions";
 import {
   CHANGE_ANNEE_SUCCESS,
   CHANGE_GROUPE_SUCCESS,
@@ -9,21 +9,19 @@ import {
   CHANGE_SEMESTRE_SUCCESS,
   CHANGE_UNITE_SUCCESS
 } from "../../../features/AppState/redux/AppStateActions";
-import { REMOVE_ETUDIANT_ITEM_SUCCESS, SAVE_ETUDIANT_ITEM_SUCCESS } from '../../../features/Etudiant/redux/EtudiantActions';
-import { REMOVE_GROUPE_ITEM_SUCCESS } from '../../../features/Groupe/redux/GroupeActions';
-import { REMOVE_MATIERE_ITEM_SUCCESS } from '../../../features/Matiere/redux/MatiereActions';
-import { REFRESHANNEESEMESTRE_STATUS_SUCCESS } from '../../../features/Outils/redux/OutilsActions';
-import { REMOVE_SEMESTRE_ITEM_SUCCESS } from '../../../features/Semestre/redux/SemestreActions';
-import { REMOVE_UNITE_ITEM_SUCCESS } from '../../../features/Unite/redux/UniteActions';
+import {
+  REMOVE_ETUDIANT_ITEM_SUCCESS,
+  SAVE_ETUDIANT_ITEM_SUCCESS
+} from "../../../features/Etudiant/redux/EtudiantActions";
+import { REMOVE_GROUPE_ITEM_SUCCESS } from "../../../features/Groupe/redux/GroupeActions";
+import { REMOVE_MATIERE_ITEM_SUCCESS } from "../../../features/Matiere/redux/MatiereActions";
+import { REFRESHANNEESEMESTRE_STATUS_SUCCESS } from "../../../features/Outils/redux/OutilsActions";
+import { REMOVE_SEMESTRE_ITEM_SUCCESS } from "../../../features/Semestre/redux/SemestreActions";
+import { REMOVE_UNITE_ITEM_SUCCESS } from "../../../features/Unite/redux/UniteActions";
 import { IControleState } from "../../../redux/InfoState";
-import { IInfoState } from "../../../redux/InfoState";
+import { GetInitialControleState } from "../../../redux/initialState";
 import { InfoAction } from "../../../redux/IPayload";
 import { IPayload } from "../../../redux/IPayload";
-import {
-  GetInitialControle,
-  GetInitialEvt,
-  GetInitialNote
-} from "../../../redux/StateProcs";
 import {
   CANCEL_CONTROLE_EVT,
   CANCEL_CONTROLE_ITEM,
@@ -76,8 +74,8 @@ function findControleById(state: IControleState, id: string): IControleDoc {
   return pz;
 } // findMatiereById
 ////////////////////////////////////////
-function refreshEvt(state: IInfoState, p: IPayload): IControleState {
-  return produce(state.controles, pRet => {
+function refreshEvt(state: IControleState, p: IPayload): IControleState {
+  return produce(state, pRet => {
     pRet.busy = false;
     if (p.evt) {
       pRet.evt = p.evt;
@@ -105,8 +103,8 @@ function refreshEvt(state: IInfoState, p: IPayload): IControleState {
     pRet.evt.modified = false;
   });
 } // refreshEvt
-function refreshNote(state: IInfoState, p: IPayload): IControleState {
-  return produce(state.controles, pRet => {
+function refreshNote(state: IControleState, p: IPayload): IControleState {
+  return produce(state, pRet => {
     pRet.busy = false;
     if (p.note) {
       pRet.note = p.note;
@@ -142,7 +140,7 @@ function refreshControle(state: IControleState, p: IPayload): IControleState {
     if (p.etudiantsOptions) {
       pRet.etudiantsOptions = p.etudiantsOptions;
     }
-    if (p.etudAffectations){
+    if (p.etudAffectations) {
       pRet.etudAffectations = p.etudAffectations;
     }
     if (p.page) {
@@ -185,9 +183,12 @@ function refreshControle(state: IControleState, p: IPayload): IControleState {
 } // refreshControle
 /////////////////////////////////////////////
 export function controleSubReducer(
-  state: IInfoState,
+  state: IControleState,
   action: InfoAction
 ): IControleState {
+  if (!state) {
+    return GetInitialControleState();
+  }
   const p = action.payload ? action.payload : {};
   switch (action.type) {
     case SELECT_CONTROLE_BEGIN:
@@ -204,25 +205,30 @@ export function controleSubReducer(
     case CONTROLE_REMOVE_NOTE_ATTACHMENT_BEGIN:
     case CONTROLE_SAVE_EVT_ATTACHMENT_BEGIN:
     case CONTROLE_REMOVE_EVT_ATTACHMENT_BEGIN:
-      return produce(state.controles, pRet => {
+      return produce(state, pRet => {
         pRet.busy = true;
       });
     case CREATE_CONTROLE_ITEM:
-      return produce(state.controles, pRet => {
-        pRet.addMode = true;
-        pRet.current = GetInitialControle(state);
+      return produce(state, pRet => {
+        if (p.controle) {
+          pRet.previousId = pRet.current.id;
+          pRet.current = p.controle;
+          pRet.addMode = true;
+        }
         pRet.busy = false;
       });
     case CREATE_CONTROLE_EVT:
-      return produce(state.controles, pRet => {
-        pRet.evtAddMode = true;
-        pRet.evt = GetInitialEvt(state);
-        pRet.evt.controleid = pRet.current.id;
-        pRet.evt.etudiantid = pRet.current.id;
+      return produce(state, pRet => {
+        if (p.evt) {
+          pRet.evt = p.evt;
+          pRet.evtAddMode = true;
+          pRet.evt.controleid = pRet.current.id;
+          pRet.evt.etudiantid = pRet.current.id;
+        }
         pRet.busy = false;
       });
     case SELECT_CONTROLE_NOTE:
-      return produce(state.controles, pRet => {
+      return produce(state, pRet => {
         if (p.note) {
           pRet.note = p.note;
         }
@@ -238,7 +244,7 @@ export function controleSubReducer(
         pRet.busy = false;
       });
     case SELECT_CONTROLE_EVT:
-      return produce(state.controles, pRet => {
+      return produce(state, pRet => {
         if (p.evt) {
           pRet.evt = p.evt;
           pRet.evtAddMode = false;
@@ -256,14 +262,12 @@ export function controleSubReducer(
         pRet.busy = false;
       });
     case CANCEL_CONTROLE_EVT:
-      return produce(state.controles, pRet => {
+      return produce(state, pRet => {
         pRet.evtAddMode = false;
-        pRet.evt = GetInitialEvt(state);
         pRet.busy = false;
       });
     case CANCEL_CONTROLE_NOTE:
-      return produce(state.controles, pRet => {
-        pRet.note = GetInitialNote(state);
+      return produce(state, pRet => {
         pRet.busy = false;
       });
     case CONTROLE_REMOVE_NOTE_ATTACHMENT_SUCCESS:
@@ -293,17 +297,17 @@ export function controleSubReducer(
     case SAVE_CONTROLE_ITEM_SUCCESS:
     case SAVE_ETUDIANT_ITEM_SUCCESS:
     case REMOVE_ETUDIANT_ITEM_SUCCESS:
-    case  REFRESHANNEESEMESTRE_STATUS_SUCCESS:
-      return refreshControle(state.controles, p);
+    case REFRESHANNEESEMESTRE_STATUS_SUCCESS:
+      return refreshControle(state, p);
     case REMOVE_CONTROLE_ITEM_SUCCESS: {
-      const px = refreshControle(state.controles, p);
+      const px = refreshControle(state, p);
       return produce(px, pRet => {
         pRet.current = GetControle();
         pRet.busy = false;
       });
     }
     case CANCEL_CONTROLE_ITEM:
-      return produce(state.controles, pRet => {
+      return produce(state, pRet => {
         const id = pRet.previousId;
         pRet.addMode = false;
         pRet.current = findControleById(pRet, id);
@@ -311,7 +315,7 @@ export function controleSubReducer(
         pRet.busy = false;
       });
     case CHANGE_CONTROLE_FIELD:
-      return produce(state.controles, pRet => {
+      return produce(state, pRet => {
         if (p.field && p.value) {
           const val = p.value;
           const pz = pRet.current;
@@ -371,7 +375,7 @@ export function controleSubReducer(
         pRet.busy = false;
       });
     case CHANGE_CONTROLE_EVT_FIELD:
-      return produce(state.controles, pRet => {
+      return produce(state, pRet => {
         if (p.field && p.value) {
           const val = p.value;
           const pz = pRet.evt;
@@ -388,25 +392,26 @@ export function controleSubReducer(
               pz.duration = val;
               pz.modified = true;
               break;
-            case "etudiantid":{
-              pz.etudiantid = val;
-              pz.modified = true;
-              const px = pRet.etudiantsOptions.find((x) =>{
-                return (x.id === pz.etudiantid);
-              });
-              if (px){
-                pz.fullname = px.text;
-                pz.url = (px.url) ? px.url : '';
+            case "etudiantid":
+              {
+                pz.etudiantid = val;
+                pz.modified = true;
+                const px = pRet.etudiantsOptions.find(x => {
+                  return x.id === pz.etudiantid;
+                });
+                if (px) {
+                  pz.fullname = px.text;
+                  pz.url = px.url ? px.url : "";
+                }
+                const py = pRet.etudAffectations.find(x => {
+                  return x.etudiantid === pz.etudiantid;
+                });
+                if (py) {
+                  pz.etudaffectationid = py.id;
+                } else {
+                  pz.etudaffectationid = "";
+                }
               }
-              const py = pRet.etudAffectations.find((x) =>{
-                return (x.etudiantid === pz.etudiantid);
-              });
-              if (py){
-                pz.etudaffectationid = py.id;
-              } else {
-                pz.etudaffectationid = '';
-              }
-            }
               break;
             case "controleid":
               pz.controleid = val;
@@ -423,7 +428,7 @@ export function controleSubReducer(
         pRet.busy = false;
       });
     case CHANGE_CONTROLE_NOTE_FIELD:
-      return produce(state.controles, pRet => {
+      return produce(state, pRet => {
         if (p.field && p.value) {
           const val = p.value;
           const pz = pRet.note;
@@ -443,7 +448,7 @@ export function controleSubReducer(
         pRet.busy = false;
       });
     default:
-      return produce(state.controles, pRet => {
+      return produce(state, pRet => {
         pRet.busy = false;
       });
   } // type

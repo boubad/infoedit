@@ -1,6 +1,7 @@
 import { Dispatch } from "redux";
 import { createAction } from "redux-actions";
 import { IInfoState } from "../../../redux/InfoState";
+import { GetInitialEtudAffectation } from '../../../redux/StateProcs';
 import { EtudAffectationServices } from "./EtudAffectationServices";
 //
 export const CHANGE_ETUDAFFECTATION_FIELD = "CHANGE_ETUDAFFECTATION_FIELD";
@@ -9,17 +10,48 @@ export const changeEtudAffectationField = createAction(
 );
 //
 export const CREATE_ETUDAFFECTATION_ITEM = "CREATE_ETUDAFFECTATION_ITEM";
-export const createEtudAffectationAction = createAction(
+const createEtudAffectationAction = createAction(
   CREATE_ETUDAFFECTATION_ITEM
 );
+export function createEtudAffectation(): any {
+  return (dispatch: Dispatch, getState: () => IInfoState) => {
+    const state = getState();
+    dispatch(
+      createEtudAffectationAction({ EtudAffectation: GetInitialEtudAffectation(state) })
+    );
+  };
+} // createAffectation
 //
 export const CANCEL_ETUDAFFECTATION_ITEM = "CANCEL_ETUDAFFECTATION_ITEM";
 export const cancelEtudAffectationAction = createAction(
   CANCEL_ETUDAFFECTATION_ITEM
 );
-//
+//////////////////////////////////////////////
+export const SELECT_ETUDAFFECTATION_ITEM_BEGIN = "SELECT_ETUDAFFECTATION_ITEM_BEGIN";
+const selectEtudAffectationBeginAction = createAction(SELECT_ETUDAFFECTATION_ITEM_BEGIN);
 export const SELECT_ETUDAFFECTATION_ITEM = "SELECT_ETUDAFFECTATION_ITEM";
-export const selectEtudAffectation = createAction(SELECT_ETUDAFFECTATION_ITEM);
+const selectEtudAffectationSuccessAction = createAction(SELECT_ETUDAFFECTATION_ITEM);
+export const SELECT_ETUDAFFECTATION_ITEM_FAIL = "SELECT_ETUDAFFECTATION_ITEM_FAIL";
+const selectEtudAffectationFailAction = createAction(SELECT_ETUDAFFECTATION_ITEM_FAIL);
+export function selectEtudAffectation(id:string): any {
+  return (dispatch: Dispatch, getState: () => IInfoState) => {
+    dispatch(selectEtudAffectationBeginAction());
+    const promise = new Promise((resolve, reject) => {
+      const doRequest = EtudAffectationServices.selectEtudAffectationAsync(getState(),id);
+      doRequest.then(
+        res => {
+          dispatch(selectEtudAffectationSuccessAction(res));
+          resolve(res);
+        },
+        err => {
+          dispatch(selectEtudAffectationFailAction(err));
+          reject(err);
+        }
+      );
+    });
+    return promise;
+  };
+} // selectEtudAffectation
 //////////////////////////////////////////////////////////
 export const SAVE_ETUDAFFECTATION_ITEM_BEGIN =
   "SAVE_ETUDAFFECTATION_ITEM_BEGIN";

@@ -100,7 +100,7 @@ function mapDispatchToProps(dispatch: InfoDispatch) {
       dispatch(gotoPageAffectation(page));
     },
     selectItem: (docid: string) => {
-      dispatch(selectAffectation({id:docid}));
+      dispatch(selectAffectation(docid));
     },
     createItem: () => {
       dispatch(createAffectation());

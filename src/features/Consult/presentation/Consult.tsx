@@ -4,8 +4,8 @@ import { Nav, NavItem, NavLink, TabContent, Table, TabPane } from "reactstrap";
 
 import { BaseComponent } from "../../../components/BaseComponent";
 import AppState from "../../../features/AppState/redux/AppState";
-import StatusComponent from "../../../features/Common/redux/StatusComponent";
 import Controle from '../../../features/Controle/redux/Controle';
+import StatusComponent from "../../AppStatus/redux/StatusComponent";
 ////////////////////////
 export interface IConsultProps {
   hasStatus: boolean;

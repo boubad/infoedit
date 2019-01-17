@@ -2,8 +2,29 @@ import { IUniteDoc } from "../../../data/DomainData";
 import { BaseServices } from "../../../redux/BaseServices";
 import { IInfoState } from "../../../redux/InfoState";
 import { IPayload } from "../../../redux/IPayload";
+import { GetInitialUnite } from "../../../redux/StateProcs";
 
 export class UniteServices {
+  public static createUnite(state: IInfoState): IPayload {
+    return { semestre: GetInitialUnite(state) };
+  } // createUnite
+  public static async selectUniteAsync(
+    state: IInfoState,
+    id: string
+  ): Promise<IPayload> {
+    const sid = id.trim();
+    if (sid.length < 1) {
+      return { unite: GetInitialUnite(state) };
+    }
+    let px = state.unites.pageData.find(x => {
+      return x.id === sid;
+    });
+    if (px === undefined) {
+      const pMan = BaseServices.getPersistManager(state);
+      px = await pMan.fetchUniteByIdAsync(sid);
+    }
+    return { unite: px };
+  } // selectUniteAsync
   //
   public static async saveUniteAsync(state: IInfoState): Promise<IPayload> {
     const pMan = BaseServices.getPersistManager(state);

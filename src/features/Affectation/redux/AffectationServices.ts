@@ -1,11 +1,32 @@
-import { IAffectationDoc } from '../../../data/DomainData';
-import { BaseServices } from '../../../redux/BaseServices';
-import { IInfoState } from '../../../redux/InfoState';
-import { IPayload } from '../../../redux/IPayload';
-import { GetInitialAffectation } from '../../../redux/StateProcs';
-
+import { IAffectationDoc } from "../../../data/DomainData";
+import { BaseServices } from "../../../redux/BaseServices";
+import { IInfoState } from "../../../redux/InfoState";
+import { IPayload } from "../../../redux/IPayload";
+import { GetInitialAffectation } from "../../../redux/StateProcs";
 
 export class AffectationServices {
+  //
+  public static createAffectation(state: IInfoState): IPayload {
+    return { affectation: GetInitialAffectation(state) };
+  } // createAffectation
+  //
+  public static async selectAffectationAsync(
+    state: IInfoState,
+    id: string
+  ): Promise<IPayload> {
+    const sid = id.trim();
+    if (sid.length < 1) {
+      return { affectation: GetInitialAffectation(state) };
+    }
+    let px = state.affectations.pageData.find(x => {
+      return x.id === sid;
+    });
+    if (px === undefined) {
+      const pMan = BaseServices.getPersistManager(state);
+      px = await pMan.fetchAffectationByIdAsync(sid);
+    }
+    return { affectation: px };
+  } // selectAffectationAsync
   public static async saveAffectationAsync(
     state: IInfoState
   ): Promise<IPayload> {
@@ -52,9 +73,9 @@ export class AffectationServices {
       count
     );
     const n = vv.length;
-    for (let i = 0; i < n; i++){
+    for (let i = 0; i < n; i++) {
       AffectationServices.checkAffectation(state, vv[i]);
-    }// i
+    } // i
     return {
       affectation: GetInitialAffectation(state),
       affectations: vv,
@@ -89,17 +110,17 @@ export class AffectationServices {
     const pz = await pMan.loadAffectationByIdAsync(id);
     AffectationServices.checkAffectation(state, pz);
     return {
-      affectation: pz,
+      affectation: pz
     };
   } // removeEtudiantAttachment
   //
-  private static checkAffectation(state:IInfoState,pz:IAffectationDoc) {
+  private static checkAffectation(state: IInfoState, pz: IAffectationDoc) {
     const startDate = state.appstate.anneeStartDate;
     const endDate = state.appstate.anneeEndDate;
-    if (pz.startdate.length < 1){
+    if (pz.startdate.length < 1) {
       pz.startdate = startDate;
     }
-    if (pz.enddate.length < 1){
+    if (pz.enddate.length < 1) {
       pz.enddate = endDate;
     }
   }

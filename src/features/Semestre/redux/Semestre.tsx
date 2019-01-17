@@ -7,7 +7,7 @@ import { ISemestresProps, Semestre } from "../presentation/Semestre";
 import {
   cancelSemestreAction,
   changeSemestreField,
-  createSemestreAction,
+  createSemestre,
   gotoPageSemestre,
   removeSemestre,
   removeSemestreAttachment,
@@ -83,10 +83,10 @@ function mapDispatchToProps(dispatch: InfoDispatch) {
       dispatch(gotoPageSemestre(page));
     },
     selectItem: (docid: string) => {
-      dispatch(selectSemestre({ id: docid }));
+      dispatch(selectSemestre(docid));
     },
     createItem: () => {
-      dispatch(createSemestreAction({}));
+      dispatch(createSemestre());
     },
     onFieldChanged: (val: any, field: string) => {
       dispatch(changeSemestreField({ field, value: val }));
@@ -95,7 +95,7 @@ function mapDispatchToProps(dispatch: InfoDispatch) {
     onEditCommand: (mode: string) => {
       switch (mode) {
         case "create":
-          dispatch(createSemestreAction({}));
+          dispatch(createSemestre());
           break;
         case "cancel":
           dispatch(cancelSemestreAction({}));

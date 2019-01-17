@@ -1,6 +1,7 @@
 import { Dispatch } from "redux";
 import { createAction } from "redux-actions";
 import { IInfoState } from '../../../redux/InfoState';
+import { GetInitialUnite } from '../../../redux/StateProcs';
 import { UniteServices } from "./UniteServices";
 //
 export const CHANGE_UNITE_FIELD = "CHANGE_UNITE_FIELD";
@@ -8,12 +9,44 @@ export const changeUniteField = createAction(CHANGE_UNITE_FIELD);
 //
 export const CREATE_UNITE_ITEM = "CREATE_UNITE_ITEM";
 export const createUniteAction = createAction(CREATE_UNITE_ITEM);
+export function createUnite(): any {
+  return (dispatch: Dispatch, getState: () => IInfoState) => {
+    const state = getState();
+    dispatch(
+      createUniteAction({ unite: GetInitialUnite(state) })
+    );
+  };
+} // createUnite
+//
 //
 export const CANCEL_UNITE_ITEM = "CANCEL_UNITE_ITEM";
 export const cancelUniteAction = createAction(CANCEL_UNITE_ITEM);
 //
+export const SELECT_UNITE_ITEM_BEGIN = "SELECT_UNITE_ITEM_BEGIN";
+const selectUniteBeginAction = createAction(SELECT_UNITE_ITEM_BEGIN);
 export const SELECT_UNITE_ITEM = "SELECT_UNITE_ITEM";
-export const selectUnite = createAction(SELECT_UNITE_ITEM);
+const selectUniteSuccessAction = createAction(SELECT_UNITE_ITEM);
+export const SELECT_UNITE_ITEM_FAIL = "SELECT_UNITE_ITEM_FAIL";
+const selectUniteFailAction = createAction(SELECT_UNITE_ITEM_FAIL);
+export function selectUnite(id:string): any {
+  return (dispatch: Dispatch, getState: () => IInfoState) => {
+    dispatch(selectUniteBeginAction());
+    const promise = new Promise((resolve, reject) => {
+      const doRequest = UniteServices.selectUniteAsync(getState(),id);
+      doRequest.then(
+        res => {
+          dispatch(selectUniteSuccessAction(res));
+          resolve(res);
+        },
+        err => {
+          dispatch(selectUniteFailAction(err));
+          reject(err);
+        }
+      );
+    });
+    return promise;
+  };
+} // selectUnite
 ///////////////////////////////////////////////////
 export const SAVE_UNITE_ITEM_BEGIN = "SAVE_UNITE_ITEM_BEGIN";
 const saveUniteBeginAction = createAction(SAVE_UNITE_ITEM_BEGIN);

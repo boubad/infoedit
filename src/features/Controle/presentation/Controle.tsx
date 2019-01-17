@@ -43,6 +43,8 @@ export interface IControlesProps {
   refresh?: () => void;
   gotoPage?: (page: number) => void;
   selectItem?: (docid: string) => void;
+  //
+  onShowDetail?: (id:string) => void;
 }
 //
 export class Controle extends BaseComponent<IControlesProps> {
@@ -103,6 +105,7 @@ export class Controle extends BaseComponent<IControlesProps> {
                 onEvtRemoveAttachment={p.onEvtRemoveAttachment}
                 onEvtSaveAttachment={p.onEvtSaveAttachment}
                 onEvtSelectItem={p.onEvtSelectItem}
+                onShowDetail = {p.onShowDetail}
               />
             </td>
           </tr>

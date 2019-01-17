@@ -10,7 +10,7 @@ import {
 import {
   cancelEtudAffectationAction,
   changeEtudAffectationField,
-  createEtudAffectationAction,
+  createEtudAffectation,
   gotoPageEtudAffectation,
   removeEtudAffectation,
   removeEtudAffectationAttachment,
@@ -104,10 +104,10 @@ function mapDispatchToProps(dispatch: InfoDispatch) {
       dispatch(gotoPageEtudAffectation(page));
     },
     selectItem: (docid: string) => {
-      dispatch(selectEtudAffectation({id:docid}));
+      dispatch(selectEtudAffectation(docid));
     },
     createItem: () => {
-      dispatch(createEtudAffectationAction());
+      dispatch(createEtudAffectation());
     },
     onFieldChanged: (value: any, field: string) => {
       dispatch(changeEtudAffectationField({ field, value }));
@@ -116,7 +116,7 @@ function mapDispatchToProps(dispatch: InfoDispatch) {
     onEditCommand: (mode: string) => {
       switch (mode) {
         case "create":
-          dispatch(createEtudAffectationAction());
+          dispatch(createEtudAffectation());
           break;
         case "cancel":
           dispatch(cancelEtudAffectationAction());

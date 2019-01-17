@@ -1,8 +1,8 @@
 import produce from "immer";
-import { GetAnnee } from "../../../data/DataProcs";
 import { IAnneeDoc } from "../../../data/DomainData";
 import { ComputePagesCount } from "../../../redux/BaseReducer";
 import { IBaseState } from "../../../redux/InfoState";
+import { GetInitialAnneeState } from '../../../redux/initialState';
 import { InfoAction, IPayload } from "../../../redux/IPayload";
 import { CHANGE_ANNEE_SUCCESS } from "../../AppState/redux/AppStateActions";
 import {
@@ -21,7 +21,8 @@ import {
   REMOVE_ANNEE_ITEM_SUCCESS,
   SAVE_ANNEE_ITEM_BEGIN,
   SAVE_ANNEE_ITEM_SUCCESS,
-  SELECT_ANNEE_ITEM
+  SELECT_ANNEE_ITEM,
+  SELECT_ANNEE_ITEM_BEGIN
 } from "./AnneeActions";
 //////////////////////////////////////////
 function refreshAnnee(
@@ -44,7 +45,23 @@ function refreshAnnee(
     if (p.annee) {
       pRet.current = p.annee;
       pRet.addMode = false;
-    }
+      const id = pRet.current.id;
+      if (id.length > 0){
+        const bb = state.pageData;
+        const n = bb.length;
+        const vv = [];
+        for (let i = 0; i < n; i++){
+           const x = bb[i];
+           if (x.id === id){
+             const y = Object.assign({},pRet.current);
+             vv.push(y);
+           } else {
+             vv.push(x);
+           }
+        }// i
+        pRet.pageData = vv;
+      }// id
+    }// annee
   });
 } // refreshAnnee
 /////////////////////////////////////////////
@@ -52,8 +69,12 @@ export function anneeSubReducer(
   state: IBaseState<IAnneeDoc>,
   action: InfoAction
 ): IBaseState<IAnneeDoc> {
+  if (!state){
+    return GetInitialAnneeState();
+  }
   const p = action.payload ? action.payload : {};
   switch (action.type) {
+    case SELECT_ANNEE_ITEM_BEGIN:
     case SAVE_ANNEE_ITEM_BEGIN:
     case REMOVE_ANNEE_ITEM_BEGIN:
     case ANNEE_SAVE_ATTACHMENT_BEGIN:
@@ -64,6 +85,7 @@ export function anneeSubReducer(
         pRet.busy = true;
       });
     case CHANGE_ANNEE_SUCCESS:
+    case SELECT_ANNEE_ITEM:
       return produce(state, pRet => {
         pRet.busy = false;
         if (p.annee) {
@@ -71,27 +93,14 @@ export function anneeSubReducer(
           pRet.addMode = false;
         }
       });
-    case SELECT_ANNEE_ITEM:
-      return produce(state, pRet => {
-        pRet.busy = false;
-        if (p.id) {
-          const id = p.id;
-          const px = state.pageData.find(x => {
-            return x.id === id;
-          });
-          if (px) {
-            pRet.current = Object.assign({}, px);
-            pRet.addMode = false;
-          } else {
-            pRet.current = GetAnnee();
-          }
-        } // id
-      });
     case CREATE_ANNEE_ITEM:
       return produce(state, pRet => {
+        if (p.annee){
+          pRet.previousId = pRet.current.id;
+          pRet.current = p.annee;
+          pRet.addMode = true;
+        }
         pRet.busy = false;
-        pRet.addMode = true;
-        pRet.current = GetAnnee();
       });
     case REFRESH_ANNEE_SUCCESS:
     case ANNEE_REMOVE_ATTACHMENT_SUCCESS:
@@ -110,8 +119,6 @@ export function anneeSubReducer(
         });
         if (px) {
           pRet.current = Object.assign({}, px);
-        } else {
-          pRet.current = GetAnnee();
         }
         pRet.previousId = "";
       });

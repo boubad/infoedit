@@ -3,9 +3,10 @@ import produce from "immer";
 import { IMPORT_ETUDIANT_SUCCESS, REFRESHANNEESEMESTRE_STATUS_SUCCESS } from 'src/features/Outils/redux/OutilsActions';
 import { GetEtudiant } from '../../../data/DataProcs';
 import { IEtudiantDoc } from '../../../data/DomainData';
-import { IEtudiantState, IInfoState } from '../../../redux/InfoState';
+import { SHOW_ETUDIANT, SHOW_ETUDIANT_BEGIN } from '../../../features/Controle/redux/ControleActions';
+import { IEtudiantState } from '../../../redux/InfoState';
+import { GetInitialEtudiantState } from '../../../redux/initialState';
 import { IPayload } from '../../../redux/IPayload';
-import { GetInitialEtudiant } from '../../../redux/StateProcs';
 import { ETUDIANT_REMOVE_ATTACHMENT_SUCCESS, ETUDIANT_SAVE_ATTACHMENT_SUCCESS } from './EtudiantActions';
 import {
   CANCEL_ETUDIANT_ITEM,
@@ -81,11 +82,15 @@ function refreshEtudiant(
 } // refreshEtudiant
 /////////////////////////////////////////////
 export function etudiantSubReducer(
-  state: IInfoState,
+  state: IEtudiantState,
   action: FluxStandardAction<IPayload>
 ): IEtudiantState {
+  if (!state){
+    return GetInitialEtudiantState();
+  }
   const p = action.payload ? action.payload : {};
   switch (action.type) {
+    case SHOW_ETUDIANT_BEGIN:
     case CHANGESTATUS_ETUDIANT_BEGIN:
     case SELECT_ETUDIANT_BEGIN:
     case SAVE_ETUDIANT_ITEM_BEGIN:
@@ -94,17 +99,28 @@ export function etudiantSubReducer(
     case ETUDIANT_REMOVE_ATTACHMENT_BEGIN:
     case SET_AVATAR_BEGIN:
     case GOTO_PAGE_ETUDIANT_BEGIN:
-      return produce(state.etudiants, pRet => {
+      return produce(state, pRet => {
         pRet.busy = true;
       });
+    case SHOW_ETUDIANT: {
+      return produce(state, pRet => {
+        if (p.etudiant){
+          pRet.current = p.etudiant;
+        }
+        pRet.busy = false;
+      });
+    }
     case CREATE_ETUDIANT_ITEM:
-      return produce(state.etudiants, pRet => {
-        pRet.addMode = true;
-        pRet.current = GetInitialEtudiant(state);
+      return produce(state, pRet => {
+        if (p.etudiant){
+          pRet.previousId = pRet.current.id;
+          pRet.current = p.etudiant;
+          pRet.addMode = true;
+        }
         pRet.busy = false;
       });
     case SELECT_ETUDIANT_NOTE:
-      return produce(state.etudiants, pRet => {
+      return produce(state, pRet => {
         if (p.note) {
           pRet.note = p.note;
         }
@@ -120,7 +136,7 @@ export function etudiantSubReducer(
         pRet.busy = false;
       });
     case SELECT_ETUDIANT_EVT:
-      return produce(state.etudiants, pRet => {
+      return produce(state, pRet => {
         if (p.evt) {
           pRet.evt = p.evt;
         }
@@ -145,16 +161,16 @@ export function etudiantSubReducer(
     case ETUDIANT_REMOVE_ATTACHMENT_SUCCESS:
     case IMPORT_ETUDIANT_SUCCESS:
     case  REFRESHANNEESEMESTRE_STATUS_SUCCESS:
-      return refreshEtudiant(state.etudiants, p);
+      return refreshEtudiant(state, p);
     case REMOVE_ETUDIANT_ITEM_SUCCESS: {
-      const px = refreshEtudiant(state.etudiants, p);
+      const px = refreshEtudiant(state, p);
       return produce(px, pRet => {
         pRet.current = GetEtudiant();
         pRet.busy = false;
       });
     }
     case CANCEL_ETUDIANT_ITEM:
-      return produce(state.etudiants, pRet => {
+      return produce(state, pRet => {
         pRet.busy = false;
         const id = pRet.previousId;
         pRet.addMode = false;
@@ -169,7 +185,7 @@ export function etudiantSubReducer(
         pRet.previousId = "";
       });
     case CHANGE_ETUDIANT_FIELD:
-      return produce(state.etudiants, pRet => {
+      return produce(state, pRet => {
         if (p.field && p.value) {
           const val = p.value;
           const pz = pRet.current;
@@ -201,7 +217,7 @@ export function etudiantSubReducer(
         pRet.busy = false;
       });
     default:
-    return produce(state.etudiants, pRet => {
+    return produce(state, pRet => {
       pRet.busy = false;
     });
   } // type

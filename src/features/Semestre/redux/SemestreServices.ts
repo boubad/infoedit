@@ -2,8 +2,29 @@ import { ISemestreDoc } from "../../../data/DomainData";
 import { BaseServices } from "../../../redux/BaseServices";
 import { IInfoState } from "../../../redux/InfoState";
 import { IPayload } from "../../../redux/IPayload";
+import { GetInitialSemestre } from '../../../redux/StateProcs';
 //
 export class SemestreServices {
+  public static createSemestre(state: IInfoState): IPayload {
+    return { semestre: GetInitialSemestre(state) };
+  } // createSemestre
+  public static async selectSemestreAsync(
+    state: IInfoState,
+    id: string
+  ): Promise<IPayload> {
+    const sid = id.trim();
+    if (sid.length < 1) {
+      return { semestre: GetInitialSemestre(state) };
+    }
+    let px = state.semestres.pageData.find(x => {
+      return x.id === sid;
+    });
+    if (px === undefined) {
+      const pMan = BaseServices.getPersistManager(state);
+      px = await pMan.fetchSemestreByIdAsync(sid);
+    }
+    return { semestre: px };
+  } // selectSemestreAsync
   //
   public static async saveSemestreAsync(state: IInfoState): Promise<IPayload> {
     const pMan = BaseServices.getPersistManager(state);

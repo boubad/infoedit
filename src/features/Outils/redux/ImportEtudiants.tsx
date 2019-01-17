@@ -3,7 +3,7 @@ import { createSelector } from "reselect";
 import { IEtudiantDoc } from 'src/data/DomainData';
 import { IInfoState } from 'src/redux/InfoState';
 import { InfoDispatch } from '../../../redux/IPayload';
-import { IImportEtudiantsProps, ImportEtudiants } from '../ImportEtudiants';
+import { IImportEtudiantsProps, ImportEtudiants } from '../presentation/ImportEtudiants';
 import { importEtudiants } from './OutilsActions';
 
 //

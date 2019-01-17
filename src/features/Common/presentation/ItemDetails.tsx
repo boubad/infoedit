@@ -16,6 +16,7 @@ export interface IItemDetailProps<T extends IControleAffectationDoc> {
   onEditCommand?: (arg: string) => void;
   onSaveAttachment?: (name: string, mime: string, data: Blob) => void;
   onRemoveAttachment?: (name: string) => void;
+  onShowDetail?: (id:string) => void;
 } // interface IItemDetailProps<T extends IItemDoc>
 //
 export class ItemDetail<T extends IControleAffectationDoc> extends BaseComponent<
@@ -70,7 +71,7 @@ export class ItemDetail<T extends IControleAffectationDoc> extends BaseComponent
       );
     } else {
       return (
-        <a href="#" onClick={this.onSelectItem.bind(this, p.id)}>
+        <a href="#" onClick={this.onShowDetail.bind(this, p.id)}>
           <img src={p.url} alt={p.fullname} height={this.getThumbHeight()} />
         </a>
       );
@@ -84,4 +85,12 @@ export class ItemDetail<T extends IControleAffectationDoc> extends BaseComponent
       this.props.onSelectItem(id);
     }
   } // onSelectItem
+  protected onShowDetail(id: string) {
+    if (
+      this.props.onShowDetail !== undefined &&
+      this.props.onShowDetail !== null
+    ) {
+      this.props.onShowDetail(id);
+    }
+  } // onShowDetail
 } // class ItemDetail<T extends IItemDoc>

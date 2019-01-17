@@ -1,10 +1,14 @@
 import produce from "immer";
-import { GetAffectation } from 'src/data/DataProcs';
-import { IAffectationDoc } from 'src/data/DomainData';
-import { CHANGE_ANNEE_SUCCESS, CHANGE_SEMESTRE_SUCCESS } from 'src/features/AppState/redux/AppStateActions';
-import { IBaseState } from 'src/redux/InfoState';
-import { IPayload } from 'src/redux/IPayload';
-import { InfoAction } from '../../../redux/IPayload';
+import { GetAffectation } from "src/data/DataProcs";
+import { IAffectationDoc } from "src/data/DomainData";
+import {
+  CHANGE_ANNEE_SUCCESS,
+  CHANGE_SEMESTRE_SUCCESS
+} from "src/features/AppState/redux/AppStateActions";
+import { IBaseState } from "src/redux/InfoState";
+import { IPayload } from "src/redux/IPayload";
+import { GetInitialAffectationState } from "../../../redux/initialState";
+import { InfoAction } from "../../../redux/IPayload";
 import {
   AFFECTATION_REMOVE_ATTACHMENT_BEGIN,
   AFFECTATION_REMOVE_ATTACHMENT_SUCCESS,
@@ -19,7 +23,8 @@ import {
   REMOVE_AFFECTATION_ITEM_SUCCESS,
   SAVE_AFFECTATION_ITEM_BEGIN,
   SAVE_AFFECTATION_ITEM_SUCCESS,
-  SELECT_AFFECTATION_ITEM
+  SELECT_AFFECTATION_ITEM,
+  SELECT_AFFECTATION_ITEM_BEGIN
 } from "./AffectationActions";
 ////////////////////////////////////
 function refreshAffectation(
@@ -28,13 +33,13 @@ function refreshAffectation(
 ): IBaseState<IAffectationDoc> {
   return produce(state, pRet => {
     pRet.busy = false;
-    if (p.page){
+    if (p.page) {
       pRet.currentPage = p.page;
     }
     if (p.affectationsCount) {
       const n = p.affectationsCount;
       pRet.itemsCount = n;
-      if (n > pRet.pageSize){
+      if (n > pRet.pageSize) {
         pRet.pageSize = n;
       }
     }
@@ -46,7 +51,7 @@ function refreshAffectation(
     if (p.affectation) {
       pRet.current = p.affectation;
       pRet.addMode = false;
-    } 
+    }
   });
 } // refreshAffectation
 /////////////////////////////////////////////
@@ -54,8 +59,12 @@ export function affectationSubReducer(
   state: IBaseState<IAffectationDoc>,
   action: InfoAction
 ): IBaseState<IAffectationDoc> {
+  if (!state) {
+    return GetInitialAffectationState();
+  }
   const p = action.payload ? action.payload : {};
   switch (action.type) {
+    case SELECT_AFFECTATION_ITEM_BEGIN:
     case SAVE_AFFECTATION_ITEM_BEGIN:
     case REMOVE_AFFECTATION_ITEM_BEGIN:
     case AFFECTATION_SAVE_ATTACHMENT_BEGIN:
@@ -66,7 +75,8 @@ export function affectationSubReducer(
       });
     case CREATE_AFFECTATION_ITEM:
       return produce(state, pRet => {
-        if (p.affectation){
+        if (p.affectation) {
+          pRet.previousId = pRet.current.id;
           pRet.current = p.affectation;
           pRet.addMode = true;
           pRet.previousId = pRet.current.id;
@@ -82,29 +92,23 @@ export function affectationSubReducer(
     case REMOVE_AFFECTATION_ITEM_SUCCESS:
       return refreshAffectation(state, p);
     case SELECT_AFFECTATION_ITEM:
-    return produce(state, pRet => {
-      if (p.id){
-        const px = state.pageData.find((x)=>{
-           return (x.id === p.id);
-        });
-        if (px !== undefined){
-          pRet.current = Object.assign({},px);
+      return produce(state, pRet => {
+        pRet.busy = false;
+        if (p.affectation) {
+          pRet.current = p.affectation;
           pRet.addMode = false;
-          pRet.previousId = "";
         }
-      }
-      pRet.busy = false;
-    });
+      });
     case CANCEL_AFFECTATION_ITEM:
       return produce(state, pRet => {
         pRet.busy = false;
         const id = pRet.previousId;
         pRet.addMode = false;
-        const px = pRet.pageData.find((x) =>{
-          return (x.id === id);
+        const px = pRet.pageData.find(x => {
+          return x.id === id;
         });
-        if (px){
-          pRet.current = Object.assign({},px);
+        if (px) {
+          pRet.current = Object.assign({}, px);
         } else {
           pRet.current = GetAffectation();
         }
@@ -112,7 +116,7 @@ export function affectationSubReducer(
       });
     case CHANGE_AFFECTATION_FIELD:
       return produce(state, pRet => {
-        if (p.field && p.value ) {
+        if (p.field && p.value) {
           const val = p.value;
           const pz = Object.assign({}, pRet.current);
           switch (p.field) {

@@ -1,3 +1,4 @@
+import { GetInitialAnnee } from 'src/redux/StateProcs';
 import { IAnneeDoc } from "../../../data/DomainData";
 import { BaseServices } from "../../../redux/BaseServices";
 import { IInfoState } from "../../../redux/InfoState";
@@ -6,7 +7,25 @@ import { IPayload } from "../../../redux/IPayload";
 //
 export class AnneeServices {
   //
-  
+  public static createAnnee(state:IInfoState): IPayload{
+      return ({annee: GetInitialAnnee(state)});
+  }// createAnneeAsync
+  //
+  public static async selectAnneeAsync(state:IInfoState, id:string): Promise<IPayload>{
+    const sid = id.trim();
+    if (sid.length < 1){
+      return ({annee: GetInitialAnnee(state)});
+    }
+    let px = state.annees.pageData.find((x) =>{
+      return (x.id === sid);
+    });
+    if (px === undefined){
+      const pMan = BaseServices.getPersistManager(state);
+      px = await pMan.fetchAnneeByIdAsync(sid);
+    }
+    return ({annee:px});
+  }// selectAnneeAsync
+  //
   public static async saveAnneeAsync(state: IInfoState): Promise<IPayload> {
     const pMan = BaseServices.getPersistManager(state);
     const p = state.annees.current;

@@ -9,6 +9,11 @@ import {
 
 //
 export class EtudiantServices {
+  //
+  public static createEtudiant(state: IInfoState): IPayload {
+    return { etudiant: GetInitialEtudiant(state) };
+  } // createEtudAffectation
+  //
   public static async saveEtudiantEvtAttachmentAsync(
     state: IInfoState,
     name: string,

@@ -1,19 +1,51 @@
 import { Dispatch } from "redux";
 import { createAction } from "redux-actions";
 import { IInfoState } from "../../../redux/InfoState";
+import { GetInitialMatiere } from '../../../redux/StateProcs';
 import { MatiereServices } from "./MatiereServices";
 //
 export const CHANGE_MATIERE_FIELD = "CHANGE_MATIERE_FIELD";
 export const changeMatiereField = createAction(CHANGE_MATIERE_FIELD);
 //
 export const CREATE_MATIERE_ITEM = "CREATE_MATIERE_ITEM";
-export const createMatiereAction = createAction(CREATE_MATIERE_ITEM);
+const createMatiereAction = createAction(CREATE_MATIERE_ITEM);
+export function createMatiere(): any {
+  return (dispatch: Dispatch, getState: () => IInfoState) => {
+    const state = getState();
+    dispatch(
+      createMatiereAction({ matiere: GetInitialMatiere(state) })
+    );
+  };
+} // createMatiere
 //
 export const CANCEL_MATIERE_ITEM = "CANCEL_MATIERE_ITEM";
 export const cancelMatiereAction = createAction(CANCEL_MATIERE_ITEM);
 //
+export const SELECT_MATIERE_ITEM_BEGIN = "SELECT_MATIERE_ITEM_BEGIN";
+const selectMatiereBeginAction = createAction(SELECT_MATIERE_ITEM_BEGIN);
 export const SELECT_MATIERE_ITEM = "SELECT_MATIERE_ITEM";
-export const selectMatiere = createAction(SELECT_MATIERE_ITEM);
+const selectMatiereSuccessAction = createAction(SELECT_MATIERE_ITEM);
+export const SELECT_MATIERE_ITEM_FAIL = "SELECT_MATIERE_ITEM_FAIL";
+const selectMatiereFailAction = createAction(SELECT_MATIERE_ITEM_FAIL);
+export function selectMatiere(id:string): any {
+  return (dispatch: Dispatch, getState: () => IInfoState) => {
+    dispatch(selectMatiereBeginAction());
+    const promise = new Promise((resolve, reject) => {
+      const doRequest = MatiereServices.selectMatiereAsync(getState(),id);
+      doRequest.then(
+        res => {
+          dispatch(selectMatiereSuccessAction(res));
+          resolve(res);
+        },
+        err => {
+          dispatch(selectMatiereFailAction(err));
+          reject(err);
+        }
+      );
+    });
+    return promise;
+  };
+} // selectMatiere
 //////////////////////////////////////////////////////
 export const SAVE_MATIERE_ITEM_BEGIN = "SAVE_MATIERE_ITEM_BEGIN";
 const saveMatiereBeginAction = createAction(SAVE_MATIERE_ITEM_BEGIN);

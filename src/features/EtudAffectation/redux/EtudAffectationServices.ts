@@ -7,6 +7,27 @@ import { GetInitialEtudAffectation } from 'src/redux/StateProcs';
 
 export class EtudAffectationServices {
   //
+  public static createEtudAffectation(state: IInfoState): IPayload {
+    return { affectation: GetInitialEtudAffectation(state) };
+  } // createEtudAffectation
+  //
+  public static async selectEtudAffectationAsync(
+    state: IInfoState,
+    id: string
+  ): Promise<IPayload> {
+    const sid = id.trim();
+    if (sid.length < 1) {
+      return { etudAffectation: GetInitialEtudAffectation(state) };
+    }
+    let px = state.etudaffectations.pageData.find(x => {
+      return x.id === sid;
+    });
+    if (px === undefined) {
+      const pMan = BaseServices.getPersistManager(state);
+      px = await pMan.loadEtudAffectationByIdAsync(sid);
+    }
+    return { affectation: px };
+  } // selectEtudAffectationAsync
   public static async saveEtudAffectationAsync(
     state: IInfoState
   ): Promise<IPayload> {

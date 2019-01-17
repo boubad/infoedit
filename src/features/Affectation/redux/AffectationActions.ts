@@ -22,8 +22,31 @@ export function createAffectation(): any {
 export const CANCEL_AFFECTATION_ITEM = "CANCEL_AFFECTATION_ITEM";
 export const cancelAffectationAction = createAction(CANCEL_AFFECTATION_ITEM);
 //
+export const SELECT_AFFECTATION_ITEM_BEGIN = "SELECT_AFFECTATION_ITEM_BEGIN";
+const selectAffectationBeginAction = createAction(SELECT_AFFECTATION_ITEM_BEGIN);
 export const SELECT_AFFECTATION_ITEM = "SELECT_AFFECTATION_ITEM";
-export const selectAffectation = createAction(SELECT_AFFECTATION_ITEM);
+const selectAffectationSuccessAction = createAction(SELECT_AFFECTATION_ITEM);
+export const SELECT_AFFECTATION_ITEM_FAIL = "SELECT_AFFECTATION_ITEM_FAIL";
+const selectAffectationFailAction = createAction(SELECT_AFFECTATION_ITEM_FAIL);
+export function selectAffectation(id:string): any {
+  return (dispatch: Dispatch, getState: () => IInfoState) => {
+    dispatch(selectAffectationBeginAction());
+    const promise = new Promise((resolve, reject) => {
+      const doRequest = AffectationServices.selectAffectationAsync(getState(),id);
+      doRequest.then(
+        res => {
+          dispatch(selectAffectationSuccessAction(res));
+          resolve(res);
+        },
+        err => {
+          dispatch(selectAffectationFailAction(err));
+          reject(err);
+        }
+      );
+    });
+    return promise;
+  };
+} // selectAffectation
 //////////////////////////////////////////////////////////
 export const SAVE_AFFECTATION_ITEM_BEGIN = "SAVE_AFFECTATION_ITEM_BEGIN";
 const saveAffectationBeginAction = createAction(SAVE_AFFECTATION_ITEM_BEGIN);

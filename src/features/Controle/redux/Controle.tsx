@@ -13,8 +13,8 @@ import {
   changeControleFieldAction,
   changeControleNoteFieldAction,
   checkControleNotes,
-  createControleAction,
-  createControleEvtAction,
+  createControle,
+  createControleEvt,
   gotoPageControle,
   removeControle,
   removeControleAttachment,
@@ -28,7 +28,8 @@ import {
   saveControleNote,
   saveControleNoteAttachment,
   selectControleEvt,
-  selectControleNote
+  selectControleNote,
+  showEtudiant
 } from "./ControleActions";
 //
 const getBusy = (state: IInfoState): boolean => {
@@ -134,7 +135,7 @@ function mapDispatchToProps(dispatch: InfoDispatch) {
     onEditCommand: (arg: string) => {
       switch (arg) {
         case "create":
-          dispatch(createControleAction({}));
+          dispatch(createControle());
           break;
         case "cancel":
           dispatch(cancelControleAction({}));
@@ -191,7 +192,7 @@ function mapDispatchToProps(dispatch: InfoDispatch) {
     onEvtEditCommand: (arg: string) => {
       switch (arg) {
         case "create":
-          dispatch(createControleEvtAction({}));
+          dispatch(createControleEvt());
           break;
         case "cancel":
           dispatch(cancelControleEvtAction({}));
@@ -214,7 +215,7 @@ function mapDispatchToProps(dispatch: InfoDispatch) {
     },
     // tslint:disable-next-line:object-literal-sort-keys
     createItem: () => {
-      dispatch(createControleAction());
+      dispatch(createControle());
     },
     refresh: () => {
       dispatch(gotoPageControle(1));
@@ -224,6 +225,9 @@ function mapDispatchToProps(dispatch: InfoDispatch) {
     },
     selectItem: (id: string) => {
       dispatch(changeControle(id));
+    },
+    onShowDetail: (id:string) => {
+      dispatch(showEtudiant(id));
     }
   };
 } // mapDispatchToProps
