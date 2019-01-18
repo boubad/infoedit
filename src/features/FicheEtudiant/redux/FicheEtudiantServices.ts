@@ -7,8 +7,14 @@ export class FicheEtudiantServices {
     state: IInfoState,
     id: string
   ): Promise<IPayload> {
+    let pEtud = state.etudiants.pageData.find((x) =>{
+      return (x.id === id);
+    });
+    if (pEtud && pEtud.loaded){
+      return { ficheEtudiant: pEtud };
+    }
     const pMan = BaseServices.getPersistManager(state);
-    const pEtud = await pMan.loadEtudiantByIdAsync(id);
+    pEtud = await pMan.loadEtudiantByIdAsync(id);
     pEtud.evts = await pMan.getEtudiantEvtsAsync(id);
     pEtud.notes = await pMan.getEtudiantNotesAsync(id);
     pEtud.affectations = await pMan.getEtudiantAffectationsAsync(id);
