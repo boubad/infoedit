@@ -4,6 +4,7 @@ import { Dispatch } from "redux";
 import { createSelector } from "reselect";
 import { IEtudiantDoc } from "../../../data/DomainData";
 import { removeEtudiantAttachment, saveEtudiantAttachment, setEtudiantAvatar } from '../../../features/Etudiant/redux/EtudiantActions';
+import { showControle } from '../../../features/FicheControle/redux/FicheControleActions';
 import { IInfoState } from "../../../redux/InfoState";
 import { IPayload } from "../../../redux/IPayload";
 import { FicheEtudiant, IFicheEtudiantProps } from '../presentation/FicheEtudiant';
@@ -43,6 +44,9 @@ function mapDispatchToProps(dispatch: Dispatch<FluxStandardAction<IPayload>>) {
     onSetAvatar: (name: string) => {
       dispatch(setEtudiantAvatar(name));
     },
+    onShowControle: (id:string) =>{
+      dispatch(showControle(id));
+    }
     //
   };
 } // mapDispatchToProps

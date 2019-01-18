@@ -2,27 +2,25 @@ import classnames from "classnames";
 import * as React from "react";
 import { Nav, NavItem, NavLink, TabContent, Table, TabPane } from "reactstrap";
 import { BaseComponent } from "../../../components/BaseComponent";
-import { IEtudiantDoc } from "../../../data/DomainData";
-import { FicheEtudiantEvts } from "./FicheEtudiantEvts";
-import { FicheEtudiantInfo } from "./FicheEtudiantInfo";
-import { FicheEtudiantNotes } from "./FicheEtudiantNotes";
+import {
+  IControleDoc} from "../../../data/DomainData";
+import { FicheControleEvts } from './FicheControleEvts';
+import { FicheControleInfo } from './FicheControleInfo';
+import { FicheControleNotes } from './FicheControleNotes';
 //
-export interface IFicheEtudiantProps {
-  current: IEtudiantDoc;
-  busy: boolean;
+export interface IFicheControleProps {
+    busy:boolean;
+    current: IControleDoc;  
   //
-  onSaveAttachment?: (name: string, mime: string, data: Blob) => void;
-  onRemoveAttachment?: (name: string) => void;
-  onSetAvatar?: (name: string) => void;
-  onShowControle?: (id:string) => void;
-} // interface IBaseInfoComponentProps<T>
-//
-interface IFicheEtudiantState {
+  onShowDetail?: (id:string) => void;
+} // interface IControleDetailProps
+
+interface IFicheControleState {
   activeTab: string;
 }
-export class FicheEtudiant extends BaseComponent<
-  IFicheEtudiantProps,
-  IFicheEtudiantState
+export class FicheControle extends BaseComponent<
+IFicheControleProps,
+  IFicheControleState
 > {
   constructor(props?: any) {
     super(props);
@@ -46,7 +44,6 @@ export class FicheEtudiant extends BaseComponent<
     );
   } // render
   private renderTabs(): React.ReactNode {
-    const p = this.props;
     return (
       <div className={this.getInfoStyle()}>
         <Nav tabs={true}>
@@ -83,43 +80,26 @@ export class FicheEtudiant extends BaseComponent<
         </Nav>
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
-            <FicheEtudiantInfo
-              current={p.current}
-              busy={p.busy}
-              onSaveAttachment={p.onSaveAttachment}
-              onRemoveAttachment={p.onRemoveAttachment}
-              onSetAvatar={p.onSetAvatar}
+            <FicheControleInfo
+              current={this.props.current}
             />
           </TabPane>
           <TabPane tabId="2">
-            <FicheEtudiantNotes notes={p.current.notes}
-             onShowControle={this.props.onShowControle} />
+            <FicheControleNotes
+              current={this.props.current}
+              onShowDetail={this.props.onShowDetail}
+            />
           </TabPane>
           <TabPane tabId="3">
-            <FicheEtudiantEvts evts={p.current.evts}
-            onShowControle={this.props.onShowControle} />
+            <FicheControleEvts
+              current={this.props.current}
+              onShowDetail={this.props.onShowDetail}
+            />
           </TabPane>
         </TabContent>
       </div>
     );
   } // render
-  private renderPhoto(): React.ReactNode {
-    const p = this.props.current;
-    if (p.url.length > 0) {
-      return <img src={p.url} alt={p.fullname} height={this.getImgHeight()} />;
-    } else {
-      return null;
-    }
-  } // renderPhoto
-  private renderHeader(): React.ReactNode {
-    const p = this.props.current;
-    return (
-      <div>
-        {this.renderPhoto()}
-        <h3 className="text-center">{p.fullname}</h3>
-      </div>
-    );
-  }
   private toggle(tab: string) {
     if (this.state.activeTab !== tab) {
       this.setState({
@@ -127,4 +107,13 @@ export class FicheEtudiant extends BaseComponent<
       });
     }
   } // toggle
-} // class EtudiantDetail
+  private renderHeader(): React.ReactNode {
+    const p = this.props.current;
+    const sRet = p.matierename + " " + p.displaydate + " " + p.groupename + " " + p.name;
+    return (
+      <div>
+        <h3 className="text-center">{sRet}</h3>
+      </div>
+    );
+  }
+} // class ControleDetail

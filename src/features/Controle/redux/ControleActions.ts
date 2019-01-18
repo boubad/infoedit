@@ -1,4 +1,3 @@
-import { push } from 'connected-react-router';
 import { Dispatch } from "redux";
 import { createAction } from "redux-actions";
 import { IInfoState } from '../../../redux/InfoState';
@@ -52,34 +51,6 @@ export const changeControleNoteFieldAction = createAction(
 export const CANCEL_CONTROLE_NOTE = "CANCEL_CONTROLE_NOTE";
 export const cancelControleNoteAction = createAction(CANCEL_CONTROLE_NOTE);
 ///////////////////////////////////////
-export const SHOW_ETUDIANT_BEGIN = "SHOW_ETUDIANT_BEGIN";
-const showEtudiantBeginAction = createAction(SHOW_ETUDIANT_BEGIN);
-export const SHOW_ETUDIANT = "SHOW_ETUDIANT";
-const showEtudiantSuccessAction = createAction(SHOW_ETUDIANT);
-export const SHOW_ETUDIANT_FAIL = "SHOW_ETUDIANT_FAIL";
-const showEtudiantFailAction = createAction(SHOW_ETUDIANT_FAIL);
-//
-export function showEtudiant(id: string): any {
-  return (dispatch: Dispatch, getState: () => IInfoState) => {
-    dispatch(showEtudiantBeginAction());
-    const promise = new Promise((resolve, reject) => {
-      const doRequest = ControleServices.showEtudiantAsync(getState(), id);
-      doRequest.then(
-        res => {
-          dispatch(push('/etuddetail/'));
-          dispatch(showEtudiantSuccessAction(res));
-          resolve(res);
-        },
-        err => {
-          dispatch(showEtudiantFailAction(err));
-          reject(err);
-        }
-      );
-    });
-    return promise;
-  };
-} // showEtudiant
-/////////////////////////////
 export const SELECT_CONTROLE_EVT_BEGIN = "SELECT_CONTROLE_EVT_BEGIN";
 const selectControleEvtBeginAction = createAction(SELECT_CONTROLE_EVT_BEGIN);
 export const SELECT_CONTROLE_EVT = "SELECT_CONTROLE_EVT";

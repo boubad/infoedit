@@ -5,6 +5,7 @@ import { IAttachedDoc, INoteDoc } from "../../../data/DomainData";
 
 export interface IFicheEtudiantNotesProps {
   notes: INoteDoc[];
+  onShowControle?: (id:string) => void;
 }
 export class FicheEtudiantNotes extends BaseComponent<
   IFicheEtudiantNotesProps
@@ -69,13 +70,23 @@ export class FicheEtudiantNotes extends BaseComponent<
       </tr>
     );
   } // renderTable
+  private onShowDetail(id:string, e?:any){
+    if (this.props.onShowControle){
+      this.props.onShowControle(id);
+    }
+  }// onShowDetail
   private renderOneLine(px: INoteDoc): React.ReactNode {
     const p = px as INoteDoc;
     return (
       <tr key={p.id}>
         <td>{p.displaydate}</td>
         <td>{p.matierename}</td>
-        <td>{p.controlename}</td>
+        <td><a
+              href="#"
+              onClick={this.onShowDetail.bind(this, p.controleid)}
+            >
+             {p.controlename}
+            </a></td>
         <td>{p.value !== null ? "" + p.value : ""}</td>
         <td>{p.observations}</td>
         <td>{this.renderAttachments(p)}</td>

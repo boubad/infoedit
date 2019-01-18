@@ -84,6 +84,7 @@ export interface IPayload {
   semestreEndDate?: string;
   freeEtudiantsOpts?:IOption[];
   ficheEtudiant?:IEtudiantDoc;
+  ficheControle?:IControleDoc;
 } // interface IPayload
 ////////////////////////////////
 export type InfoAction = FluxStandardAction<IPayload>;

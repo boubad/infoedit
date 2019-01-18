@@ -19,7 +19,7 @@ export function showEtudiant(id: string): any {
       doRequest.then(
         res => {
           dispatch(showEtudiantSuccessAction(res));
-          dispatch(push("/etuddetail"));
+          dispatch(push("/etud"));
           resolve(res);
         },
         err => {

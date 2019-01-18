@@ -5,6 +5,7 @@ import { IAttachedDoc, IEvtDoc } from "../../../data/DomainData";
 
 export interface IFicheEtudiantEvtsProps {
   evts: IEvtDoc[];
+  onShowControle?: (id:string) => void;
 }
 export class FicheEtudiantEvts extends BaseComponent<
   IFicheEtudiantEvtsProps
@@ -69,6 +70,11 @@ export class FicheEtudiantEvts extends BaseComponent<
           </tr>
     );
   } // render
+  private onShowDetail(id:string, e?:any){
+    if (this.props.onShowControle){
+      this.props.onShowControle(id);
+    }
+  }// onShowDetail
   private renderOneLine(p: IEvtDoc): React.ReactNode {
     return (
       <tr key={p.id}>
@@ -77,7 +83,12 @@ export class FicheEtudiantEvts extends BaseComponent<
         </td>
         <td>{p.matierename}</td>
         <td>
-            {p.controlename}
+            <a
+              href="#"
+              onClick={this.onShowDetail.bind(this, p.controleid)}
+            >
+             {p.controlename}
+            </a>
         </td>
         <td>{p.genrestring}</td>
         <td>{p.observations}</td>

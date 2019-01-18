@@ -13,6 +13,7 @@
 package-lock.json
 yarn.lock
 .vscode/chrome
+.alm
 .DS_Store
 .env.local
 .env.development.local
