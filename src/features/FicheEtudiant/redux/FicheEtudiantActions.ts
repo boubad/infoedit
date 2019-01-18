@@ -2,6 +2,7 @@ import { push } from "connected-react-router";
 import { Dispatch } from "redux";
 import { createAction } from "redux-actions";
 import { IInfoState } from "../../../redux/InfoState";
+import { ROUTE_ETUD } from '../../../Routes';
 import { FicheEtudiantServices } from "./FicheEtudiantServices";
 ///////////////////////////////
 export const SHOW_ETUDIANT_BEGIN = "SHOW_ETUDIANT_BEGIN";
@@ -19,7 +20,7 @@ export function showEtudiant(id: string): any {
       doRequest.then(
         res => {
           dispatch(showEtudiantSuccessAction(res));
-          dispatch(push("/etud"));
+          dispatch(push(ROUTE_ETUD));
           resolve(res);
         },
         err => {

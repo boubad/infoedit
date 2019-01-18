@@ -3,13 +3,12 @@ import * as React from "react";
 import { Link, Route } from "react-router-dom";
 import { Nav, NavItem } from "reactstrap";
 import Admin from "./features/Admin/redux/Admin";
-import AppState from "./features/AppState/redux/AppState";
 import Consult from "./features/Consult/redux/Consult";
 import FicheControle from "./features/FicheControle/redux/FicheControle";
 import FicheEtudiant from "./features/FicheEtudiant/redux/FicheEtudiant";
+import Home from './features/Home/redux/Home';
 import { history } from "./redux/InfoStore";
-//
-const Home = () => <AppState />;
+import { ROUTE_ADMIN, ROUTE_CONSULT, ROUTE_CONTROLE, ROUTE_ETUD, ROUTE_HOME } from './Routes';
 //
 const App = () => {
   return (
@@ -17,22 +16,22 @@ const App = () => {
       <div className="infoback">
         <Nav>
           <NavItem>
-            <Link to="/">Accueil</Link>
+            <Link to={ROUTE_HOME}>Accueil</Link>
           </NavItem>{" "}
           &nbsp; &nbsp;
           <NavItem>
-            <Link to="/consult">Consulter</Link>
+            <Link to={ROUTE_CONSULT}>Consulter</Link>
           </NavItem>{" "}
           &nbsp; &nbsp;
           <NavItem>
-            <Link to="/admin">Administrer</Link>
+            <Link to={ROUTE_ADMIN}>Administrer</Link>
           </NavItem>
         </Nav>
-        <Route path="/" exact={true} component={Home} />
-        <Route path="/admin" component={Admin} />
-        <Route path="/consult" component={Consult} />
-        <Route path="/etud" component={FicheEtudiant} />
-        <Route path="/controle" component={FicheControle} />
+        <Route path={ROUTE_HOME} exact={true} component={Home} />
+        <Route path={ROUTE_ADMIN} component={Admin} />
+        <Route path={ROUTE_CONSULT} component={Consult} />
+        <Route path={ROUTE_ETUD} component={FicheEtudiant} />
+        <Route path={ROUTE_CONTROLE} component={FicheControle} />
       </div>
     </ConnectedRouter>
   );

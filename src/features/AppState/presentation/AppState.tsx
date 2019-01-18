@@ -18,18 +18,12 @@ export interface IAppStateProps {
   busy:boolean;
   //
   ValueChanged?: (val: any, propname?: string) => void;
-  RefreshAll?: () => void;
 } // interface IGlobalStateComponentProps
 //
 export class AppState extends BaseComponent<IAppStateProps> {
   constructor(props?: any) {
     super(props);
   } // constructor
-  public componentWillMount() {
-    if (this.props.RefreshAll !== undefined && this.props.RefreshAll !== null){
-      this.props.RefreshAll();
-    }
-  }// componentWillMount
   public render(): React.ReactNode {
     const p = this.props;
     const busy = (this.props.busy !== undefined && this.props.busy !== null && this.props.busy === true) ? true: false;

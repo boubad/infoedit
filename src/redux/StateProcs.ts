@@ -178,7 +178,6 @@ export function GetInitialEtudAffectation(
   pz.enddate = p.semestreEndDate;
   pz.ownerid = state.appstate.ownerid;
   return pz;
-  return pz;
 } // GetInitialAffectation
 export function GetInitialAnnee(state: IInfoState): IAnneeDoc {
   const pz = GetAnnee();
@@ -191,10 +190,13 @@ export function GetInitialAnnee(state: IInfoState): IAnneeDoc {
 export function GetInitialMatiere(state: IInfoState): IMatiereDoc {
   const pz = GetMatiere();
   pz.uniteid = state.appstate.uniteid;
+  pz.ownerid = state.appstate.ownerid;
+  pz.coefficient=1.0;
   return pz;
 } // GetInitialMatiere
 export function GetInitialGroupe(state: IInfoState): IGroupeDoc {
   const pz = GetGroupe();
+  pz.ownerid = state.appstate.ownerid;
   return pz;
 } // GetInitialGroupe
 export function GetInitialUnite(state: IInfoState): IUniteDoc {
@@ -217,6 +219,7 @@ export function GetInitialControle(state: IInfoState): IControleDoc {
   pz.semestreid = p.semestreid;
   pz.groupeid = p.groupeid;
   pz.uniteid = p.uniteid;
+  pz.coefficient = 1.0;
   pz.date = new Date().toISOString().slice(0, 10);
   pz.displaydate = DateToDisplay(pz.date);
   pz.ownerid = state.appstate.ownerid;
@@ -243,6 +246,11 @@ export function GetInitialNote(state: IInfoState): INoteDoc {
   pz.semestreid = p.semestreid;
   pz.groupeid = p.groupeid;
   pz.uniteid = p.uniteid;
+  pz.anneename = p.anneename;
+  pz.semestrename = p.semestrename;
+  pz.unitename = p.unitename;
+  pz.matierename = p.matierename;
+  pz.groupename = p.groupename;
   return pz;
 } // GetInitialNote
 export function GetInitialEvt(state: IInfoState): IEvtDoc {
@@ -263,5 +271,7 @@ export function GetInitialEvt(state: IInfoState): IEvtDoc {
   pz.anneename = p.anneename;
   pz.semestrename = p.semestrename;
   pz.matierename = p.matierename;
+  pz.unitename = p.unitename;
+  pz.duration = p.duration;
   return pz;
 } // GetInitialEvt

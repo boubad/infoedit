@@ -1,10 +1,8 @@
-import { FluxStandardAction } from "flux-standard-action";
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
 import { createSelector } from "reselect";
 import { IEtudiantDoc } from '../../../data/DomainData';
 import { IInfoState } from '../../../redux/InfoState';
-import { IPayload } from '../../../redux/IPayload';
+import { InfoDispatch } from '../../../redux/IPayload';
 import { Etudiant, IEtudiantsProps } from '../presentation/Etudiant';
 import {
   cancelEtudiantAction,
@@ -83,7 +81,7 @@ const selector = createSelector(
 function mapStateToProps(state: IInfoState): IEtudiantsProps {
   return selector(state);
 } // mapStateToProps
-function mapDispatchToProps(dispatch: Dispatch<FluxStandardAction<IPayload>>) {
+function mapDispatchToProps(dispatch: InfoDispatch) {
   return {
     onFieldChanged: (value: any, propname: string) => {
       dispatch(changeEtudiantFieldAction({ field: propname, value }));

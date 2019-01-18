@@ -4,10 +4,10 @@ import { IOption } from '../../../data/DomainData';
 import { IInfoState } from '../../../redux/InfoState';
 import { InfoDispatch } from '../../../redux/IPayload';
 import { AppState, IAppStateProps } from '../presentation/AppState';
-import { changeAnnee, changeGroupe, changeMatiere, changeSemestre, changeUnite, refreshAll } from './AppStateActions';
+import { changeAnnee, changeGroupe, changeMatiere, changeSemestre, changeUnite } from './AppStateActions';
 //
 const getBusy = (state: IInfoState) : boolean => {
-  return state.appstate.busy || state.annees.busy || state.semestres.busy || state.groupes.busy || state.unites.busy || state.matieres.busy || state.outils.busy || state.affectations.busy || state.etudaffectations.busy;
+  return state.appstate.busy || state.annees.busy || state.semestres.busy || state.groupes.busy || state.unites.busy || state.matieres.busy || state.outils.busy || state.affectations.busy || state.etudaffectations.busy || state.details.busy;
 };
 const getUniteid = (state: IInfoState): string => {
   return state.appstate.uniteid;
@@ -89,9 +89,6 @@ function mapStateToProps(state: IInfoState): IAppStateProps {
 } // mapStateToProps
 function mapDispatchToProps(dispatch: InfoDispatch) {
   return {
-    RefreshAll: () => {
-      dispatch(refreshAll());
-    },
     ValueChanged: (val: any, s: string) => {
       if (s === "groupeid") {
         dispatch(changeGroupe(val));

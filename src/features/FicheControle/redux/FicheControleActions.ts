@@ -2,6 +2,7 @@ import { push } from "connected-react-router";
 import { Dispatch } from "redux";
 import { createAction } from "redux-actions";
 import { IInfoState } from "../../../redux/InfoState";
+import { ROUTE_CONTROLE } from '../../../Routes';
 import { FicheControleServices } from "./FicheControleServices";
 ///////////////////////////////
 export const SHOW_CONTROLE_BEGIN = "SHOW_CONTROLE_BEGIN";
@@ -19,7 +20,7 @@ export function showControle(id: string): any {
       doRequest.then(
         res => {
           dispatch(showControleSuccessAction(res));
-          dispatch(push("/controle"));
+          dispatch(push(ROUTE_CONTROLE));
           resolve(res);
         },
         err => {

@@ -11,7 +11,8 @@ export class InputDateComponent extends InputItemComponent {
     if (p.min !== undefined && p.max !== undefined) {
       return (
         <Input
-          className={this.getLinkStyle(this.state.busy)}
+          className={this.getInfoStyle()}
+          readOnly={this.props.busy}
           id={p.propname}
           type="date"
           value={this.state.text}
@@ -24,7 +25,8 @@ export class InputDateComponent extends InputItemComponent {
     } else if (p.min !== undefined) {
       return (
         <Input
-          className={this.getLinkStyle(this.state.busy)}
+          className={this.getInfoStyle()}
+          readOnly={this.props.busy}
           id={p.propname}
           type="date"
           value={this.state.text}
@@ -36,7 +38,8 @@ export class InputDateComponent extends InputItemComponent {
     } else if (p.max !== undefined) {
       return (
         <Input
-          className={this.getLinkStyle(this.state.busy)}
+          className={this.getInfoStyle()}
+          readOnly={this.props.busy}
           id={p.propname}
           type="date"
           value={this.state.text}
@@ -48,7 +51,8 @@ export class InputDateComponent extends InputItemComponent {
     } else {
       return (
         <Input
-          className={this.getLinkStyle(this.state.busy)}
+          className={this.getInfoStyle()}
+          readOnly={this.props.busy}
           id={p.propname}
           type="date"
           value={this.state.text}

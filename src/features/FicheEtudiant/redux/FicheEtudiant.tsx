@@ -1,12 +1,10 @@
-import { FluxStandardAction } from "flux-standard-action";
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
 import { createSelector } from "reselect";
 import { IEtudiantDoc } from "../../../data/DomainData";
 import { removeEtudiantAttachment, saveEtudiantAttachment, setEtudiantAvatar } from '../../../features/Etudiant/redux/EtudiantActions';
 import { showControle } from '../../../features/FicheControle/redux/FicheControleActions';
 import { IInfoState } from "../../../redux/InfoState";
-import { IPayload } from "../../../redux/IPayload";
+import { InfoDispatch } from "../../../redux/IPayload";
 import { FicheEtudiant, IFicheEtudiantProps } from '../presentation/FicheEtudiant';
 //
 const getBusy = (state: IInfoState): boolean => {
@@ -31,7 +29,7 @@ function mapStateToProps(
 ): IFicheEtudiantProps {
   return selector(state);
 } // mapStateToProps
-function mapDispatchToProps(dispatch: Dispatch<FluxStandardAction<IPayload>>) {
+function mapDispatchToProps(dispatch: InfoDispatch) {
   return {
     // tslint:disable-next-line:object-literal-sort-keys
     onSaveAttachment: (name: string, mime: string, data: Blob) => {
