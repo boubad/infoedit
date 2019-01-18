@@ -192,7 +192,7 @@ export class ControleEvts2 extends BaseComponent<IControleEvtsProps> {
       );
     } else {
       return (
-        <a href="#" onClick={this.onShowDetail.bind(this, p.id)}>
+        <a href="#" onClick={this.onShowDetail.bind(this, p.etudiantid)}>
           <img src={p.url} alt={p.fullname} height={48} />
         </a>
       );
@@ -254,7 +254,7 @@ export class ControleEvts2 extends BaseComponent<IControleEvtsProps> {
           <td>
             <a
               href="#"
-              onClick={this.onSelectItem.bind(this, p.id)}
+              onClick={this.onShowDetail.bind(this, p.etudiantid)}
             >
               {p.fullname}
             </a>

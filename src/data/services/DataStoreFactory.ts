@@ -1,6 +1,6 @@
 import { IDataStore } from './IDataStore';
+import { BufferedDataStore } from './impl/BufferedDataStore';
 import { CouchDBManager } from './impl/couchdb/CouchDBManager';
-// import { CouchDBProxy } from './impl/couchdb/CouchDBProxy';
 
 export class DataStoreFactory {
     public static GetDataStore(serverUrl:string, dbname:string) : IDataStore {
@@ -10,7 +10,8 @@ export class DataStoreFactory {
             surl = surl + "/";
         }
         surl = surl + dbname + "/";
-       return new CouchDBManager(surl);
+        const pStore = new CouchDBManager(surl);
+        return new BufferedDataStore(pStore);
       // return new CouchDBProxy(surl);
     }// GetDataStore
 }// class DataStoreFactory

@@ -19,6 +19,7 @@ export interface IAppData {
   readonly databaseName: string;
 } // interface IAppData
 export interface IAppStatus {
+  readonly busy:boolean;
   readonly error: string;
   readonly status: string;
 } // interface IAppStatus

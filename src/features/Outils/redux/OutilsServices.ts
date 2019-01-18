@@ -4,6 +4,17 @@ import { IInfoState } from 'src/redux/InfoState';
 import { IPayload } from 'src/redux/IPayload';
 
 export class OutilsServices {
+  //
+  public static async syncDataAsync(
+    state: IInfoState
+  ): Promise<IPayload> {
+    const pMan = BaseServices.getPersistManager(state);
+    await pMan.synchroData();
+    return ({
+      status: "Les données ont été mises à jour!"
+    });
+  } // syncDataAsync
+  //
   public static async refreshAnneeSemestreEtudiantsStatus(
     state: IInfoState
   ): Promise<IPayload> {

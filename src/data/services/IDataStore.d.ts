@@ -12,4 +12,6 @@ export interface IDataStore {
   removeDoc(id:string) : Promise<void>;
   maintainsManyDocs(docs:any[]) : Promise<void>;
   removeDocsBySelector(sel: any): Promise<void>;
+  bulkGet(ids: string[]): Promise<any[]>;
+  synchroData(): Promise<void>;
 }// interface IDataStore

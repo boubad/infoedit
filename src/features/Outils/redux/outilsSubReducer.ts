@@ -23,8 +23,7 @@ import {
   IMPORT_ETUDIANT_BEGIN,
   IMPORT_ETUDIANT_SUCCESS,
   REFRESHANNEESEMESTRE_STATUS_BEGIN,
-  REFRESHANNEESEMESTRE_STATUS_SUCCESS
-} from "./OutilsActions";
+  REFRESHANNEESEMESTRE_STATUS_SUCCESS} from "./OutilsActions";
 //////////////////////////////////////////
 export function outilsSubReducer(
   state: IOutilsState,

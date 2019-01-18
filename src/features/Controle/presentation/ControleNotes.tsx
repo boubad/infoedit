@@ -14,7 +14,7 @@ export class ControleNotes extends ItemDetail<INoteDoc> {
         <th>Photo</th>
         <th>Nom</th>
         <th>Note</th>
-        <th>Remarques</th>
+        <th>Action</th>
       </tr>
     );
   } // renderTableHeader
@@ -27,7 +27,7 @@ export class ControleNotes extends ItemDetail<INoteDoc> {
               {p.fullname}
           </td>
           <td>{p.value !== null ? "" + p.value : ""}</td>
-          <td>{p.observations}</td>
+          <td>{""}</td>
         </tr>
       );
     } else {
@@ -37,13 +37,20 @@ export class ControleNotes extends ItemDetail<INoteDoc> {
           <td>
             <a
               href="#"
-              onClick={this.onSelectItem.bind(this, p.id)}
+              onClick={this.onShowDetail.bind(this, p.etudiantid)}
             >
               {p.fullname}
             </a>
           </td>
           <td>{p.value !== null ? "" + p.value : ""}</td>
-          <td>{p.observations}</td>
+          <td>
+          <a
+              href="#"
+              onClick={this.onSelectItem.bind(this, p.id)}
+            >
+              {"Sélectionner"}
+            </a>
+          </td>
         </tr>
       );
     }

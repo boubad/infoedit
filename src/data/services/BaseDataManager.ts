@@ -84,6 +84,10 @@ export class BaseDataManager {
     this.pStore = pStore;
   } // constructor
   //
+  public async synchroData(): Promise<void> {
+    await this.pStore.synchroData();
+  }// synchroData
+  //
   public async getMatieresOptionsAsync(uniteid: string): Promise<IOption[]> {
     if (uniteid.trim().length < 1) {
       return [{ id: "", text: "" }];

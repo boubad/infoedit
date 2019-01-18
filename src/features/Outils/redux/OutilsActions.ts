@@ -2,19 +2,48 @@ import { Dispatch } from "redux";
 import { createAction } from "redux-actions";
 import { IInfoState } from "src/redux/InfoState";
 import { OutilsServices } from "./OutilsServices";
+/////////////////////////////////////////////////////
+export const SYNC_DATA_BEGIN = "SYNC_DATA_BEGIN";
+const syncDataBeginAction = createAction(SYNC_DATA_BEGIN);
+export const SYNC_DATA_SUCCESS = "SYNC_DATA_SUCCESS";
+const syncDataSuccessAction = createAction(SYNC_DATA_SUCCESS);
+export const SYNC_DATA_FAIL = "SYNC_DATA_FAIL";
+const syncDataFailAction = createAction(SYNC_DATA_FAIL);
+//
+export function syncData(): any {
+  return (dispatch: Dispatch, getState: () => IInfoState) => {
+    dispatch(syncDataBeginAction());
+    const promise = new Promise((resolve, reject) => {
+      const doRequest = OutilsServices.syncDataAsync(
+        getState()
+      );
+      doRequest.then(
+        res => {
+          dispatch(syncDataSuccessAction(res));
+          resolve(res);
+        },
+        err => {
+          dispatch(syncDataFailAction(err));
+          reject(err);
+        }
+      );
+    });
+    return promise;
+  };
+} // syncData
 ///////////////////////////////////////////////
 export const REFRESHANNEESEMESTRE_STATUS_BEGIN =
-  " REFRESHANNEESEMESTRE_STATUS_BEGIN";
+  "REFRESHANNEESEMESTRE_STATUS_BEGIN";
 const refreshAnneeSemestreStatusBeginAction = createAction(
   REFRESHANNEESEMESTRE_STATUS_BEGIN
 );
 export const REFRESHANNEESEMESTRE_STATUS_SUCCESS =
-  " REFRESHANNEESEMESTRE_STATUS_SUCCESS";
+  "REFRESHANNEESEMESTRE_STATUS_SUCCESS";
 const refreshAnneeSemestreStatusSuccessAction = createAction(
   REFRESHANNEESEMESTRE_STATUS_SUCCESS
 );
 export const REFRESHANNEESEMESTRE_STATUS_FAIL =
-  " REFRESHANNEESEMESTRE_STATUS_FAIL";
+  "REFRESHANNEESEMESTRE_STATUS_FAIL";
 const refreshAnneeSemestreStatusFailAction = createAction(
   REFRESHANNEESEMESTRE_STATUS_FAIL
 );
@@ -39,7 +68,7 @@ export function refreshAnneeSemestreEtudiantsStatus(): any {
     });
     return promise;
   };
-} // importEtudiants
+} // refreshAnneeSemestreEtudiantsStatus
 ////////////////////////////////////////////
 export const CHANGEANNEESEMESTRE_STATUS_BEGIN =
   "CHANGEANNEESEMESTRE_STATUS_BEGIN";

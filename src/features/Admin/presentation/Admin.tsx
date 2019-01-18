@@ -12,6 +12,7 @@ import Groupe from "../../../features/Groupe/redux/Groupe";
 import Matiere from "../../../features/Matiere/redux/Matiere";
 import ChangeStatus from '../../../features/Outils/redux/ChangeStatus';
 import ImportEtudiants from '../../../features/Outils/redux/ImportEtudiants';
+import SynchroData from '../../../features/Outils/redux/SynchroData';
 import Semestre from "../../../features/Semestre/redux/Semestre";
 import Unite from "../../../features/Unite/redux/Unite";
 import StatusComponent from "../../AppStatus/redux/StatusComponent";
@@ -153,6 +154,16 @@ export class Admin extends BaseComponent<IAdminProps, IAdminState> {
                       Outils
                     </NavLink>
                   </NavItem>
+                  <NavItem>
+                    <NavLink
+                      className={classnames({
+                        active: this.state.activeTab === "12"
+                      })}
+                      onClick={this.toggle.bind(this, "12")}
+                    >
+                      Sync
+                    </NavLink>
+                  </NavItem>
                 </Nav>
                 <TabContent activeTab={this.state.activeTab}>
                   <TabPane tabId="1">
@@ -184,6 +195,9 @@ export class Admin extends BaseComponent<IAdminProps, IAdminState> {
                   </TabPane>
                   <TabPane tabId="11">
                     <ChangeStatus />
+                  </TabPane>
+                  <TabPane tabId="12">
+                    <SynchroData />
                   </TabPane>
                 </TabContent>
               </div>

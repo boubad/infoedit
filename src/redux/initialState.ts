@@ -40,6 +40,7 @@ export function GetInitialAppData(): IAppData {
 } // GetInitialAppData
 export function GetInitialAppStatus(): IAppStatus {
   return {
+    busy:false,
     error: "",
     status: ""
   };

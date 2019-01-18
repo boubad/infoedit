@@ -11,6 +11,7 @@ const STRING_ETAG1 = "etag";
 const STRING_ETAG2 = "ETag";
 const STRING_FIND_IMPL = "_find";
 const STRING_BULK_DOCS = "_bulk_docs";
+const STRING_BULK_GET = "_bulk_get";
 //
 const MAX_INT_VALUE = Number.MAX_SAFE_INTEGER;
 //
@@ -25,6 +26,9 @@ export class CouchDBManager implements IDataStore {
     }
     this.client = new FetchClient();
   } // constructor
+  public async synchroData() : Promise<void> {
+    return;
+  }// synchroData
   public formBlobUrl(docid?: string, attname?: string): string {
     if (
       docid &&
@@ -256,6 +260,36 @@ export class CouchDBManager implements IDataStore {
       }
     });
   } //  maintainsManyDocs
+  public bulkGet(ids: string[]): Promise<any[]> {
+    const n = ids.length;
+    const vdocs: any[] = [];
+    for (let i = 0; i < n; i++) {
+      const id = ids[i];
+      vdocs.push({ id });
+    } // i
+    const sUrl = this.formUrl(STRING_BULK_GET);
+    return this.client.performPost(sUrl, { docs: vdocs }).then((rsp: any) => {
+      const pRet: any[] = [];
+      if (rsp.results) {
+        const rr = rsp.results;
+        const nx = rr.length;
+        for (let i = 0; i < nx; i++) {
+          const x = rr[i];
+          if (x.docs) {
+            const yy = x.docs;
+            const ny = yy.length;
+            for (let j = 0; j < ny; j++) {
+              const y = yy[j];
+              if (y.ok) {
+                pRet.push(y.ok);
+              } // ok
+            } // j
+          } // xdocs
+        } // i
+      } // rsp.results
+      return pRet;
+    });
+  } // bulkGet
   public removeDocsBySelector(sel: any): Promise<void> {
     const offset = 0;
     const count = MAX_INT_VALUE;

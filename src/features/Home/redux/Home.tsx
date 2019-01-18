@@ -7,7 +7,7 @@ import { InfoDispatch } from '../../../redux/IPayload';
 import { Home, IHomeProps } from '../presentation/Home';
 //
 const getBusy = (state: IInfoState) : boolean => {
-  return state.appstate.busy || state.annees.busy || state.semestres.busy || state.groupes.busy || state.unites.busy || state.matieres.busy || state.outils.busy || state.affectations.busy || state.etudaffectations.busy || state.details.busy;
+  return state.appstate.busy || state.annees.busy || state.semestres.busy || state.groupes.busy || state.unites.busy || state.matieres.busy || state.outils.busy || state.affectations.busy || state.etudaffectations.busy || state.details.busy || state.appstatus.busy;
 };
 const getGroupeid = (state: IInfoState): string => {
   return state.appstate.groupeid;
