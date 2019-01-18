@@ -105,6 +105,7 @@ export function matiereSubReducer(
       return produce(state, pRet => {
         if (p.matiere) {
           pRet.addMode = false;
+          pRet.previousId = pRet.current.id;
           pRet.current = p.matiere;
         }
         pRet.busy = false;

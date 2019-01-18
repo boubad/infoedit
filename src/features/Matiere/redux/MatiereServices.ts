@@ -24,7 +24,7 @@ export class MatiereServices {
       const pMan = BaseServices.getPersistManager(state);
       px = await pMan.fetchMatiereByIdAsync(sid);
     }
-    return { groupe: px };
+    return { matiere: px };
   } // selectMatiereAsync
   //
   public static async saveMatiereAsync(state: IInfoState): Promise<IPayload> {
