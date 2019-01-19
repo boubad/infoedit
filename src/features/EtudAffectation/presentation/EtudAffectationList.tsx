@@ -12,6 +12,9 @@ export class EtudAffectationList extends BaseListComponent<
   protected renderTableHeader(): React.ReactNode {
     return (
       <tr>
+        <th>Année</th>
+        <th>Semestre</th>
+        <th>Groupe</th>
         <th>Photo</th>
         <th>Nom</th>
         <th>Début</th>
@@ -26,11 +29,14 @@ export class EtudAffectationList extends BaseListComponent<
     if (busy) {
       return (
         <tr key={px.id}>
+          <td>{px.anneename}</td>
+          <td>{px.semestrename}</td>
+          <td>{px.groupename}</td>
           <td>{this.renderPhoto(px)}</td>
           <td>
             <a
               href="#"
-              onClick={this.onSelectItem.bind(this, px.id)}
+              onClick={this.onShowDetail.bind(this, px.etudiantid)}
               className={this.getDisabledStyle()}
             >
               {px.fullname}
@@ -60,9 +66,12 @@ export class EtudAffectationList extends BaseListComponent<
     } else {
       return (
         <tr key={px.id}>
+          <td>{px.anneename}</td>
+          <td>{px.semestrename}</td>
+          <td>{px.groupename}</td>
           <td>{this.renderPhoto(px)}</td>
           <td>
-            <a href="#" onClick={this.onSelectItem.bind(this, px.id)}>
+            <a href="#" onClick={this.onShowDetail.bind(this, px.etudiantid)}>
               {px.fullname}
             </a>
           </td>
@@ -87,7 +96,10 @@ export class EtudAffectationList extends BaseListComponent<
       return null;
     } else {
       return (
-        <img src={p.url} alt={p.fullname} height={this.getThumbHeight()} />
+        <a href="#" onClick={this.onShowDetail.bind(this, p.etudiantid)}>
+          <img src={p.url} alt={p.fullname} height={this.getThumbHeight()} />
+        </a>
+        
       );
     }
   } // renderPhoto

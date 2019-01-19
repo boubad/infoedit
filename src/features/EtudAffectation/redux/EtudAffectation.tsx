@@ -2,6 +2,7 @@ import { connect } from "react-redux";
 import { createSelector } from "reselect";
 import { IEtudAffectationDoc, IOption } from "src/data/DomainData";
 import { IInfoState } from "src/redux/InfoState";
+import { showEtudiant } from '../../../features/FicheEtudiant/redux/FicheEtudiantActions';
 import { InfoDispatch } from "../../../redux/IPayload";
 import {
   EtudAffectation,
@@ -43,6 +44,20 @@ const getItems = (state: IInfoState): IEtudAffectationDoc[] => {
 const getEtudiantsOptions = (state: IInfoState): IOption[] => {
   return state.outils.freeEtudiantsOpts;
 };
+const getCurrentOptions = (state: IInfoState) : IOption[] => {
+   const pRet:IOption[] = [];
+   const vv = state.etudaffectations.pageData;
+   const n = vv.length;
+   for (let i = 0; i < n; i++){
+    const x = vv[i];
+    pRet.push({
+      id: x.etudiantid,
+      text: x.fullname,
+      url: x.url
+    });
+   }// i
+   return pRet;
+};
 const getStartDate = (state: IInfoState): string => {
   return state.appstate.semestreStartDate;
 };
@@ -61,7 +76,8 @@ const selector = createSelector(
     getItems,
     getEtudiantsOptions,
     getStartDate,
-    getEndDate
+    getEndDate,
+    getCurrentOptions
   ],
   (
     busy: boolean,
@@ -73,19 +89,20 @@ const selector = createSelector(
     items: IEtudAffectationDoc[],
     etudiantsOptions: IOption[],
     startDate: string,
-    endDate: string
+    endDate: string,
+    currentOptions: IOption[]
   ) => {
     return {
       addMode,
-      etudiantsOptions,
-      // tslint:disable-next-line:object-literal-sort-keys
       busy,
       current,
+      currentOptions,
       currentPage,
       displayPages,
+      endDate,
+      etudiantsOptions,
       items,
       pagesCount,
-      endDate,
       startDate
     };
   }
@@ -136,6 +153,9 @@ function mapDispatchToProps(dispatch: InfoDispatch) {
     },
     onSaveAttachment: (name: string, mime: string, data: Blob | Buffer) => {
       dispatch(saveEtudAffectationAttachment(name, mime, data));
+    },
+    showDetail: (id:string) => {
+      dispatch(showEtudiant(id));
     }
   };
 } // mapDispatchToProps

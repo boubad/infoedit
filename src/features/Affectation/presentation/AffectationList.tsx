@@ -10,6 +10,8 @@ export class AffectationList extends BaseListComponent<IAffectationDoc> {
   protected renderTableHeader(): React.ReactNode {
     return (
       <tr>
+        <th>Année</th>
+        <th>Semestre</th>
         <th>Groupe</th>
         <th>Début</th>
         <th>Fin</th>
@@ -29,6 +31,24 @@ export class AffectationList extends BaseListComponent<IAffectationDoc> {
               onClick={this.onSelectItem.bind(this, px.id)}
               className={this.getDisabledStyle()}
             >
+              {px.anneename}
+            </a>
+          </td>
+          <td>
+            <a
+              href="#"
+              onClick={this.onSelectItem.bind(this, px.id)}
+              className={this.getDisabledStyle()}
+            >
+              {px.semestrename}
+            </a>
+          </td>
+          <td>
+            <a
+              href="#"
+              onClick={this.onSelectItem.bind(this, px.id)}
+              className={this.getDisabledStyle()}
+            >
               {px.groupename}
             </a>
           </td>
@@ -40,6 +60,16 @@ export class AffectationList extends BaseListComponent<IAffectationDoc> {
     } else {
       return (
         <tr key={px.id}>
+        <td>
+            <a href="#" onClick={this.onSelectItem.bind(this, px.id)}>
+              {px.anneename}
+            </a>
+          </td>
+          <td>
+            <a href="#" onClick={this.onSelectItem.bind(this, px.id)}>
+              {px.semestrename}
+            </a>
+          </td>
           <td>
             <a href="#" onClick={this.onSelectItem.bind(this, px.id)}>
               {px.groupename}

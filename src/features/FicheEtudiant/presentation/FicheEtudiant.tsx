@@ -3,6 +3,7 @@ import * as React from "react";
 import { Nav, NavItem, NavLink, TabContent, Table, TabPane } from "reactstrap";
 import { BaseComponent } from "../../../components/BaseComponent";
 import { IEtudiantDoc } from "../../../data/DomainData";
+import { FicheEtudiantAffectations } from "./FicheEtudiantAffectations";
 import { FicheEtudiantEvts } from "./FicheEtudiantEvts";
 import { FicheEtudiantInfo } from "./FicheEtudiantInfo";
 import { FicheEtudiantNotes } from "./FicheEtudiantNotes";
@@ -14,7 +15,7 @@ export interface IFicheEtudiantProps {
   onSaveAttachment?: (name: string, mime: string, data: Blob) => void;
   onRemoveAttachment?: (name: string) => void;
   onSetAvatar?: (name: string) => void;
-  onShowControle?: (id:string) => void;
+  onShowControle?: (id: string) => void;
 } // interface IBaseInfoComponentProps<T>
 //
 interface IFicheEtudiantState {
@@ -60,7 +61,7 @@ export class FicheEtudiant extends BaseComponent<
               Infos
             </NavLink>
           </NavItem>
-          <NavItem>
+          <NavItem hidden={this.props.current.notes.length < 1}>
             <NavLink
               className={classnames({
                 active: this.state.activeTab === "2"
@@ -70,7 +71,7 @@ export class FicheEtudiant extends BaseComponent<
               Notes
             </NavLink>
           </NavItem>
-          <NavItem>
+          <NavItem hidden={this.props.current.evts.length < 1}>
             <NavLink
               className={classnames({
                 active: this.state.activeTab === "3"
@@ -78,6 +79,16 @@ export class FicheEtudiant extends BaseComponent<
               onClick={this.toggle.bind(this, "3")}
             >
               Evènements
+            </NavLink>
+          </NavItem>
+          <NavItem hidden={this.props.current.affectations.length < 1}>
+            <NavLink
+              className={classnames({
+                active: this.state.activeTab === "4"
+              })}
+              onClick={this.toggle.bind(this, "4")}
+            >
+              Affectations
             </NavLink>
           </NavItem>
         </Nav>
@@ -91,13 +102,25 @@ export class FicheEtudiant extends BaseComponent<
               onSetAvatar={p.onSetAvatar}
             />
           </TabPane>
-          <TabPane tabId="2">
-            <FicheEtudiantNotes notes={p.current.notes}
-             onShowControle={this.props.onShowControle} />
+          <TabPane tabId="2" hidden={this.props.current.notes.length < 1}>
+            <FicheEtudiantNotes
+              notes={p.current.notes}
+              onShowControle={this.props.onShowControle}
+            />
           </TabPane>
-          <TabPane tabId="3">
-            <FicheEtudiantEvts evts={p.current.evts}
-            onShowControle={this.props.onShowControle} />
+          <TabPane tabId="3" hidden={this.props.current.evts.length < 1}>
+            <FicheEtudiantEvts
+              evts={p.current.evts}
+              onShowControle={this.props.onShowControle}
+            />
+          </TabPane>
+          <TabPane
+            tabId="4"
+            hidden={this.props.current.affectations.length < 1}
+          >
+            <FicheEtudiantAffectations
+              affectations={this.props.current.affectations}
+            />
           </TabPane>
         </TabContent>
       </div>

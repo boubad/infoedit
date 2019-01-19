@@ -28,6 +28,7 @@ import {
   INoteDoc,
   IOption,
   ISemestreDoc,
+  ISigleNamedDoc,
   IUniteDoc
 } from "../DomainData";
 import { IDataStore } from "./IDataStore";
@@ -55,6 +56,45 @@ import {
 import { LocalStoreManager } from "./impl/local/LocalStoreManager";
 //
 export class BaseDataManager {
+  public static sortSigleNamedDoc(bb: ISigleNamedDoc[]) {
+    if (bb.length > 1) {
+      bb.sort((x1, x2) => {
+        if (x1.name > x2.name) {
+          return 1;
+        } else if (x1.name < x2.name) {
+          return -1;
+        } else {
+          return 0;
+        }
+      });
+    } // sort
+  } // sortSigleNamedDoc
+  public static sortOptions(bb: IOption[], bDesc = false) {
+    if (bb.length > 1) {
+      if (bDesc === true) {
+        bb.sort((x1, x2) => {
+          if (x1.text > x2.text) {
+            return -1;
+          } else if (x1.text < x2.text) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+      } else {
+        bb.sort((x1, x2) => {
+          if (x1.text > x2.text) {
+            return 1;
+          } else if (x1.text < x2.text) {
+            return -1;
+          } else {
+            return 0;
+          }
+        });
+      }
+    }
+  } // sortOptions
+  //
   protected pStore: IDataStore;
   //
   private semestresMap: Map<string, ISemestreDoc> = new Map<
@@ -123,6 +163,14 @@ export class BaseDataManager {
   public removeAttachmentAsync(docid: string, attname: string): Promise<void> {
     return this.pStore.removeBlob(docid, attname);
   } // removeAttachmentAsync
+  public async fetchNoteByIdAsync(sid: string): Promise<INoteDoc> {
+    const pz = await this.pStore.findDocById(sid);
+    return this.convertNoteDocAsync(pz);
+  } // fetchNoteByIdAsync
+  public async fetchEvtByIdAsync(sid: string): Promise<IEvtDoc> {
+    const pz = await this.pStore.findDocById(sid);
+    return this.convertEvtDocAsync(pz);
+  } // fetchEvtByIdAsync
   public async fetchControleByIdAsync(sid: string): Promise<IControleDoc> {
     const pz = this.controlesMap.get(sid);
     if (pz) {
@@ -202,7 +250,7 @@ export class BaseDataManager {
     const pRet: IOption[] = [{ id: "", text: "" }];
     const fields = ["_id", "name"];
     const pp = await this.pStore.findAllDocsBySelector(sel, fields);
-    let n = pp.length;
+    const n = pp.length;
     if (n < 1) {
       return pRet;
     }
@@ -211,30 +259,7 @@ export class BaseDataManager {
       const x = pp[i];
       bb.push({ id: x._id, text: x.name });
     } // i
-    if (bb.length > 1) {
-      if (bDesc && bDesc === true) {
-        bb.sort((x1, x2) => {
-          if (x1.text > x2.text) {
-            return -1;
-          } else if (x1.text < x2.text) {
-            return 1;
-          } else {
-            return 0;
-          }
-        });
-      } else {
-        bb.sort((x1, x2) => {
-          if (x1.text > x2.text) {
-            return 1;
-          } else if (x1.text < x2.text) {
-            return -1;
-          } else {
-            return 0;
-          }
-        });
-      }
-    }
-    n = bb.length;
+    BaseDataManager.sortOptions(bb);
     for (let i = 0; i < n; i++) {
       pRet.push(bb[i]);
     }
@@ -539,8 +564,6 @@ export class BaseDataManager {
     return pRet;
   } // getDocAttachments
   protected register(id: string, data: any) {
-    if (id && data) {
-      LocalStoreManager.put(id, data);
-    }
+    LocalStoreManager.put(id, data);
   } // register
 } // class BaseDataManager

@@ -8,7 +8,7 @@ import { GetInitialEtudAffectation } from 'src/redux/StateProcs';
 export class EtudAffectationServices {
   //
   public static createEtudAffectation(state: IInfoState): IPayload {
-    return { affectation: GetInitialEtudAffectation(state) };
+    return { etudAffectation: GetInitialEtudAffectation(state) };
   } // createEtudAffectation
   //
   public static async selectEtudAffectationAsync(
@@ -26,7 +26,7 @@ export class EtudAffectationServices {
       const pMan = BaseServices.getPersistManager(state);
       px = await pMan.loadEtudAffectationByIdAsync(sid);
     }
-    return { affectation: px };
+    return { etudAffectation: px };
   } // selectEtudAffectationAsync
   public static async saveEtudAffectationAsync(
     state: IInfoState

@@ -1,4 +1,5 @@
 import { ISemestreDoc } from '../DomainData';
+import { BaseDataManager } from './BaseDataManager';
 import { IDataStore } from "./IDataStore";
 import { TYPE_SEMESTRE } from "./impl/DomainData";
 import { IItemSemestre } from "./impl/IInfoDomain";
@@ -81,17 +82,7 @@ export class SemestreManager extends UniteManager {
     for (let i = 0; i < n; i++) {
       pRet.push(this.convertSemestreDoc(pp[i]));
     }
-    if (pRet.length > 1) {
-      pRet.sort((a, b) => {
-        if (a.sigle < b.sigle) {
-          return -1;
-        } else if (a.sigle > b.sigle) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-    } // sort
+    BaseDataManager.sortSigleNamedDoc(pRet);
     return pRet;
   } // getSemestresAsync
   //

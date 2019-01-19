@@ -73,7 +73,9 @@ export class BufferedDataStore implements IDataStore {
     if (id.length > 0) {
       const data = await this.client.findDocById(id);
       if (data._id === id) {
-        LocalStoreManager.put(data._id, data);
+        if (LocalStoreManager.hasKey(id)) {
+          LocalStoreManager.remove(id);
+        }
       }
     }
     return id;
@@ -95,8 +97,9 @@ export class BufferedDataStore implements IDataStore {
     for (let i = 0; i < nx; i++) {
       const id = ids[i];
       if (id.length > 0) {
-        const data = await this.client.findDocById(id);
-        LocalStoreManager.put(id, data);
+        if (LocalStoreManager.hasKey(id)) {
+          LocalStoreManager.remove(id);
+        }
       } // id
     } // i
   } // maintainsManyDocs

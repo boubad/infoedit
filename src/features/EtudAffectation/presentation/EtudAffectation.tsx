@@ -13,6 +13,7 @@ export interface IEtudAffectationsProps {
   pagesCount: number;
   items: IEtudAffectationDoc[];
   etudiantsOptions: IOption[];
+  currentOptions: IOption[];
   startDate: string;
   endDate: string;
   busy: boolean;
@@ -25,6 +26,7 @@ export interface IEtudAffectationsProps {
   onEditCommand?: (arg: string) => void;
   onSaveAttachment?: (name: string, mime: string, data: Blob) => void;
   onRemoveAttachment?: (name: string) => void;
+  showDetail?: (id:string) => void;
 } // interfaceIAffectationsProps
 //
 export class EtudAffectation extends BaseComponent<IEtudAffectationsProps> {
@@ -54,6 +56,7 @@ export class EtudAffectation extends BaseComponent<IEtudAffectationsProps> {
                 gotoPage={p.gotoPage}
                 selectItem={p.selectItem}
                 createItem={p.createItem}
+                showDetail={p.showDetail}
               />
             </td>
             <td className="top">
@@ -61,6 +64,7 @@ export class EtudAffectation extends BaseComponent<IEtudAffectationsProps> {
                 addMode={p.addMode}
                 current={p.current}
                 etudiantsOptions={p.etudiantsOptions}
+                currentOptions={p.currentOptions}
                 startDate={p.startDate}
                 endDate={p.endDate}
                 busy={this.props.busy}

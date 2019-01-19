@@ -16,6 +16,7 @@ export interface IBaseListComponentProps<T extends IBaseDoc> {
   gotoPage?: (page: number) => void;
   selectItem?: (docid: string) => void;
   createItem?: () => void;
+  showDetail?: (id:string) => void;
 } // interface IBaseListComponentProps<T extends IBaseDoc>
 //
 export class BaseListComponent<T extends IBaseDoc> extends BaseComponent<
@@ -94,5 +95,10 @@ export class BaseListComponent<T extends IBaseDoc> extends BaseComponent<
     if (this.props.selectItem !== undefined && this.props.selectItem !== null) {
       this.props.selectItem(docid);
     }
-  }
+  } // onSelectItem
+  protected onShowDetail(id: string, e?: any){
+    if (this.props.showDetail){
+      this.props.showDetail(id);
+    }
+  }// onShowDetail
 } // class BaseListComponent<T extends IBaseDoc>

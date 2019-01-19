@@ -17,7 +17,7 @@ export function createEtudAffectation(): any {
   return (dispatch: Dispatch, getState: () => IInfoState) => {
     const state = getState();
     dispatch(
-      createEtudAffectationAction({ EtudAffectation: GetInitialEtudAffectation(state) })
+      createEtudAffectationAction({ etudAffectation: GetInitialEtudAffectation(state) })
     );
   };
 } // createAffectation

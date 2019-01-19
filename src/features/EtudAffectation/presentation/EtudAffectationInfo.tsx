@@ -12,6 +12,7 @@ export interface IEtudAffectationInfoProps {
   addMode: boolean;
   current: IEtudAffectationDoc;
   etudiantsOptions: IOption[];
+  currentOptions: IOption[];
   startDate: string;
   endDate: string;
   busy: boolean;
@@ -88,14 +89,15 @@ export class EtudAffectationInfo extends BaseComponent<
     );
   }
   private renderForm(): React.ReactNode {
+    const opts = (this.props.current.rev.length > 0) ? this.props.currentOptions : this.props.etudiantsOptions;
     return (
       <Form className={this.getInfoStyle()}>
         <ItemChoiceComponent
           text={this.props.current.etudiantid}
-          items={this.props.etudiantsOptions}
+          items={opts}
           prompt={"Etudiant:"}
           propname={"etudiantid"}
-          busy={this.props.busy}
+          busy={this.props.busy || this.props.current.rev.length > 0}
           onItemChoosen={this.props.onFieldChanged}
         />
         <InputDateComponent
