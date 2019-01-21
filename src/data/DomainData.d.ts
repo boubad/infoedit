@@ -58,6 +58,7 @@ export interface IEtudAffectationDoc extends IItemIntervalDoc {
   etudiantStatus: string;
 } // interface IEtudAffectationDoc
 export interface IEtudiantDoc extends IBaseDoc {
+  ident:string;
   lastname: string;
   firstname: string;
   email: string;
@@ -106,6 +107,7 @@ export interface INoteDoc extends IControleAffectationDoc {
   coefficient: number;
 } // interface INoteDoc
 export interface IImportEtudiant {
+  ident?:string;
   lastname?: string;
   firstname?: string;
   email?: string;
@@ -115,5 +117,16 @@ export interface IOption {
   id: string;
   text: string;
   url?: string;
-} // interface IpOtion
+} // interface IOption
+//
+interface IEtudiantDesc {
+  etudiantid:string;
+  fullname:string;
+  url:string;
+  value:number | null;
+  count:number;
+  total:number;
+  notes:INoteDoc[];
+  evts:IEvtDoc[];
+}// interface IEtudiantDesc
 ////////////////////////////////////////////

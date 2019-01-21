@@ -6,6 +6,7 @@ import {
   IAnneeDoc,
   IControleDoc,
   IEtudAffectationDoc,
+  IEtudiantDesc,
   IEtudiantDoc,
   IEvtDoc,
   IGroupeDoc,
@@ -85,6 +86,8 @@ export interface IPayload {
   freeEtudiantsOpts?:IOption[];
   ficheEtudiant?:IEtudiantDoc;
   ficheControle?:IControleDoc;
+  //
+  etudiantDescs?: IEtudiantDesc[];
 } // interface IPayload
 ////////////////////////////////
 export type InfoAction = FluxStandardAction<IPayload>;

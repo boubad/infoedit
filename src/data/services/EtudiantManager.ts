@@ -55,6 +55,7 @@ export class EtudiantManager extends GroupeManager {
       avatar: p.avatar.trim(),
       email: p.email.trim(),
       firstname: p.firstname.trim(),
+      ident: p.ident.trim(),
       lastname: p.lastname.trim(),
       observations: p.observations.trim(),
       ownerid: p.ownerid,

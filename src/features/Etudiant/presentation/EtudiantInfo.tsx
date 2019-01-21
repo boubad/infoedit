@@ -45,6 +45,13 @@ export class EtudiantInfo extends BaseInfoComponent<IEtudiantDoc> {
           busy={this.props.busy}
           onTextChanged={this.props.onFieldChanged}
         />
+        <InputUpperTextComponent
+          text={p.ident}
+          prompt={"Numéro étudiant:"}
+          propname={"ident"}
+          busy={this.props.busy}
+          onTextChanged={this.props.onFieldChanged}
+        />
         <StatusChoiceComponent 
           text = {p.status}
           prompt = {"Etat:"}

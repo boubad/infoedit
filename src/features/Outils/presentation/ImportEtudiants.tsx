@@ -21,6 +21,7 @@ interface IImportEtudiantData {
   lastname: string;
   firstname: string;
   email: string;
+  ident: string;
   observations: string;
 } // interface IImportEtudiant
 //
@@ -107,6 +108,7 @@ export class ImportEtudiants extends BaseComponent<
               <Table dark={true} bordered={true}>
                 <tbody className={this.getInfoStyle()}>
                   <tr>
+                    <th>Numéro</th>
                     <th>Nom de famille</th>
                     <th>Prénom(s)</th>
                     <th>Courriel</th>
@@ -126,6 +128,15 @@ export class ImportEtudiants extends BaseComponent<
   private renderOneLine(p: IImportEtudiantData): React.ReactNode {
     return (
       <tr key={"" + p.index}>
+        <td>
+          <InputTableItemComponent
+            index={"" + p.index}
+            text={p.ident}
+            propname={"ident"}
+            busy={this.props.busy}
+            onValueChanged={this.fieldChanged}
+          />
+        </td>
         <td>
           <InputTableItemComponent
             index={"" + p.index}
@@ -170,6 +181,7 @@ export class ImportEtudiants extends BaseComponent<
       <Table bordered={true} striped={true}>
         <tbody className={this.getInfoStyle()}>
           <tr>
+            <th>Numéro</th>
             <th>ID</th>
             <th>Revision</th>
             <td>Nom</td>
@@ -184,6 +196,7 @@ export class ImportEtudiants extends BaseComponent<
   private renderFinalLine(p: IEtudiantDoc): React.ReactNode {
     return (
       <tr key={p.id}>
+        <td>{p.ident}</td>
         <td>{p.id}</td>
         <td>{p.rev}</td>
         <td>{p.fullname}</td>
@@ -202,6 +215,9 @@ export class ImportEtudiants extends BaseComponent<
       const p = pp[i];
       if (i === index) {
         switch (field) {
+          case "ident":
+           p.ident = val;
+           break;
           case "lastname":
             p.lastname = val;
             break;
@@ -278,6 +294,7 @@ export class ImportEtudiants extends BaseComponent<
   } // checkData
   private checkEtudiant(p: any): IImportEtudiantData {
     const pRet: IImportEtudiantData = {
+      ident: this.filterText(p.ident),
       index: 0,
       lastname: this.filterText(p.lastname, true),
       // tslint:disable-next-line:object-literal-sort-keys

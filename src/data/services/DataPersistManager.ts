@@ -1,11 +1,11 @@
 import { ETUDIANT_STATUS_FREE, GetEtudiant, GetNote } from "../DataProcs";
 import { IControleDoc, IEtudiantDoc, IEvtDoc, INoteDoc, IOption } from "../DomainData";
-import { AffectationManager } from "./AffectationManager";
 import { IDataStore } from "./IDataStore";
 import { TYPE_ETUD_AFFECTATION, TYPE_ETUDIANT, TYPE_EVT, TYPE_NOTE } from "./impl/DomainData";
 import { IItemEtudiant, IItemEvt, IItemNote } from "./impl/IInfoDomain";
+import { StatDataManager } from './StatDataManager';
 //
-export class DataPersistManager extends AffectationManager {
+export class DataPersistManager extends StatDataManager {
   //
   constructor(pStore: IDataStore) {
     super(pStore);
@@ -79,6 +79,7 @@ export class DataPersistManager extends AffectationManager {
           if (rem.length > 0) {
             pz.observations = rem;
           }
+          pz.ident = x.ident ? x.ident : '';
           docs.push(pz);
           const sel: any = {
             firstname: { $eq: firstname },

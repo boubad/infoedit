@@ -14,6 +14,7 @@ import { groupeSubReducer } from "../features/Groupe/redux/groupeSubReducer";
 import { matiereSubReducer } from "../features/Matiere/redux/matiereSubReducer";
 import { outilsSubReducer } from '../features/Outils/redux/outilsSubReducer';
 import { semestreSubReducer } from "../features/Semestre/redux/semestreSubReducer";
+import { statsSubReducer } from '../features/Statistiques/redux/statsSubReducer';
 import { uniteSubReducer } from "../features/Unite/redux/uniteSubReducer";
 //
 export const createRootReducer = (history:History<any>) => {
@@ -33,6 +34,7 @@ export const createRootReducer = (history:History<any>) => {
     outils : outilsSubReducer,
     semestres :semestreSubReducer,
     unites : uniteSubReducer,
-    details: detailsSubReducer
+    details: detailsSubReducer,
+    stats: statsSubReducer
   });
 };

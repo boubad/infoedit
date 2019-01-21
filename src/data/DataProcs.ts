@@ -1,5 +1,5 @@
 import * as moment from "moment";
-import { IAffectationDoc, IAnneeDoc, IControleDoc, IEtudAffectationDoc, IEtudiantDoc, IEvtDoc, IGroupeDoc, IMatiereDoc, INoteDoc, ISemestreDoc, IUniteDoc } from './DomainData';
+import { IAffectationDoc, IAnneeDoc, IControleDoc, IEtudAffectationDoc, IEtudiantDesc, IEtudiantDoc, IEvtDoc, IGroupeDoc, IMatiereDoc, INoteDoc, ISemestreDoc, IUniteDoc } from './DomainData';
 //
 ////////////////////////
 export function DateToDisplay(date:string) : string {
@@ -145,7 +145,8 @@ export function GetGroupe(): IGroupeDoc {
         loaded: false,
         status:'',
         affectations:[],
-        ownerid:''
+        ownerid:'',
+        ident:'',
       }
     );
   } // GetEtudiant
@@ -338,4 +339,16 @@ export function GetGroupe(): IGroupeDoc {
     );
   } // GetControle
   //
+  export function GetEtudiantDesc(): IEtudiantDesc {
+    return Object.assign({},{
+      count:0,
+      etudiantid:'',
+      evts:[],
+      fullname:'',
+      notes:[],
+      total:0,
+      url:'',
+      value: null,
+    });
+  }// GetEtudiantDesc
   

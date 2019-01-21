@@ -4,12 +4,14 @@ import { Nav, NavItem, NavLink, TabContent, Table, TabPane } from "reactstrap";
 
 import { BaseComponent } from "../../../components/BaseComponent";
 import AppState from "../../../features/AppState/redux/AppState";
-import Controle from '../../../features/Controle/redux/Controle';
+import Controle from "../../../features/Controle/redux/Controle";
+import MatiereStat from "../../../features/Statistiques/redux/MatiereStat";
 import StatusComponent from "../../AppStatus/redux/StatusComponent";
 ////////////////////////
 export interface IConsultProps {
   hasStatus: boolean;
   hasAffectation: boolean;
+  canStatMatiere: boolean;
 } // interface IMainAppProps
 interface IConsultState {
   activeTab: string;
@@ -42,7 +44,7 @@ export class Consult extends BaseComponent<IConsultProps, IConsultState> {
             <td>
               <div className={this.getInfoStyle()}>
                 <Nav tabs={true}>
-                <NavItem hidden={!p.hasAffectation}>
+                  <NavItem hidden={!p.hasAffectation}>
                     <NavLink
                       className={classnames({
                         active: this.state.activeTab === "1"
@@ -52,10 +54,23 @@ export class Consult extends BaseComponent<IConsultProps, IConsultState> {
                       Contrôles
                     </NavLink>
                   </NavItem>
+                  <NavItem hidden={!p.canStatMatiere}>
+                    <NavLink
+                      className={classnames({
+                        active: this.state.activeTab === "2"
+                      })}
+                      onClick={this.toggle.bind(this, "2")}
+                    >
+                      Matières
+                    </NavLink>
+                  </NavItem>
                 </Nav>
                 <TabContent activeTab={this.state.activeTab}>
                   <TabPane tabId="1" hidden={!p.hasAffectation}>
                     <Controle />
+                  </TabPane>
+                  <TabPane tabId="2" hidden={!p.canStatMatiere}>
+                    <MatiereStat />
                   </TabPane>
                 </TabContent>
               </div>

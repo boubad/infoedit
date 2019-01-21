@@ -78,6 +78,7 @@ export interface IItemEtudiant {
   email?: string;
   avatar?: string;
   status?: string;
+  ident?:string;
 } // interface IItemEtudiant
 export interface IItemAffectation {
   _id?: string;

@@ -486,6 +486,7 @@ export class BaseDataManager {
     pRet.fullname = (pRet.lastname + " " + pRet.firstname).trim();
     pRet.avatar = p.avatar ? p.avatar : "";
     pRet.status = p.status ? p.status : "";
+    pRet.ident = p.ident? p.ident : "";
     pRet.url = this.pStore.formBlobUrl(pRet.id, pRet.avatar);
     pRet.attachments = this.getDocAttachments(p);
     this.etudiantsMap.set(pRet.id, pRet);

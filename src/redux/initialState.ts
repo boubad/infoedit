@@ -29,7 +29,8 @@ import {
   IDetailState,
   IEtudiantState,
   IInfoState,
-  IOutilsState
+  IOutilsState,
+  IStatState
 } from "./InfoState";
 ///////////////////////////////////
 export function GetInitialAppData(): IAppData {
@@ -230,6 +231,13 @@ export function GetInitialDetailState(): IDetailState {
   });
 }
 //
+export function GetInitialStatState(): IStatState {
+  return ({
+    busy:false,
+    matiereStats: []
+  });
+}
+//
 export  const initialState: IInfoState = {
   appdata: GetInitialAppData(),
   appstatus: GetInitialAppStatus(),
@@ -246,6 +254,7 @@ export  const initialState: IInfoState = {
   affectations: GetInitialAffectationState(),
   etudaffectations: GetInitialEtudAffectationState(),
   outils: GetInitialOutilsState(),
-  details: GetInitialDetailState()
+  details: GetInitialDetailState(),
+  stats: GetInitialStatState()
 }; // initialDataModel
 //

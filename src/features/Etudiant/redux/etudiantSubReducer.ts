@@ -199,6 +199,9 @@ export function etudiantSubReducer(
             case "status":
               pz.status = val;
               pz.modified = true;
+            case "ident":
+              pz.ident = val;
+              pz.modified = true;
               break;
             default:
               break;

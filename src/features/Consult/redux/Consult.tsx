@@ -10,17 +10,23 @@ const getHasStatus = (state: IInfoState): boolean => {
 const getHasAffectation = (state: IInfoState): boolean => {
   return state.appstate.affectationid.length > 0 && state.appstate.matiereid.length > 0;
 };
+const getCanStatMatiere = (state: IInfoState) : boolean =>{
+  return state.appstate.anneeid.length > 0 && state.appstate.semestreid.length > 0 && state.appstate.matiereid.length > 0;
+}
 //
 const selector = createSelector(
   [
     getHasStatus,
-    getHasAffectation
+    getHasAffectation,
+    getCanStatMatiere,
   ],
   (
     hasStatus: boolean,
-    hasAffectation: boolean
+    hasAffectation: boolean,
+    canStatMatiere:boolean
   ) => {
     return {
+      canStatMatiere,
       hasAffectation,
       hasStatus,
     };

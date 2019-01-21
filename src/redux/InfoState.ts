@@ -3,6 +3,7 @@ import {
   IAnneeDoc,
   IControleDoc,
   IEtudAffectationDoc,
+  IEtudiantDesc,
   IEtudiantDoc,
   IEvtDoc,
   IGroupeDoc,
@@ -79,6 +80,10 @@ export interface IDetailState {
   ficheEtudiant:IEtudiantDoc;
   ficheControle:IControleDoc;
 }// interface IDetailState
+export interface  IStatState {
+  busy:boolean;
+  matiereStats: IEtudiantDesc[];
+};
 export interface IInfoState {
   readonly appstatus: IAppStatus;
   readonly appdata: IAppData;
@@ -94,5 +99,6 @@ export interface IInfoState {
   readonly etudaffectations: IBaseState<IEtudAffectationDoc>;
   readonly outils: IOutilsState;
   readonly details: IDetailState;
+  readonly stats: IStatState;
 } // interface IInfoState
 //

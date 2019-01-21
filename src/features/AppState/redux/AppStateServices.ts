@@ -24,8 +24,9 @@ export class AppStateServices {
           controle: GetInitialControle(state),
           controles: [],
           controlesCount: 0,
+          etudiantDescs:[],
           matiere: GetInitialMatiere(state),
-          matiereid: ""
+          matiereid: "",
         };
         if (matiereid.length < 1) {
           return pRet;
@@ -61,6 +62,11 @@ export class AppStateServices {
           0,
           count3
         );
+        pRet.etudiantDescs = await pMan.getAnneeSemestreMatiereStats(
+          anneeid,
+          semestreid,
+          matiereid
+        );
         return pRet;
       } // ChangeMatiereAsync
     //
@@ -72,6 +78,7 @@ export class AppStateServices {
       controle: GetInitialControle(state),
       controles: [],
       controlesCount: 0,
+      etudiantDescs:[],
       matiereid:'',
       matieresCount:0,
       // tslint:disable-next-line:object-literal-sort-keys
@@ -174,6 +181,7 @@ export class AppStateServices {
       etudAffectation:GetInitialEtudAffectation(state),
       etudAffectations: [],
       etudAffectationsCount: 0,
+      etudiantDescs:[],
       etudiantsOptions:[],
       semestre: GetInitialSemestre(state),
       semestreid: "",
@@ -211,7 +219,14 @@ export class AppStateServices {
       }
     }// i
     pRet.affectations = affs;
+    const matiereid = state.appstate.matiereid;
+    pRet.etudiantDescs =  await pMan.getAnneeSemestreMatiereStats(
+      anneeid,
+      matiereid,
+      semestreid,
+    );
     const groupeid = state.appstate.groupeid;
+    
     if (groupeid.length < 1) {
       return pRet;
     }
@@ -222,7 +237,6 @@ export class AppStateServices {
       semestreid,
       groupeid
     );
-    const matiereid = state.appstate.matiereid;
     if (matiereid.length < 1) {
       return pRet;
     }
@@ -262,6 +276,7 @@ export class AppStateServices {
       etudAffectation:GetInitialEtudAffectation(state),
       etudAffectations: [],
       etudAffectationsCount: 0,
+      etudiantDescs:[],
       etudiantsOptions:[],
     };
     if (anneeid.length < 1) {
@@ -317,6 +332,11 @@ export class AppStateServices {
       groupeid
     );
     const matiereid = state.appstate.matiereid;
+    pRet.etudiantDescs =  await pMan.getAnneeSemestreMatiereStats(
+      anneeid,
+      matiereid,
+      semestreid,
+    );
     if (matiereid.length < 1) {
       return pRet;
     }
@@ -342,7 +362,7 @@ export class AppStateServices {
     const pRet: IPayload = {
       };
     pRet.anneesOptions= await pMan.getAnneesOptionsAsync();
-   pRet.semestresOptions = await pMan.getSemestresOptionsAsync();
+    pRet.semestresOptions = await pMan.getSemestresOptionsAsync();
     pRet.groupesOptions = await pMan.getGroupesOptionsAsync();
     pRet.unitesOptions = await pMan.getUnitesOptionsAsync();
     return pRet;

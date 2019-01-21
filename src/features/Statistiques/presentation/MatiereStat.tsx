@@ -1,0 +1,176 @@
+import classnames from "classnames";
+import * as React from "react";
+// tslint:disable-next-line:ordered-imports
+import { Table, Nav, TabContent, NavItem, NavLink, TabPane } from "reactstrap";
+import { BaseComponent } from "../../../components/BaseComponent";
+import {
+  IEtudiantDesc,
+  IEvtDoc
+} from "../../../data/DomainData";
+//
+export interface IMatiereStatProps {
+  descs: IEtudiantDesc[];
+  busy: boolean;
+  //
+  showDetail?: (id: string) => void;
+} // IMatiereStatProps
+//
+interface IMatiereStatState {
+  activeTab: string;
+} // interface  IMatiereStatState
+//
+export class MatiereStat extends BaseComponent<
+  IMatiereStatProps,
+  IMatiereStatState
+> {
+  //
+  constructor(props?: any) {
+    super(props);
+    this.state = {
+      activeTab: "1"
+    };
+    this.toggle = this.toggle.bind(this);
+  } // constructor
+  //
+  public render(): React.ReactNode {
+    return (
+      <div className={this.getInfoStyle()}>
+        <Nav tabs={true}>
+          <NavItem>
+            <NavLink
+              className={classnames({
+                active: this.state.activeTab === "1"
+              })}
+              onClick={this.toggle.bind(this, "1")}
+            >
+              Notes
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({
+                active: this.state.activeTab === "2"
+              })}
+              onClick={this.toggle.bind(this, "2")}
+            >
+              Evènements
+            </NavLink>
+          </NavItem>
+        </Nav>
+        <TabContent activeTab={this.state.activeTab}>
+          <TabPane tabId="1">{this.renderNotesTable()}</TabPane>
+          <TabPane tabId="2">{this.renderEvtsTable()}</TabPane>
+        </TabContent>
+      </div>
+    );
+  } // render
+  //
+  private renderNotesTable(): React.ReactNode {
+    return (
+      <Table>
+        <tbody className={this.getInfoStyle()}>
+          {this.renderNotesHeader()}
+          {this.props.descs.map(p => {
+            return this.renderNoteLine(p);
+          })}
+        </tbody>
+      </Table>
+    );
+  } //   renderNotesTable
+  private renderEvtsTable(): React.ReactNode {
+    return (
+      <Table>
+        <tbody className={this.getInfoStyle()}>
+          {this.renderEvtsHeader()}
+          {this.props.descs.map(p => {
+            return this.renderEvtLine(p);
+          })}
+        </tbody>
+      </Table>
+    );
+  } //   renderEvtsTable
+  private renderLinePhoto(p: IEtudiantDesc): React.ReactNode {
+    if (p.url.length < 1) {
+      return null;
+    }
+    if (this.props.busy) {
+      return (
+        <img src={p.url} alt={p.fullname} height={this.getThumbHeight()} />
+      );
+    } else {
+      return (
+        <a href="#" onClick={this.onShowDetail.bind(this, p.etudiantid)}>
+          <img src={p.url} alt={p.fullname} height={this.getThumbHeight()} />
+        </a>
+      );
+    }
+  } // renderLinePhoto
+  private renderNotesHeader(): React.ReactNode {
+    return (
+      <tr>
+        <th>Photo</th>
+        <th>Nom</th>
+        <th>Note</th>
+      </tr>
+    );
+  } // renderNotesHeader
+  private renderNoteLine(p: IEtudiantDesc): React.ReactNode {
+    return (
+      <tr key={p.etudiantid}>
+        <td>{this.renderLinePhoto(p)}</td>
+        <td>
+          <a href="#" onClick={this.onShowDetail.bind(this, p.etudiantid)}>
+            {p.fullname}
+          </a>
+        </td>
+        <td>{p.count > 0 ? p.value : ""}</td>
+      </tr>
+    );
+  } // renderNoteLine
+  private renderEvtsHeader(): React.ReactNode {
+    return (
+      <tr>
+        <th>Photo</th>
+        <th>Nom</th>
+        <th>Evènements</th>
+      </tr>
+    );
+  } // renderEvtsHeader
+  private renderEvtDetail(p: IEvtDoc): React.ReactNode {
+    return <li key={p.id}>{p.displaydate + " " + p.genrestring}</li>;
+  } // renderEvtDetail
+  private renderEvtContent(p: IEtudiantDesc): React.ReactNode {
+    return (
+      <ul>
+        {p.evts.map(x => {
+          return this.renderEvtDetail(x);
+        })}
+      </ul>
+    );
+  } // renderEvtContent
+  private renderEvtLine(p: IEtudiantDesc): React.ReactNode {
+    return (
+      <tr key={p.etudiantid}>
+        <td>{this.renderLinePhoto(p)}</td>
+        <td>
+          <a href="#" onClick={this.onShowDetail.bind(this, p.etudiantid)}>
+            {p.fullname}
+          </a>
+        </td>
+        <td>{this.renderEvtContent(p)}</td>
+      </tr>
+    );
+  } // renderEvtLine
+  private toggle(tab: string) {
+    if (this.state.activeTab !== tab) {
+      this.setState({
+        activeTab: tab
+      });
+    }
+  } // toggle
+  private onShowDetail(id: string) {
+    if (this.props.showDetail !== undefined && this.props.showDetail !== null) {
+      this.props.showDetail(id);
+    }
+  } // onShowDetail
+} // class ImportEtudiants
