@@ -1,16 +1,28 @@
 import classnames from "classnames";
+import * as Papa from "papaparse";
 import * as React from "react";
 // tslint:disable-next-line:ordered-imports
-import { Table, Nav, TabContent, NavItem, NavLink, TabPane } from "reactstrap";
+import {
+  Form,
+  FormGroup,
+  Input,
+  Nav,
+  NavItem,
+  NavLink,
+  TabContent,
+  Table,
+  TabPane
+} from "reactstrap";
 import { BaseComponent } from "../../../components/BaseComponent";
 import {
   IEtudiantDesc,
   IEvtDoc,
+  IExportEtudiantDesc,
   IMatiereDesc
 } from "../../../data/DomainData";
 //
 export interface IMatiereStatProps {
-  matieresigle:string;
+  matieresigle: string;
   descs: IEtudiantDesc[];
   busy: boolean;
   //
@@ -58,10 +70,21 @@ export class MatiereStat extends BaseComponent<
               Evènements
             </NavLink>
           </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({
+                active: this.state.activeTab === "3"
+              })}
+              onClick={this.toggle.bind(this, "3")}
+            >
+              Export-Notes
+            </NavLink>
+          </NavItem>
         </Nav>
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">{this.renderNotesTable()}</TabPane>
           <TabPane tabId="2">{this.renderEvtsTable()}</TabPane>
+          <TabPane tabId="3">{this.renderExportNotes()}</TabPane>
         </TabContent>
       </div>
     );
@@ -118,11 +141,11 @@ export class MatiereStat extends BaseComponent<
   } // renderNotesHeader
   private renderNoteLine(p: IEtudiantDesc): React.ReactNode {
     const fullname = p.lastname + " " + p.firstname;
-    let sv = '';
-    const pp = (p.descs) ? p.descs : new Map<string,IMatiereDesc>();
+    let sv = "";
+    const pp = p.descs ? p.descs : new Map<string, IMatiereDesc>();
     const px = pp.get(this.props.matieresigle);
-    if (px){
-      sv = (px.count > 0 && px.value) ? "" + px.value : "";
+    if (px) {
+      sv = px.count > 0 && px.value ? "" + px.value : "";
     }
     return (
       <tr key={p.etudiantid}>
@@ -149,10 +172,10 @@ export class MatiereStat extends BaseComponent<
     return <li key={p.id}>{p.displaydate + " " + p.genrestring}</li>;
   } // renderEvtDetail
   private renderEvtContent(p: IEtudiantDesc): React.ReactNode {
-    const pp = (p.descs) ? p.descs : new Map<string,IMatiereDesc>();
+    const pp = p.descs ? p.descs : new Map<string, IMatiereDesc>();
     const px = pp.get(this.props.matieresigle);
-    let evts:IEvtDoc[] = [];
-    if (px){
+    let evts: IEvtDoc[] = [];
+    if (px) {
       evts = px.evts;
     }
     return (
@@ -177,6 +200,39 @@ export class MatiereStat extends BaseComponent<
       </tr>
     );
   } // renderEvtLine
+  private renderExportNotes(): React.ReactNode {
+    return (
+      <Form className={this.getInfoStyle()}>
+        <FormGroup>
+          <Input className={this.getInfoStyle()}
+            type="textarea"
+            value={this.getExportNotes()}
+            readOnly={true}
+          />
+        </FormGroup>
+      </Form>
+    );
+  } // renderExportNotes
+  private getExportNotes(): string {
+    const rr: IExportEtudiantDesc[] = [];
+    this.props.descs.forEach(x => {
+      const cur: IExportEtudiantDesc = {
+        firstname: x.firstname,
+        groupe: x.groupesigle,
+        ident: x.ident,
+        lastname: x.lastname,
+        note: null
+      };
+      const pp = x.descs ? x.descs : new Map<string, IMatiereDesc>();
+      const px = pp.get(this.props.matieresigle);
+      if (px) {
+        cur.note = px.value;
+      }
+      rr.push(cur);
+    });
+    const pRet =  Papa.unparse(rr);
+    return pRet;
+  } // getExportNotes
   private toggle(tab: string) {
     if (this.state.activeTab !== tab) {
       this.setState({

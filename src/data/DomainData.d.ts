@@ -130,7 +130,7 @@ export interface IMatiereDesc {
   evts:IEvtDoc[];
 }// interface IMatiereDesc
 //
-interface IEtudiantDesc {
+export interface IEtudiantDesc {
   etudiantid:string;
   ident:string;
   lastname:string;
@@ -139,4 +139,11 @@ interface IEtudiantDesc {
   url:string;
   descs:Map<string,IMatiereDesc> | null;
 }// interface IEtudiantDesc
+export interface IExportEtudiantDesc {
+  ident:string;
+  groupe:string;
+  lastname:string;
+  firstname:string;
+  note: number | null;
+}// interface IExportEtudiantDesc
 ////////////////////////////////////////////

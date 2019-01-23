@@ -35,6 +35,9 @@ export class StatDataManager extends AffectationManager {
         oDesc = GetEtudiantDesc();
         oDesc.etudiantid = pEtud.id;
         oDesc.ident = pEtud.ident;
+        if (oDesc.ident.length < 1){
+          oDesc.ident = pEtud.id;
+        }
         oDesc.lastname = pEtud.lastname;
         oDesc.firstname = pEtud.firstname;
         oDesc.url = pEtud.url;
@@ -79,6 +82,9 @@ export class StatDataManager extends AffectationManager {
         oDesc = GetEtudiantDesc();
         oDesc.etudiantid = pEtud.id;
         oDesc.ident = pEtud.ident;
+        if (oDesc.ident.length < 1){
+          oDesc.ident = pEtud.id;
+        }
         oDesc.lastname = pEtud.lastname;
         oDesc.firstname = pEtud.firstname;
         oDesc.url = pEtud.url;
@@ -154,6 +160,9 @@ export class StatDataManager extends AffectationManager {
         oDesc = GetEtudiantDesc();
         oDesc.etudiantid = pEtud.id;
         oDesc.ident = pEtud.ident;
+        if (oDesc.ident.length < 1){
+          oDesc.ident = pEtud.id;
+        }
         oDesc.lastname = pEtud.lastname;
         oDesc.firstname = pEtud.firstname;
         oDesc.url = pEtud.url;
@@ -199,6 +208,9 @@ export class StatDataManager extends AffectationManager {
         oDesc = GetEtudiantDesc();
         oDesc.etudiantid = pEtud.id;
         oDesc.ident = pEtud.ident;
+        if (oDesc.ident.length < 1){
+          oDesc.ident = pEtud.id;
+        }
         oDesc.lastname = pEtud.lastname;
         oDesc.firstname = pEtud.firstname;
         oDesc.url = pEtud.url;
