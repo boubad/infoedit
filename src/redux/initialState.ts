@@ -55,6 +55,8 @@ export function GetInitialAppState(): IAppState {
     groupesOptions: [],
     matiereid: "",
     matieresOptions: [],
+    // tslint:disable-next-line:object-literal-sort-keys
+    matiereSigle:'',
     semestreid: "",
     semestresOptions: [],
     uniteid: "",

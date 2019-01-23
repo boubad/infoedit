@@ -119,14 +119,24 @@ export interface IOption {
   url?: string;
 } // interface IOption
 //
-interface IEtudiantDesc {
-  etudiantid:string;
-  fullname:string;
-  url:string;
-  value:number | null;
+export interface IMatiereDesc {
+  id:string;
+  name:string;
+  coefficient:number;
   count:number;
   total:number;
+  value: number | null;
   notes:INoteDoc[];
   evts:IEvtDoc[];
+}// interface IMatiereDesc
+//
+interface IEtudiantDesc {
+  etudiantid:string;
+  ident:string;
+  lastname:string;
+  firstname:string;
+  groupesigle:string;
+  url:string;
+  descs:Map<string,IMatiereDesc> | null;
 }// interface IEtudiantDesc
 ////////////////////////////////////////////

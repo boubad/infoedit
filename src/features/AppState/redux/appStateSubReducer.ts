@@ -88,6 +88,9 @@ export function appStateSubReducer(
     case REMOVE_AFFECTATION_ITEM_SUCCESS:
       return produce(state, pRet => {
         pRet.busy = false;
+        if (p.matiereSigle){
+          pRet.matiereSigle = p.matiereSigle;
+        }
         if (p.anneeStartDate) {
           pRet.anneeStartDate = p.anneeStartDate;
         }

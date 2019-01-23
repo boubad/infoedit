@@ -1,5 +1,5 @@
 import * as moment from "moment";
-import { IAffectationDoc, IAnneeDoc, IControleDoc, IEtudAffectationDoc, IEtudiantDesc, IEtudiantDoc, IEvtDoc, IGroupeDoc, IMatiereDoc, INoteDoc, ISemestreDoc, IUniteDoc } from './DomainData';
+import { IAffectationDoc, IAnneeDoc, IControleDoc, IEtudAffectationDoc, IEtudiantDesc, IEtudiantDoc, IEvtDoc, IGroupeDoc, IMatiereDesc, IMatiereDoc, INoteDoc, ISemestreDoc, IUniteDoc } from './DomainData';
 //
 ////////////////////////
 export function DateToDisplay(date:string) : string {
@@ -339,16 +339,28 @@ export function GetGroupe(): IGroupeDoc {
     );
   } // GetControle
   //
-  export function GetEtudiantDesc(): IEtudiantDesc {
+  export function GetMatiereDesc():IMatiereDesc {
     return Object.assign({},{
+      coefficient:1.0,
       count:0,
-      etudiantid:'',
       evts:[],
-      fullname:'',
+      id:'',
+      name:'',
       notes:[],
       total:0,
-      url:'',
-      value: null,
+      value:null,
     });
+  }// GetMatiereDesc
+  //
+  export function GetEtudiantDesc(): IEtudiantDesc {
+    return Object.assign({},{
+      descs:null,
+      etudiantid:'',
+      firstname:'',
+      groupesigle:'',
+      ident:'',
+      lastname:'',
+      url:'',
+         });
   }// GetEtudiantDesc
   

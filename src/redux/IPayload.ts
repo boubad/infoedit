@@ -33,6 +33,7 @@ export interface IPayload {
   value?: any;
   matieres?: IMatiereDoc[];
   matiereid?: string;
+  matiereSigle?:string;
   matiere?: IMatiereDoc;
   etudiants?: IEtudiantDoc[];
   etudiantsOptions?: IOption[];

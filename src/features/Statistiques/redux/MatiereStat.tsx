@@ -12,15 +12,20 @@ const getDescs = (state: IInfoState): IEtudiantDesc[] => {
 const getBusy = (state: IInfoState): boolean => {
   return state.appstate.busy || state.stats.busy;
 };
+const getMatiereSigle = (state:IInfoState) : string => {
+  return state.appstate.matiereSigle;
+}
 const selector = createSelector(
-  [getBusy, getDescs],
+  [getBusy, getDescs,getMatiereSigle],
   (
     busy: boolean,
-    descs: IEtudiantDesc[]
+    descs: IEtudiantDesc[],
+    matieresigle:string
   ) => {
     return {
       busy,
-      descs
+      descs,
+      matieresigle
     };
   }
 );

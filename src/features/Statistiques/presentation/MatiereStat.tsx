@@ -5,10 +5,12 @@ import { Table, Nav, TabContent, NavItem, NavLink, TabPane } from "reactstrap";
 import { BaseComponent } from "../../../components/BaseComponent";
 import {
   IEtudiantDesc,
-  IEvtDoc
+  IEvtDoc,
+  IMatiereDesc
 } from "../../../data/DomainData";
 //
 export interface IMatiereStatProps {
+  matieresigle:string;
   descs: IEtudiantDesc[];
   busy: boolean;
   //
@@ -95,12 +97,12 @@ export class MatiereStat extends BaseComponent<
     }
     if (this.props.busy) {
       return (
-        <img src={p.url} alt={p.fullname} height={this.getThumbHeight()} />
+        <img src={p.url} alt={p.lastname} height={this.getThumbHeight()} />
       );
     } else {
       return (
         <a href="#" onClick={this.onShowDetail.bind(this, p.etudiantid)}>
-          <img src={p.url} alt={p.fullname} height={this.getThumbHeight()} />
+          <img src={p.url} alt={p.lastname} height={this.getThumbHeight()} />
         </a>
       );
     }
@@ -115,15 +117,22 @@ export class MatiereStat extends BaseComponent<
     );
   } // renderNotesHeader
   private renderNoteLine(p: IEtudiantDesc): React.ReactNode {
+    const fullname = p.lastname + " " + p.firstname;
+    let sv = '';
+    const pp = (p.descs) ? p.descs : new Map<string,IMatiereDesc>();
+    const px = pp.get(this.props.matieresigle);
+    if (px){
+      sv = (px.count > 0 && px.value) ? "" + px.value : "";
+    }
     return (
       <tr key={p.etudiantid}>
         <td>{this.renderLinePhoto(p)}</td>
         <td>
           <a href="#" onClick={this.onShowDetail.bind(this, p.etudiantid)}>
-            {p.fullname}
+            {fullname}
           </a>
         </td>
-        <td>{p.count > 0 ? p.value : ""}</td>
+        <td>{sv}</td>
       </tr>
     );
   } // renderNoteLine
@@ -140,21 +149,28 @@ export class MatiereStat extends BaseComponent<
     return <li key={p.id}>{p.displaydate + " " + p.genrestring}</li>;
   } // renderEvtDetail
   private renderEvtContent(p: IEtudiantDesc): React.ReactNode {
+    const pp = (p.descs) ? p.descs : new Map<string,IMatiereDesc>();
+    const px = pp.get(this.props.matieresigle);
+    let evts:IEvtDoc[] = [];
+    if (px){
+      evts = px.evts;
+    }
     return (
       <ul>
-        {p.evts.map(x => {
+        {evts.map(x => {
           return this.renderEvtDetail(x);
         })}
       </ul>
     );
   } // renderEvtContent
   private renderEvtLine(p: IEtudiantDesc): React.ReactNode {
+    const fullname = p.lastname + " " + p.firstname;
     return (
       <tr key={p.etudiantid}>
         <td>{this.renderLinePhoto(p)}</td>
         <td>
           <a href="#" onClick={this.onShowDetail.bind(this, p.etudiantid)}>
-            {p.fullname}
+            {fullname}
           </a>
         </td>
         <td>{this.renderEvtContent(p)}</td>

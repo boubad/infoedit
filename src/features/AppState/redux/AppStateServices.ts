@@ -1,3 +1,4 @@
+import { GetMatiere } from '../../../data/DataProcs';
 import { BaseServices } from "../../../redux/BaseServices";
 import { IInfoState } from "../../../redux/InfoState";
 import { IPayload } from "../../../redux/IPayload";
@@ -27,6 +28,8 @@ export class AppStateServices {
           etudiantDescs:[],
           matiere: GetInitialMatiere(state),
           matiereid: "",
+          // tslint:disable-next-line:object-literal-sort-keys
+          matiereSigle:"",
         };
         if (matiereid.length < 1) {
           return pRet;
@@ -40,6 +43,8 @@ export class AppStateServices {
         } else {
           pRet.matiere = await pMan.fetchMatiereByIdAsync(matiereid);
         }  
+        const pMat = (pRet.matiere) ? pRet.matiere : GetMatiere();
+        pRet.matiereSigle = pMat.sigle;
         pRet.matiereid = matiereid;
         const semestreid = state.appstate.semestreid;
         const anneeid = state.appstate.anneeid;
@@ -81,6 +86,8 @@ export class AppStateServices {
       etudiantDescs:[],
       matiereid:'',
       matieresCount:0,
+      // tslint:disable-next-line:object-literal-sort-keys
+      matiereSigle:'',
       // tslint:disable-next-line:object-literal-sort-keys
       matieres:[],
       matieresOptions:[],

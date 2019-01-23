@@ -31,6 +31,7 @@ export interface IAppState {
   readonly matiereid: string;
   readonly anneeid: string;
   readonly uniteid: string;
+  readonly matiereSigle:string;
   readonly matieresOptions: IOption[];
   readonly anneesOptions: IOption[];
   readonly groupesOptions: IOption[];
