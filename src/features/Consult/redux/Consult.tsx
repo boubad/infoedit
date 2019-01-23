@@ -8,7 +8,10 @@ const getHasStatus = (state: IInfoState): boolean => {
   return state.appstatus.error.length > 0 || state.appstatus.status.length > 0;
 };
 const getHasAffectation = (state: IInfoState): boolean => {
-  return state.appstate.affectationid.length > 0 && state.appstate.matiereid.length > 0;
+  return state.appstate.affectationid.length > 0;
+};
+const getHasMatiere = (state: IInfoState): boolean => {
+  return state.appstate.matiereid.length > 0;
 };
 const getCanStatMatiere = (state: IInfoState) : boolean =>{
   return state.appstate.anneeid.length > 0 && state.appstate.semestreid.length > 0 && state.appstate.matiereid.length > 0;
@@ -19,15 +22,18 @@ const selector = createSelector(
     getHasStatus,
     getHasAffectation,
     getCanStatMatiere,
+    getHasMatiere,
   ],
   (
     hasStatus: boolean,
     hasAffectation: boolean,
-    canStatMatiere:boolean
+    canStatMatiere:boolean,
+    hasMatiere:boolean
   ) => {
     return {
       canStatMatiere,
       hasAffectation,
+      hasMatiere,
       hasStatus,
     };
   }

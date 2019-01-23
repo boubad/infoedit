@@ -23,7 +23,7 @@ export class GroupeManager extends MatiereManager {
       throw new TypeError("Invalid input data");
     }
     const doc: any = {
-      name: p.name,
+      name,
       observations: p.observations.trim(),
       ownerid: p.ownerid,
       sigle,
@@ -47,11 +47,6 @@ export class GroupeManager extends MatiereManager {
     const docid = await this.pStore.maintainsDoc(doc);
     return this.loadGroupeByIdAsync(docid);
   } // saveGroupeAsync
-  //
-  public async loadGroupeByIdAsync(id: string): Promise<IGroupeDoc> {
-    const data: IItemGroupe = await this.pStore.findDocById(id);
-    return this.convertGroupeDoc(data);
-  } // loadGroupeByIdAsyn
   //
   public getGroupesCountAsync(): Promise<number> {
     const sel: any = {

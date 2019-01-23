@@ -12,6 +12,7 @@ export interface IConsultProps {
   hasStatus: boolean;
   hasAffectation: boolean;
   canStatMatiere: boolean;
+  hasMatiere:boolean;
 } // interface IMainAppProps
 interface IConsultState {
   activeTab: string;
@@ -44,7 +45,7 @@ export class Consult extends BaseComponent<IConsultProps, IConsultState> {
             <td>
               <div className={this.getInfoStyle()}>
                 <Nav tabs={true}>
-                  <NavItem hidden={!p.hasAffectation}>
+                  <NavItem hidden={!p.hasAffectation || !p.hasMatiere}>
                     <NavLink
                       className={classnames({
                         active: this.state.activeTab === "1"
@@ -66,7 +67,7 @@ export class Consult extends BaseComponent<IConsultProps, IConsultState> {
                   </NavItem>
                 </Nav>
                 <TabContent activeTab={this.state.activeTab}>
-                  <TabPane tabId="1" hidden={!p.hasAffectation}>
+                  <TabPane tabId="1" hidden={!p.hasAffectation || !p.hasMatiere}>
                     <Controle />
                   </TabPane>
                   <TabPane tabId="2" hidden={!p.canStatMatiere}>

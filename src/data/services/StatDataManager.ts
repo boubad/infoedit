@@ -221,6 +221,7 @@ export class StatDataManager extends AffectationManager {
       oMap.set(etudiantid, oDesc);
     } // i
     oMap.forEach((oDesc, etudiantid) => {
+      pRet.push(oDesc);
       if (oDesc.descs){
         oDesc.descs.forEach((pm,sigle) =>{
           if (pm.count > 0){

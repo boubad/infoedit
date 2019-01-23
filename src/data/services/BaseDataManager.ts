@@ -33,9 +33,15 @@ import {
 } from "../DomainData";
 import { IDataStore } from "./IDataStore";
 import {
+  TYPE_AFFECTATION,
   TYPE_ANNEE,
+  TYPE_CONTROLE,
+  TYPE_ETUD_AFFECTATION,
+  TYPE_ETUDIANT,
+  TYPE_EVT,
   TYPE_GROUPE,
   TYPE_MATIERE,
+  TYPE_NOTE,
   TYPE_SEMESTRE,
   TYPE_UNITE
 } from "./impl/DomainData";
@@ -108,6 +114,10 @@ export class BaseDataManager {
     string,
     IAffectationDoc
   >();
+  private etudAffectationsMap: Map<string, IEtudAffectationDoc> = new Map<
+    string,
+    IEtudAffectationDoc
+  >();
   private etudiantsMap: Map<string, IEtudiantDoc> = new Map<
     string,
     IEtudiantDoc
@@ -120,6 +130,8 @@ export class BaseDataManager {
     string,
     IControleDoc
   >();
+  private evtsMap: Map<string, IEvtDoc> = new Map<string, IEvtDoc>();
+  private notesMap: Map<string, INoteDoc> = new Map<string, INoteDoc>();
   //
   constructor(pStore: IDataStore) {
     this.pStore = pStore;
@@ -163,84 +175,253 @@ export class BaseDataManager {
   public removeAttachmentAsync(docid: string, attname: string): Promise<void> {
     return this.pStore.removeBlob(docid, attname);
   } // removeAttachmentAsync
+  //////////////////////////
+  public async loadNoteByIdAsync(id: string): Promise<INoteDoc> {
+    const sel: any = {
+      _id: { $eq: id },
+      type: { $eq: TYPE_NOTE }
+    };
+    const data: IItemNote[] = await this.pStore.findDocsBySelector(sel, 0, 1);
+    if (data.length > 0) {
+      return await this.convertNoteDocAsync(data[0]);
+    } else {
+      return GetNote();
+    }
+  } // loadEvtByIdAsync
+  public async loadEvtByIdAsync(id: string): Promise<IEvtDoc> {
+    const sel: any = {
+      _id: { $eq: id },
+      type: { $eq: TYPE_EVT }
+    };
+    const data: IItemEvt[] = await this.pStore.findDocsBySelector(sel, 0, 1);
+    if (data.length > 0) {
+      return await this.convertEvtDocAsync(data[0]);
+    } else {
+      return GetEvt();
+    }
+  } // loadEvtByIdAsync
+  public async loadUniteByIdAsync(id: string): Promise<IUniteDoc> {
+    const sel: any = {
+      _id: { $eq: id },
+      type: { $eq: TYPE_UNITE }
+    };
+    const data: IItemUnite[] = await this.pStore.findDocsBySelector(sel, 0, 1);
+    if (data.length > 0) {
+      return this.convertUniteDoc(data[0]);
+    } else {
+      return GetUnite();
+    }
+  } // loadUniteByIdAsyn
+  public async loadSemestreByIdAsync(id: string): Promise<ISemestreDoc> {
+    const sel: any = {
+      _id: { $eq: id },
+      type: { $eq: TYPE_SEMESTRE }
+    };
+    const data: IItemSemestre[] = await this.pStore.findDocsBySelector(
+      sel,
+      0,
+      1
+    );
+    if (data.length > 0) {
+      return this.convertSemestreDoc(data[0]);
+    } else {
+      return GetSemestre();
+    }
+  } // loadSemestreByIdAsyn
+  public async loadMatiereByIdAsync(id: string): Promise<IMatiereDoc> {
+    const sel: any = {
+      _id: { $eq: id },
+      type: { $eq: TYPE_MATIERE }
+    };
+    const data: IItemMatiere[] = await this.pStore.findDocsBySelector(
+      sel,
+      0,
+      1
+    );
+    if (data.length > 0) {
+      return await this.convertMatiereDocAsync(data[0]);
+    } else {
+      return GetMatiere();
+    }
+  } // loadByIdAsyn
+  public async loadGroupeByIdAsync(id: string): Promise<IGroupeDoc> {
+    const sel: any = {
+      _id: { $eq: id },
+      type: { $eq: TYPE_GROUPE }
+    };
+    const data: IItemGroupe[] = await this.pStore.findDocsBySelector(sel, 0, 1);
+    if (data.length > 0) {
+      return this.convertGroupeDoc(data[0]);
+    } else {
+      return GetGroupe();
+    }
+  } // loadGroupeByIdAsyn
+  //
+  public async loadEtudiantByIdAsync(id: string): Promise<IEtudiantDoc> {
+    const sel: any = {
+      _id: { $eq: id },
+      type: { $eq: TYPE_ETUDIANT }
+    };
+    const data: IItemEtudiant[] = await this.pStore.findDocsBySelector(
+      sel,
+      0,
+      1
+    );
+    if (data.length > 0) {
+      return this.convertEtudiantDoc(data[0]);
+    } else {
+      return GetEtudiant();
+    }
+  } // loadByIdAsync
+  //
+  public async loadEtudAffectationByIdAsync(
+    id: string
+  ): Promise<IEtudAffectationDoc> {
+    const sel: any = {
+      _id: { $eq: id },
+      type: { $eq: TYPE_ETUD_AFFECTATION }
+    };
+    const data: IItemEtudAffectation[] = await this.pStore.findDocsBySelector(
+      sel,
+      0,
+      1
+    );
+    if (data.length > 0) {
+      return this.convertEtudAffectationDocAsync(data[0]);
+    } else {
+      return GetEtudAffectation();
+    }
+  } // loadByIdAsync
+  public async loadControleByIdAsync(id: string): Promise<IControleDoc> {
+    const sel: any = {
+      _id: { $eq: id },
+      type: { $eq: TYPE_CONTROLE }
+    };
+    const data: IItemControle[] = await this.pStore.findDocsBySelector(
+      sel,
+      0,
+      1
+    );
+    if (data.length > 0) {
+      return this.convertControleDocAsync(data[0]);
+    } else {
+      return GetControle();
+    }
+  } // loadByIdAsyn
+  public async loadAnneeByIdAsync(id: string): Promise<IAnneeDoc> {
+    const sel: any = {
+      _id: { $eq: id },
+      type: { $eq: TYPE_ANNEE }
+    };
+    const data: IItemAnnee[] = await this.pStore.findDocsBySelector(sel);
+    if (data.length > 0) {
+      return this.convertAnneeDoc(data[0]);
+    }
+    return GetAnnee();
+  } // loadAneeByIdAsync
+  //
+  public async loadAffectationByIdAsync(id: string): Promise<IAffectationDoc> {
+    const sel: any = {
+      _id: { $eq: id },
+      type: { $eq: TYPE_AFFECTATION }
+    };
+    const pp: IItemAffectation[] = await this.pStore.findDocsBySelector(
+      sel,
+      0,
+      1
+    );
+    if (pp.length > 0) {
+      return this.convertAffectationDocAsync(pp[0]);
+    }
+    return GetAffectation();
+  } // loadByIdAsync
+  /////////////////////////////
   public async fetchNoteByIdAsync(sid: string): Promise<INoteDoc> {
-    const pz = await this.pStore.findDocById(sid);
-    return this.convertNoteDocAsync(pz);
+    const pz = this.notesMap.get(sid);
+    if (pz) {
+      return pz;
+    } else {
+      return this.loadNoteByIdAsync(sid);
+    }
   } // fetchNoteByIdAsync
   public async fetchEvtByIdAsync(sid: string): Promise<IEvtDoc> {
-    const pz = await this.pStore.findDocById(sid);
-    return this.convertEvtDocAsync(pz);
+    const pz = this.evtsMap.get(sid);
+    if (pz) {
+      return pz;
+    } else {
+      return this.loadEvtByIdAsync(sid);
+    }
   } // fetchEvtByIdAsync
   public async fetchControleByIdAsync(sid: string): Promise<IControleDoc> {
     const pz = this.controlesMap.get(sid);
     if (pz) {
       return pz;
     } else {
-      const pp = await this.pStore.findDocById(sid);
-      return this.convertControleDocAsync(pp);
+      return this.loadControleByIdAsync(sid);
     }
   } // fetchControleByIdAsync
-  public async fetchAffectationByIdAsync(id: string): Promise<IAffectationDoc> {
-    const pz = this.affectationsMap.get(id);
-    if (pz !== undefined) {
+  public async fetchEtudAffectationByIdAsync(id: string): Promise<IEtudAffectationDoc> {
+    const pz = this.etudAffectationsMap.get(id);
+    if (pz) {
       return pz;
     } else {
-      const pp = await this.pStore.findDocById(id);
-      return this.convertAffectationDocAsync(pp);
+      return this.loadEtudAffectationByIdAsync(id);
+    }
+  } // fetchEtudAffectationByIdAsync
+  public async fetchAffectationByIdAsync(id: string): Promise<IAffectationDoc> {
+    const pz = this.affectationsMap.get(id);
+    if (pz) {
+      return pz;
+    } else {
+      return this.loadAffectationByIdAsync(id);
     }
   } // fetchAffectationByIdAsync
   public async fetchMatiereByIdAsync(id: string): Promise<IMatiereDoc> {
     const pz = this.matieresMap.get(id);
-    if (pz !== undefined) {
+    if (pz) {
       return pz;
     } else {
-      const pp = await this.pStore.findDocById(id);
-      return this.convertMatiereDocAsync(pp);
+      return this.loadMatiereByIdAsync(id);
     }
   } // fetchMatiereByIdAsync
   public async fetchGroupeByIdAsync(id: string): Promise<IGroupeDoc> {
     const pz = this.groupesMap.get(id);
-    if (pz !== undefined) {
+    if (pz) {
       return pz;
     } else {
-      const pp = await this.pStore.findDocById(id);
-      return this.convertGroupeDoc(pp);
+      return this.loadGroupeByIdAsync(id);
     }
   } // fetchSemestreByIdAsync
   public async fetchSemestreByIdAsync(id: string): Promise<ISemestreDoc> {
     const pz = this.semestresMap.get(id);
-    if (pz !== undefined) {
+    if (pz) {
       return pz;
     } else {
-      const pp = await this.pStore.findDocById(id);
-      return this.convertSemestreDoc(pp);
+      return this.loadSemestreByIdAsync(id);
     }
   } // fetchSemestreByIdAsync
   public async fetchUniteByIdAsync(id: string): Promise<IUniteDoc> {
     const pz = this.unitesMap.get(id);
-    if (pz !== undefined) {
+    if (pz) {
       return pz;
     } else {
-      const pp = await this.pStore.findDocById(id);
-      return this.convertUniteDoc(pp);
+      return this.loadUniteByIdAsync(id);
     }
   } // fetchUniteByIdAsync
   public async fetchAnneeByIdAsync(id: string): Promise<IAnneeDoc> {
     const pz = this.anneesMap.get(id);
-    if (pz !== undefined) {
+    if (pz) {
       return pz;
     } else {
-      const pp = await this.pStore.findDocById(id);
-      return this.convertAnneeDoc(pp);
+      return this.loadAnneeByIdAsync(id);
     }
   } // fetchAnneeByIdAsync
   public async fetchEtudiantByIdAsync(id: string): Promise<IEtudiantDoc> {
     const pz = this.etudiantsMap.get(id);
-    if (pz !== undefined) {
+    if (pz) {
       return pz;
     } else {
-      const pp = await this.pStore.findDocById(id);
-      return this.convertEtudiantDoc(pp);
+      return this.loadEtudiantByIdAsync(id);
     }
   } // fetchEtudiantByIdAsync
   protected async getItemsOptionsAsync(
@@ -298,6 +479,9 @@ export class BaseDataManager {
     pRet.anneename = x.anneename;
     pRet.groupename = x.groupename;
     pRet.unitename = x.unitename;
+    if (pRet.id.length > 0){
+      this.evtsMap.set(pRet.id, pRet);
+    }
     return pRet;
   } // convertEvtDocAsync
   protected async convertNoteDocAsync(p: IItemNote): Promise<INoteDoc> {
@@ -334,6 +518,9 @@ export class BaseDataManager {
     pRet.anneename = xx.anneename;
     pRet.groupename = xx.groupename;
     pRet.unitename = xx.unitename;
+    if (pRet.id.length > 0){
+      this.notesMap.set(pRet.id, pRet);
+    }
     return pRet;
   } // convertNoteDocAsync
   //
@@ -368,6 +555,9 @@ export class BaseDataManager {
     }
     pRet.displayenddate = DateToDisplay(pRet.enddate);
     pRet.displaystartdate = DateToDisplay(pRet.startdate);
+    if (pRet.id.length > 0){
+      this.etudAffectationsMap.set(pRet.id,pRet);
+    }
     return pRet;
   } // convertEtudAffectationDocAsync
   protected async convertAffectationDocAsync(
@@ -397,7 +587,9 @@ export class BaseDataManager {
     pRet.groupename = g.name;
     pRet.displayenddate = DateToDisplay(pRet.enddate);
     pRet.displaystartdate = DateToDisplay(pRet.startdate);
+    if (pRet.id.length > 0){
     this.affectationsMap.set(pRet.id, pRet);
+    }
     return pRet;
   } // convertAffectationDocAsync
   //
@@ -421,7 +613,9 @@ export class BaseDataManager {
     const un = await this.fetchUniteByIdAsync(pRet.uniteid);
     pRet.unitename = un.name;
     pRet.attachments = this.getDocAttachments(p);
+    if (pRet.id.length > 0){
     this.matieresMap.set(pRet.id, pRet);
+    }
     return pRet;
   } // convertMatiereDocAsync
   protected async convertControleDocAsync(
@@ -452,7 +646,9 @@ export class BaseDataManager {
     pRet.anneename = aff.anneename;
     pRet.semestrename = aff.semestrename;
     pRet.groupename = aff.groupename;
+    if (pRet.id.length > 0){
     this.controlesMap.set(pRet.id, pRet);
+    }
     return pRet;
   } // convertControleDocAsync
   protected convertAnneeDoc(p: IItemAnnee): IAnneeDoc {
@@ -470,7 +666,9 @@ export class BaseDataManager {
     pRet.displayenddate = DateToDisplay(pRet.enddate);
     pRet.displaystartdate = DateToDisplay(pRet.startdate);
     pRet.attachments = this.getDocAttachments(p);
+    if (pRet.id.length > 0){
     this.anneesMap.set(pRet.id, pRet);
+    }
     return pRet;
   } // convertAnneeDoc
   protected convertEtudiantDoc(p: IItemEtudiant): IEtudiantDoc {
@@ -486,10 +684,12 @@ export class BaseDataManager {
     pRet.fullname = (pRet.lastname + " " + pRet.firstname).trim();
     pRet.avatar = p.avatar ? p.avatar : "";
     pRet.status = p.status ? p.status : "";
-    pRet.ident = p.ident? p.ident : "";
+    pRet.ident = p.ident ? p.ident : "";
     pRet.url = this.pStore.formBlobUrl(pRet.id, pRet.avatar);
     pRet.attachments = this.getDocAttachments(p);
+    if (pRet.id.length > 0){
     this.etudiantsMap.set(pRet.id, pRet);
+    }
     return pRet;
   } // convertEtudiantDoc
   protected convertSemestreDoc(p: IItemSemestre): ISemestreDoc {
@@ -502,7 +702,9 @@ export class BaseDataManager {
     pRet.name = p.name ? p.name : "";
     pRet.sigle = p.sigle ? p.sigle : "";
     pRet.attachments = this.getDocAttachments(p);
+    if (pRet.id.length > 0){
     this.semestresMap.set(pRet.id, pRet);
+    }
     return pRet;
   } // convertSemestreDoc
   protected convertUniteDoc(p: IItemUnite): IUniteDoc {
@@ -515,7 +717,9 @@ export class BaseDataManager {
     pRet.name = p.name ? p.name : "";
     pRet.sigle = p.sigle ? p.sigle : "";
     pRet.attachments = this.getDocAttachments(p);
+    if (pRet.id.length > 0){
     this.unitesMap.set(pRet.id, pRet);
+    }
     return pRet;
   } // convertUniteDoc
   protected convertGroupeDoc(p: IItemGroupe): IGroupeDoc {
@@ -528,7 +732,9 @@ export class BaseDataManager {
     pRet.name = p.name ? p.name : "";
     pRet.sigle = p.sigle ? p.sigle : "";
     pRet.attachments = this.getDocAttachments(p);
-    this.groupesMap.set(pRet.id, pRet);
+    if (pRet.id.length > 0) {
+      this.groupesMap.set(pRet.id, pRet);
+    }
     return pRet;
   } // convertGroupeDoc
   protected getDocAttachments(p: any): IAttachedDoc[] {

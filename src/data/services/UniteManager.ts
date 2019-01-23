@@ -1,4 +1,4 @@
-import { IUniteDoc } from '../DomainData';
+import { IUniteDoc } from "../DomainData";
 import { BaseDataManager } from "./BaseDataManager";
 import { IDataStore } from "./IDataStore";
 import { TYPE_UNITE } from "./impl/DomainData";
@@ -24,7 +24,7 @@ export class UniteManager extends BaseDataManager {
       throw new TypeError("Cannot save unite");
     }
     const doc: any = {
-      name: p.name.trim(),
+      name,
       observations: p.observations,
       ownerid: p.ownerid,
       sigle,
@@ -42,17 +42,12 @@ export class UniteManager extends BaseDataManager {
     if (pp.length > 0) {
       const x = pp[0];
       doc._id = x._id;
-    } else if (p.id.trim().length > 0){
+    } else if (p.id.trim().length > 0) {
       doc._id = p.id.trim();
-    } 
+    }
     const docid = await this.pStore.maintainsDoc(doc);
     return await this.loadUniteByIdAsync(docid);
   } // saveUniteAsync
-  //
-  public async loadUniteByIdAsync(id: string): Promise<IUniteDoc> {
-    const data: IItemUnite = await this.pStore.findDocById(id);
-    return this.convertUniteDoc(data);
-  } // loadUniteByIdAsyn
   //
   public getUnitesCountAsync(): Promise<number> {
     const sel: any = {

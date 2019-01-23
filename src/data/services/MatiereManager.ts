@@ -18,27 +18,41 @@ export class MatiereManager extends SemestreManager {
   } // remove
   //
   public async saveMatiereAsync(p: IMatiereDoc): Promise<IMatiereDoc> {
-    if (p.sigle.trim().length < 1 || p.uniteid.trim().length < 1) {
+    const sigle = p.sigle.trim().toLowerCase();
+    const name = p.name.trim();
+    const uniteid = p.uniteid.trim();
+    if (sigle.length < 1 || name.length < 1 ||  uniteid.length < 1) {
       throw new TypeError("Invalid input data");
     }
+    const srev = await this.pStore.findDocRevision(uniteid);
+    if (srev.length < 1){
+      throw new TypeError("Invalid parent unite");
+    }
+    let modname = p.modname.trim();
+    if (modname.length < 1){
+      modname = sigle;
+    }
+    let coefficient = p.coefficient;
+    if (coefficient <= 0.0){
+      coefficient = 1.0;
+    }
     const doc: any = {
-      type: TYPE_MATIERE,
-      // tslint:disable-next-line:object-literal-sort-keys
-      observations: p.observations,
-      sigle: p.sigle.trim().toLowerCase(),
-      name: p.name.trim(),
-      uniteid: p.uniteid.trim(),
-      modname: p.modname,
-      coefficient: p.coefficient,
+      coefficient,
       ecs: p.ecs,
-      ownerid: p.ownerid
+      modname,
+      name,
+      observations: p.observations,
+      ownerid: p.ownerid,
+      sigle,
+      type: TYPE_MATIERE,
+      uniteid,
     };
     const pp: any[] = await this.pStore.findDocsBySelector(
       {
         type: { $eq: TYPE_MATIERE },
         // tslint:disable-next-line:object-literal-sort-keys
-        sigle: { $eq: p.sigle.trim().toLowerCase() },
-        uniteid: { $eq: p.uniteid.trim() }
+        sigle: { $eq: sigle },
+        uniteid: { $eq: uniteid }
       },
       0,
       1,
@@ -54,12 +68,6 @@ export class MatiereManager extends SemestreManager {
     return await this.loadMatiereByIdAsync(docid);
   } // saveAsync
   //
-  public async loadMatiereByIdAsync(id: string): Promise<IMatiereDoc> {
-    const data: IItemMatiere = await this.pStore.findDocById(id);
-    return await this.convertMatiereDocAsync(data);
-  } // loadByIdAsyn
-  //
-
   public getMatieresCountAsync(uniteid: string): Promise<number> {
     const sel: any = {
       type: { $eq: TYPE_MATIERE }

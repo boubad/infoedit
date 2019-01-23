@@ -59,11 +59,6 @@ export class AnneeManager extends ControleManager {
     return this.loadAnneeByIdAsync(docid);
   } // saveAsync
   //
-  public async loadAnneeByIdAsync(id: string): Promise<IAnneeDoc> {
-    const data: IItemAnnee = await this.pStore.findDocById(id);
-    return this.convertAnneeDoc(data);
-  } // loadAneeByIdAsync
-  //
   public getAnneesCountAsync(): Promise<number> {
     const sel: any = {
       type: { $eq: TYPE_ANNEE }

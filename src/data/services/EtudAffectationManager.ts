@@ -1,8 +1,7 @@
 import {
   ETUDIANT_STATUS_BUSY,
   ETUDIANT_STATUS_DONE,
-  ETUDIANT_STATUS_FREE
-} from "../DataProcs";
+  ETUDIANT_STATUS_FREE} from "../DataProcs";
 import { IEtudAffectationDoc } from "../DomainData";
 import { EtudiantManager } from './EtudiantManager';
 import { IDataStore } from "./IDataStore";
@@ -33,27 +32,31 @@ export class EtudAffectationManager extends EtudiantManager {
     p: IEtudAffectationDoc
   ): Promise<IEtudAffectationDoc> {
     const affectationid = p.affectationid;
-    const etudiantid = p.etudiantid;
+    const etudiantid = p.etudiantid.trim();
     const d1 = p.startdate;
     const d2 = p.enddate;
     if (
       affectationid.length < 1 ||
-      etudiantid.trim().length < 1 ||
+      etudiantid.length < 1 ||
       d1.length < 1 ||
       d2.length < 1 ||
       d1 > d2
     ) {
       throw new TypeError("Cannot save etud affectation");
     }
-    const anneeid = p.anneeid;
+    const pEtud = await this.fetchEtudiantByIdAsync(etudiantid);
     const pAff = await this.fetchAffectationByIdAsync(affectationid);
+    if (pEtud.id !== etudiantid || pAff.id !== affectationid){
+      throw new TypeError("Invalid parent(s)");
+    }
     if (pAff.startdate.length > 0 && pAff.enddate.length > 0){
       if (d1 < pAff.startdate || d2 > pAff.enddate) {
         throw new TypeError("Cannot save etud affectation. Bad date(s)...");
       }
     }
-    const semestreid = p.semestreid;
-    const groupeid = p.groupeid;
+    const semestreid = pAff.semestreid;
+    const groupeid = pAff.groupeid;
+    const anneeid = pAff.anneeid;
     const sel1: any = {
       anneeid: { $eq: anneeid },
       etudiantid: { $eq: etudiantid },
@@ -103,13 +106,6 @@ export class EtudAffectationManager extends EtudiantManager {
     await this.changeEtudiantStatusAsync(p.etudiantid, ETUDIANT_STATUS_BUSY);
     return this.loadEtudAffectationByIdAsync(docid);
   } // saveAsync
-  //
-  public async loadEtudAffectationByIdAsync(
-    id: string
-  ): Promise<IEtudAffectationDoc> {
-    const data: IItemEtudAffectation = await this.pStore.findDocById(id);
-    return this.convertEtudAffectationDocAsync(data);
-  } // loadByIdAsync
   //
   public async getEtudAffectationsCountAsync(
     anneeid: string,

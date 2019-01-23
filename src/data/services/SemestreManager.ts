@@ -25,7 +25,7 @@ export class SemestreManager extends UniteManager {
       throw new TypeError("Cannot save semestre");
     }
     const doc: any = {
-      name: p.name.trim(),
+      name,
       observations: p.observations,
       ownerid: p.ownerid,
       sigle,
@@ -49,11 +49,6 @@ export class SemestreManager extends UniteManager {
     const docid = await this.pStore.maintainsDoc(doc);
     return await this.loadSemestreByIdAsync(docid);
   } // saveSemestreAsync
-  //
-  public async loadSemestreByIdAsync(id: string): Promise<ISemestreDoc> {
-    const data: IItemSemestre = await this.pStore.findDocById(id);
-    return this.convertSemestreDoc(data);
-  } // loadSemestreByIdAsyn
   //
   public getSemestresCountAsync(): Promise<number> {
     const sel: any = {

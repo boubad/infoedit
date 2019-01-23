@@ -147,10 +147,6 @@ export class DataPersistManager extends StatDataManager {
     } // sort
     return pRet;
   } // getAnneeSemestreGroupeEtudiantsOptions
-  public async loadEvtByIdAsync(id: string): Promise<IEvtDoc> {
-    const data: IItemEvt = await this.pStore.findDocById(id);
-    return await this.convertEvtDocAsync(data);
-  } // loadEvtByIdAsync
   public removeEvtAsync(p: IEvtDoc): Promise<void> {
     return this.pStore.removeDoc(p.id);
   } // removeEvtAsync
@@ -382,10 +378,6 @@ export class DataPersistManager extends StatDataManager {
     } // sort
     return pRet;
   } // getEtudiantNotesAsync
-  public async loadNoteByIdAsync(id: string): Promise<INoteDoc> {
-    const data: IItemNote = await this.pStore.findDocById(id);
-    return await this.convertNoteDocAsync(data);
-  } // loadEvtByIdAsync
   public async maintainsManyNotesAsync(notes: INoteDoc[]): Promise<void> {
     const docs: any[] = [];
     const n = notes.length;

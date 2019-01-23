@@ -1,6 +1,6 @@
-import {ETUDIANT_STATUS_FREE} from '../DataProcs';
-import { IEtudiantDoc, IOption } from '../DomainData';
-import { GroupeManager } from './GroupeManager';
+import { ETUDIANT_STATUS_FREE } from "../DataProcs";
+import { IEtudiantDoc, IOption } from "../DomainData";
+import { GroupeManager } from "./GroupeManager";
 import { IDataStore } from "./IDataStore";
 import { TYPE_ETUDIANT } from "./impl/DomainData";
 import { IItemEtudiant } from "./impl/IInfoDomain";
@@ -75,17 +75,12 @@ export class EtudiantManager extends GroupeManager {
     if (pp.length > 0) {
       const x = pp[0];
       doc._id = x._id;
-    } else if (p.id.trim().length > 0){
+    } else if (p.id.trim().length > 0) {
       doc._id = p.id.trim();
     }
     const docid = await this.pStore.maintainsDoc(doc);
     return this.loadEtudiantByIdAsync(docid);
   } // saveEtudiantAsync
-  //
-  public async loadEtudiantByIdAsync(id: string): Promise<IEtudiantDoc> {
-    const data: IItemEtudiant = await this.pStore.findDocById(id);
-    return this.convertEtudiantDoc(data);
-  } // loadByIdAsync
   //
   public getEtudiantsCountAsync(status: string): Promise<number> {
     const sel: any = {

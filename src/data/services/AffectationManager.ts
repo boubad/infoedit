@@ -18,15 +18,15 @@ export class AffectationManager extends AnneeManager {
   public async saveAffectationAsync(
     p: IAffectationDoc
   ): Promise<IAffectationDoc> {
-    const anneeid = p.anneeid;
-    const semestreid = p.semestreid;
-    const groupeid = p.groupeid;
-    const start = p.startdate;
-    const end = p.enddate;  
+    const anneeid = p.anneeid.trim();
+    const semestreid = p.semestreid.trim();
+    const groupeid = p.groupeid.trim();
+    const start = p.startdate.trim();
+    const end = p.enddate.trim();  
     if (
-      anneeid.trim().length < 1 ||
-      semestreid.trim().length < 1 ||
-      groupeid.trim().length < 1 ||
+      anneeid.length < 1 ||
+      semestreid.length < 1 ||
+      groupeid.length < 1 ||
       start.length < 1 ||
       end.length < 1 ||
       start > end
@@ -36,7 +36,12 @@ export class AffectationManager extends AnneeManager {
     const pAnnee = await this.fetchAnneeByIdAsync(anneeid);
     if (start < pAnnee.startdate || end > pAnnee.enddate){
       throw new TypeError("Cannot save affectation. Bad dates.");
-    }  
+    } 
+    const pSem = await this.fetchSemestreByIdAsync(semestreid);
+    const pGroupe = await this.fetchGroupeByIdAsync(groupeid);
+    if (pSem.id !== semestreid || pGroupe.id !== groupeid){
+      throw new TypeError("Cannot find parent semestre (groupe)");
+    }
       const doc: IItemAffectation = {
         anneeid,
         enddate:end,
@@ -58,19 +63,12 @@ export class AffectationManager extends AnneeManager {
       if (pp.length > 0) {
         const x = pp[0];
         doc._id = x._id;
-      } else if (p.id.length > 0) {
-        doc._id = p.id;
       } else if (p.id.trim().length > 0){
         doc._id = p.id.trim();
       }
       const sid = await this.pStore.maintainsDoc(doc);
       return this.loadAffectationByIdAsync(sid);
   } // saveAsync
-  //
-  public async loadAffectationByIdAsync(id: string): Promise<IAffectationDoc> {
-    const data: IItemAffectation = await this.pStore.findDocById(id);
-    return this.convertAffectationDocAsync(data);
-  } // loadByIdAsync
   //
   public async getAffectationsCountAsync(
     anneeid: string,

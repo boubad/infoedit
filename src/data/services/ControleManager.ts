@@ -28,21 +28,27 @@ export class ControleManager extends EtudAffectationManager {
     ) {
       throw new TypeError("Cannot save controle");
     }
+    const pMat = await this.fetchMatiereByIdAsync(matiereid);
+    const pAff = await this.fetchAffectationByIdAsync(affectationid);
+    if (pMat.id !== matiereid || pAff.id !== affectationid){
+      throw new TypeError("Invalid parent(s) id(s)");
+    }
+    const coefficient = (p.coefficient > 0.0) ? p.coefficient : 1.0;
     const doc: any = {
       affectationid,
-      anneeid: p.anneeid,
-      coefficient: p.coefficient,
+      anneeid: pAff.anneeid,
+      coefficient,
       date,
       duration: p.duration,
-      groupeid: p.groupeid,
+      groupeid: pAff.groupeid,
       matiereid,
       name,
       observations: p.observations,
       ownerid: p.ownerid,
       place: p.place,
-      semestreid: p.semestreid,
+      semestreid: pAff.semestreid,
       type: TYPE_CONTROLE,
-      uniteid: p.uniteid
+      uniteid: pMat.uniteid
     };
     const sel: any = {
       affectationid: { $eq: affectationid },
@@ -61,11 +67,6 @@ export class ControleManager extends EtudAffectationManager {
     const docid = await this.pStore.maintainsDoc(doc);
     return this.loadControleByIdAsync(docid);
   } // saveAsync
-  //
-  public async loadControleByIdAsync(id: string): Promise<IControleDoc> {
-    const data: IItemControle = await this.pStore.findDocById(id);
-    return this.convertControleDocAsync(data);
-  } // loadByIdAsyn
   //
   public async getControlesCountAsync(
     anneeid: string,
