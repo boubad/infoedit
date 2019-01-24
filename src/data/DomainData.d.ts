@@ -27,6 +27,11 @@ export interface IAnneeDoc extends ISigleNamedDoc {
 export interface ISemestreDoc extends ISigleNamedDoc {} // interface IUniteDoc
 export interface IUniteDoc extends ISigleNamedDoc {} // interface IUniteDoc
 export interface IGroupeDoc extends ISigleNamedDoc {} // interface IGroupeDoc
+export interface IDataVarDoc extends ISigleNamedDoc {
+  modalkeys:string[];
+  modelvalues:number[];
+  vartype:string;
+}// interface IDataVarDoc
 //
 export interface IMatiereDoc extends ISigleNamedDoc {
   uniteid: string;
@@ -66,6 +71,7 @@ export interface IEtudiantDoc extends IBaseDoc {
   status: string;
   url: string;
   fullname: string;
+  data:any;
   notes: INoteDoc[];
   evts: IEvtDoc[];
   affectations: IEtudAffectationDoc[];
@@ -122,6 +128,7 @@ export interface IOption {
 export interface IMatiereDesc {
   id:string;
   name:string;
+  unite:string;
   coefficient:number;
   count:number;
   total:number;
@@ -138,6 +145,7 @@ export interface IEtudiantDesc {
   groupesigle:string;
   url:string;
   descs:Map<string,IMatiereDesc> | null;
+  data:any;
 }// interface IEtudiantDesc
 export interface IExportEtudiantDesc {
   ident:string;

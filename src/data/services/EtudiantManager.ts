@@ -29,7 +29,7 @@ export class EtudiantManager extends GroupeManager {
       const docid = await this.pStore.maintainsDoc(data);
       data = await this.pStore.findDocById(docid);
     }
-    return this.convertEtudiantDoc(data);
+    return this.convertEtudiantDocAsync(data);
   } // changeEtudiantAvatarAsync
   public async changeEtudiantStatusAsync(
     id: string,
@@ -44,7 +44,7 @@ export class EtudiantManager extends GroupeManager {
       const docid = await this.pStore.maintainsDoc(data);
       data = await this.pStore.findDocById(docid);
     }
-    return this.convertEtudiantDoc(data);
+    return this.convertEtudiantDocAsync(data);
   } // changeEtudiantStatusAsync
   //
   public async saveEtudiantAsync(p: IEtudiantDoc): Promise<IEtudiantDoc> {
@@ -53,6 +53,7 @@ export class EtudiantManager extends GroupeManager {
     }
     const doc: any = {
       avatar: p.avatar.trim(),
+      data: p.data,
       email: p.email.trim(),
       firstname: p.firstname.trim(),
       ident: p.ident.trim(),
@@ -118,7 +119,7 @@ export class EtudiantManager extends GroupeManager {
     }
     const pRet: IEtudiantDoc[] = [];
     for (let i = 0; i < n; i++) {
-      pRet.push(this.convertEtudiantDoc(pp[i]));
+      pRet.push(await this.convertEtudiantDocAsync(pp[i]));
     } // i
     if (pRet.length > 1) {
       pRet.sort((a, b) => {

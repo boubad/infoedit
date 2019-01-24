@@ -1,4 +1,18 @@
 //
+export interface IItemDataVar {
+  _id?: string;
+  _rev?: string;
+  _deleted?: boolean;
+  _attachments?: any;
+  type?: string;
+  ownerid?: string;
+  observations?: string;
+  sigle?: string;
+  name?: string;
+  modalkeys?: string[];
+  modelvalues?: number[];
+  vartype?: string;
+} // interface IItemDataVar
 export interface IItemAnnee {
   _id?: string;
   _rev?: string;
@@ -78,7 +92,8 @@ export interface IItemEtudiant {
   email?: string;
   avatar?: string;
   status?: string;
-  ident?:string;
+  ident?: string;
+  data?: string;
 } // interface IItemEtudiant
 export interface IItemAffectation {
   _id?: string;

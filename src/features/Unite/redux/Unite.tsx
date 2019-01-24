@@ -8,7 +8,7 @@ import { IUnitesProps, Unite } from "../presentation/Unite";
 import {
   cancelUniteAction,
   changeUniteField,
-  createUniteAction,
+  createUnite,
   gotoPageUnite,
   removeUnite,
   removeUniteAttachment,
@@ -75,7 +75,7 @@ function mapStateToProps(state: IInfoState): IUnitesProps {
 function mapDispatchToProps(dispatch: InfoDispatch) {
   return {
     createItem: () => {
-      dispatch(createUniteAction());
+      dispatch(createUnite());
     },
     gotoPage: (page: number) => {
       dispatch(gotoPageUnite(page));
@@ -83,7 +83,7 @@ function mapDispatchToProps(dispatch: InfoDispatch) {
     onEditCommand: (mode: string) => {
       switch (mode) {
         case "create":
-          dispatch(createUniteAction({}));
+          dispatch(createUnite());
           break;
         case "cancel":
           dispatch(cancelUniteAction({}));

@@ -26,14 +26,10 @@ export class SigleNamedListComponent<
       return (
         <tr key={px.id}>
           <td>
-            <a href="#" onClick={this.onSelectItem.bind(this, px.id)} className={this.getDisabledStyle()}>
               {px.sigle}
-            </a>
           </td>
           <td>
-            <a href="#" onClick={this.onSelectItem.bind(this, px.id)} className={this.getDisabledStyle()}>
               {px.name}
-            </a>
           </td>
           <td>{px.observations}</td>
         </tr>

@@ -203,7 +203,17 @@ export function etudiantSubReducer(
               pz.ident = val;
               pz.modified = true;
               break;
+            case "data":
+              pz.data = val;
+              pz.modified = true;
+              break;
             default:
+              {
+                const data = pz.data;
+                data[p.field] = val;
+                pz.data = data;
+                pz.modified = true;
+              }
               break;
           } // field
         } // p

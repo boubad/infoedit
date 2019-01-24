@@ -1,5 +1,6 @@
 import { FluxStandardAction } from "flux-standard-action";
 import { Dispatch } from "redux";
+import { IDataVarDoc } from '../data/DomainData';
 //
 import {
   IAffectationDoc,
@@ -89,6 +90,13 @@ export interface IPayload {
   ficheControle?:IControleDoc;
   //
   etudiantDescs?: IEtudiantDesc[];
+  dataLabel?:string;
+  dataValue?:any;
+  dataVarsOptions?:IOption[];
+  //
+  dataVarsCount?:number;
+  dataVar?:IDataVarDoc;
+  dataVars?:IDataVarDoc[];
 } // interface IPayload
 ////////////////////////////////
 export type InfoAction = FluxStandardAction<IPayload>;

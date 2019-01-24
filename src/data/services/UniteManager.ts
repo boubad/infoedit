@@ -1,10 +1,11 @@
 import { IUniteDoc } from "../DomainData";
 import { BaseDataManager } from "./BaseDataManager";
+import { DataVarManager } from './DataVarManager';
 import { IDataStore } from "./IDataStore";
 import { TYPE_UNITE } from "./impl/DomainData";
 import { IItemUnite } from "./impl/IInfoDomain";
 //
-export class UniteManager extends BaseDataManager {
+export class UniteManager extends DataVarManager {
   //
   constructor(pStore: IDataStore) {
     super(pStore);

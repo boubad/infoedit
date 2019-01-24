@@ -372,6 +372,7 @@ export class AppStateServices {
     pRet.semestresOptions = await pMan.getSemestresOptionsAsync();
     pRet.groupesOptions = await pMan.getGroupesOptionsAsync();
     pRet.unitesOptions = await pMan.getUnitesOptionsAsync();
+    pRet.dataVarsOptions = await pMan.getDataVarOptionsAsync();
     return pRet;
   } // RefreshGlobalOptions
 } // class EtudiantServices

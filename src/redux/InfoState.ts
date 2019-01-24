@@ -2,6 +2,7 @@ import {
   IAffectationDoc,
   IAnneeDoc,
   IControleDoc,
+  IDataVarDoc,
   IEtudAffectationDoc,
   IEtudiantDesc,
   IEtudiantDoc,
@@ -44,6 +45,7 @@ export interface IAppState {
   readonly affectations: IAffectationDoc[];
   readonly affectationid: string;
   readonly ownerid:string;
+  readonly dataVarsOptions:IOption[];
 } // interface IAppState
 export interface IBaseState<T> {
   readonly busy: boolean;
@@ -101,5 +103,6 @@ export interface IInfoState {
   readonly outils: IOutilsState;
   readonly details: IDetailState;
   readonly stats: IStatState;
+  readonly datavars: IBaseState<IDataVarDoc>;
 } // interface IInfoState
 //

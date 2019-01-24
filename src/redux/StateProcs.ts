@@ -13,10 +13,12 @@ import {
   GetSemestre,
   GetUnite
 } from "../data/DataProcs";
+import { GetDataVarDoc } from '../data/DataProcs';
 import {
   IAffectationDoc,
   IAnneeDoc,
   IControleDoc,
+  IDataVarDoc,
   IEtudAffectationDoc,
   IEtudiantDoc,
   IEvtDoc,
@@ -194,6 +196,11 @@ export function GetInitialMatiere(state: IInfoState): IMatiereDoc {
   pz.coefficient=1.0;
   return pz;
 } // GetInitialMatiere
+export function GetInitialDataVar(state: IInfoState): IDataVarDoc {
+  const pz = GetDataVarDoc();
+  pz.ownerid = state.appstate.ownerid;
+  return pz;
+} // GetInitialDataVarDo
 export function GetInitialGroupe(state: IInfoState): IGroupeDoc {
   const pz = GetGroupe();
   pz.ownerid = state.appstate.ownerid;

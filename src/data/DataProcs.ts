@@ -1,5 +1,5 @@
 import * as moment from "moment";
-import { IAffectationDoc, IAnneeDoc, IControleDoc, IEtudAffectationDoc, IEtudiantDesc, IEtudiantDoc, IEvtDoc, IGroupeDoc, IMatiereDesc, IMatiereDoc, INoteDoc, ISemestreDoc, IUniteDoc } from './DomainData';
+import { IAffectationDoc, IAnneeDoc, IControleDoc, IDataVarDoc, IEtudAffectationDoc, IEtudiantDesc, IEtudiantDoc, IEvtDoc, IGroupeDoc, IMatiereDesc, IMatiereDoc, INoteDoc, ISemestreDoc, IUniteDoc } from './DomainData';
 //
 ////////////////////////
 export function DateToDisplay(date:string) : string {
@@ -18,6 +18,11 @@ export const ETUDIANT_STATUS_FREE = 'free';
 export const ETUDIANT_STATUS_BUSY = 'busy';
 export const ETUDIANT_STATUS_DONE = 'done';
 export const ETUDIANT_STATUS_DEMISSION = 'demmission';
+//
+export const DATAVAR_TYPE_STRING = 'string';
+export const DATAVAR_TYPE_NUMBER = 'number';
+export const DATAVAR_TYPE_IDENT = 'ident';
+export const DATAVAR_TYPE_INFO = 'info';
 //
 export function ConvertEvtTypeToString(etype?: EvtGenre): string {
   let stype = "";
@@ -47,6 +52,27 @@ export function ConvertEvtTypeToString(etype?: EvtGenre): string {
   } // etype
   return stype;
 } // convertEvtTypeToString
+//
+export function GetDataVarDoc(): IDataVarDoc {
+  return Object.assign(
+    {},
+    {
+      id: "",
+      rev: "",
+      // tslint:disable-next-line:object-literal-sort-keys
+      observations: "",
+      name: "",
+      sigle: "",
+      modified: false,
+      attachments: [],
+      loaded: false,
+      ownerid:'',
+      modalkeys:[],
+      modelvalues:[],
+      vartype:''
+    }
+  );
+} // GetGroupe
 //
 export function GetGroupe(): IGroupeDoc {
     return Object.assign(
@@ -147,6 +173,7 @@ export function GetGroupe(): IGroupeDoc {
         affectations:[],
         ownerid:'',
         ident:'',
+        data:{}
       }
     );
   } // GetEtudiant
@@ -348,12 +375,14 @@ export function GetGroupe(): IGroupeDoc {
       name:'',
       notes:[],
       total:0,
+      unite:'',
       value:null,
     });
   }// GetMatiereDesc
   //
   export function GetEtudiantDesc(): IEtudiantDesc {
     return Object.assign({},{
+      data:{},
       descs:null,
       etudiantid:'',
       firstname:'',

@@ -1,3 +1,4 @@
+import { GetDataVarDoc } from '../data/DataProcs';
 import {
   GetAffectation,
   GetAnnee,
@@ -14,6 +15,7 @@ import {
 import {
   IAffectationDoc,
   IAnneeDoc,
+  IDataVarDoc,
   IEtudAffectationDoc,
   IGroupeDoc,
   IMatiereDoc,
@@ -68,7 +70,8 @@ export function GetInitialAppState(): IAppState {
     semestreEndDate: "",
     affectationid: "",
     affectations: [],
-    ownerid: ""
+    ownerid: "",
+    dataVarsOptions:[],
   };
 } // getInitialAppState
 export function GetInitialAnneeState(): IBaseState<IAnneeDoc> {
@@ -156,6 +159,21 @@ export function GetInitialControleState(): IControleState {
     etudAffectations: []
   };
 } // GetControleInitialState
+export function GetInitialVarDocState(): IBaseState<IDataVarDoc> {
+  return {
+    addMode: false,
+    busy: false,
+    displayPages: 5,
+    // tslint:disable-next-line:object-literal-sort-keys
+    current: GetDataVarDoc(),
+    currentPage: 0,
+    itemsCount: 0,
+    pagesCount: 0,
+    pageData: [],
+    pageSize: 20,
+    previousId: ""
+  };
+} // GetInitialVarDocState
 export function GetInitialMatiereState(): IBaseState<IMatiereDoc> {
   return {
     addMode: false,
@@ -257,6 +275,7 @@ export  const initialState: IInfoState = {
   etudaffectations: GetInitialEtudAffectationState(),
   outils: GetInitialOutilsState(),
   details: GetInitialDetailState(),
-  stats: GetInitialStatState()
+  stats: GetInitialStatState(),
+  datavars: GetInitialVarDocState()
 }; // initialDataModel
 //

@@ -1,4 +1,5 @@
 import produce from "immer";
+import { REMOVE_DATAVAR_ITEM_SUCCESS, SAVE_DATAVAR_ITEM_SUCCESS } from '../../../features/DataVar/redux/DataVarActions';
 import {
   REMOVE_SEMESTRE_ITEM_SUCCESS,
   SAVE_SEMESTRE_ITEM_SUCCESS
@@ -86,8 +87,13 @@ export function appStateSubReducer(
     case REMOVE_ETUDIANT_ITEM_SUCCESS:
     case SAVE_AFFECTATION_ITEM_SUCCESS:
     case REMOVE_AFFECTATION_ITEM_SUCCESS:
+    case SAVE_DATAVAR_ITEM_SUCCESS:
+    case REMOVE_DATAVAR_ITEM_SUCCESS:
       return produce(state, pRet => {
         pRet.busy = false;
+        if (p.dataVarsOptions){
+          pRet.dataVarsOptions = p.dataVarsOptions;
+        }
         if (p.matiereSigle){
           pRet.matiereSigle = p.matiereSigle;
         }

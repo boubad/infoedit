@@ -3,16 +3,17 @@ import * as React from "react";
 import { Nav, NavItem, NavLink, TabContent, Table, TabPane } from "reactstrap";
 
 import { BaseComponent } from "../../../components/BaseComponent";
-import Affectation from '../../../features/Affectation/redux/Affectation';
+import Affectation from "../../../features/Affectation/redux/Affectation";
 import Annee from "../../../features/Annee/redux/Annee";
-import AppState from '../../../features/AppState/redux/AppState';
-import EtudAffectation from '../../../features/EtudAffectation/redux/EtudAffectation';
-import Etudiant from '../../../features/Etudiant/redux/Etudiant';
+import AppState from "../../../features/AppState/redux/AppState";
+import DataVar from "../../../features/DataVar/redux/DataVar";
+import EtudAffectation from "../../../features/EtudAffectation/redux/EtudAffectation";
+import Etudiant from "../../../features/Etudiant/redux/Etudiant";
 import Groupe from "../../../features/Groupe/redux/Groupe";
 import Matiere from "../../../features/Matiere/redux/Matiere";
-import ChangeStatus from '../../../features/Outils/redux/ChangeStatus';
-import ImportEtudiants from '../../../features/Outils/redux/ImportEtudiants';
-import SynchroData from '../../../features/Outils/redux/SynchroData';
+import ChangeStatus from "../../../features/Outils/redux/ChangeStatus";
+import ImportEtudiants from "../../../features/Outils/redux/ImportEtudiants";
+import SynchroData from "../../../features/Outils/redux/SynchroData";
 import Semestre from "../../../features/Semestre/redux/Semestre";
 import Unite from "../../../features/Unite/redux/Unite";
 import StatusComponent from "../../AppStatus/redux/StatusComponent";
@@ -40,7 +41,7 @@ export class Admin extends BaseComponent<IAdminProps, IAdminState> {
     return (
       <Table>
         <tbody className={this.getInfoStyle()}>
-        <tr>
+          <tr>
             <td className="text-center">
               <AppState />
             </td>
@@ -164,6 +165,16 @@ export class Admin extends BaseComponent<IAdminProps, IAdminState> {
                       Sync
                     </NavLink>
                   </NavItem>
+                  <NavItem>
+                    <NavLink
+                      className={classnames({
+                        active: this.state.activeTab === "13"
+                      })}
+                      onClick={this.toggle.bind(this, "13")}
+                    >
+                      Variables
+                    </NavLink>
+                  </NavItem>
                 </Nav>
                 <TabContent activeTab={this.state.activeTab}>
                   <TabPane tabId="1">
@@ -198,6 +209,9 @@ export class Admin extends BaseComponent<IAdminProps, IAdminState> {
                   </TabPane>
                   <TabPane tabId="12">
                     <SynchroData />
+                  </TabPane>
+                  <TabPane tabId="13">
+                    <DataVar />
                   </TabPane>
                 </TabContent>
               </div>

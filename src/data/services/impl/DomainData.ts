@@ -9,3 +9,4 @@ export const TYPE_ETUD_AFFECTATION = "affetud";
 export const TYPE_CONTROLE = "cont";
 export const TYPE_EVT = "evt";
 export const TYPE_NOTE = "note";
+export const TYPE_DATAVAR = "datavar";

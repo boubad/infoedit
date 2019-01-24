@@ -14,12 +14,13 @@ import {
   GetUnite
 } from "../DataProcs";
 
-import { DateToDisplay } from "../DataProcs";
+import { DateToDisplay, GetDataVarDoc } from "../DataProcs";
 import {
   IAffectationDoc,
   IAnneeDoc,
   IAttachedDoc,
   IControleDoc,
+  IDataVarDoc,
   IEtudAffectationDoc,
   IEtudiantDoc,
   IEvtDoc,
@@ -36,6 +37,7 @@ import {
   TYPE_AFFECTATION,
   TYPE_ANNEE,
   TYPE_CONTROLE,
+  TYPE_DATAVAR,
   TYPE_ETUD_AFFECTATION,
   TYPE_ETUDIANT,
   TYPE_EVT,
@@ -50,6 +52,7 @@ import {
   IItemAnnee,
   IItemAttInfo,
   IItemControle,
+  IItemDataVar,
   IItemEtudAffectation,
   IItemEtudiant,
   IItemEvt,
@@ -102,6 +105,7 @@ export class BaseDataManager {
   } // sortOptions
   //
   protected pStore: IDataStore;
+  protected dataVarsOptions: IOption[] = [];
   //
   private semestresMap: Map<string, ISemestreDoc> = new Map<
     string,
@@ -132,7 +136,12 @@ export class BaseDataManager {
   >();
   private evtsMap: Map<string, IEvtDoc> = new Map<string, IEvtDoc>();
   private notesMap: Map<string, INoteDoc> = new Map<string, INoteDoc>();
+  private dataVarsMap: Map<string, IDataVarDoc> = new Map<
+    string,
+    IDataVarDoc
+  >();
   //
+
   constructor(pStore: IDataStore) {
     this.pStore = pStore;
   } // constructor
@@ -140,6 +149,36 @@ export class BaseDataManager {
   public async synchroData(): Promise<void> {
     await this.pStore.synchroData();
   } // synchroData
+  //
+  public async getDataVarOptionsAsync(): Promise<IOption[]> {
+    const sel: any = {
+      type: { $eq: TYPE_DATAVAR }
+    };
+    const pRet: IOption[] = [{ id: "", text: "" }];
+    const fields = ["sigle", "name", "observations"];
+    const pp = await this.pStore.findAllDocsBySelector(sel, fields);
+    const n = pp.length;
+    if (n < 1) {
+      return pRet;
+    }
+    const bb: IOption[] = [];
+    for (let i = 0; i < n; i++) {
+      const x = pp[i];
+      const pz: IOption = {
+        id: x.sigle,
+        text: x.name
+      };
+      if (x.observations) {
+        pz.url = x.observations;
+      }
+      bb.push(pz);
+    } // i
+    BaseDataManager.sortOptions(bb);
+    for (let i = 0; i < n; i++) {
+      pRet.push(bb[i]);
+    }
+    return pRet;
+  } // getDataVarOptionsAsync
   //
   public async getMatieresOptionsAsync(uniteid: string): Promise<IOption[]> {
     if (uniteid.trim().length < 1) {
@@ -268,7 +307,7 @@ export class BaseDataManager {
       1
     );
     if (data.length > 0) {
-      return this.convertEtudiantDoc(data[0]);
+      return this.convertEtudiantDocAsync(data[0]);
     } else {
       return GetEtudiant();
     }
@@ -335,7 +374,26 @@ export class BaseDataManager {
     }
     return GetAffectation();
   } // loadByIdAsync
+  public async loadDataVarByIdAsync(id: string): Promise<IDataVarDoc> {
+    const sel: any = {
+      _id: { $eq: id },
+      type: { $eq: TYPE_DATAVAR }
+    };
+    const pp: IDataVarDoc[] = await this.pStore.findDocsBySelector(sel, 0, 1);
+    if (pp.length > 0) {
+      return this.convertDataVarDoc(pp[0]);
+    }
+    return GetDataVarDoc();
+  } // loadByIdAsync
   /////////////////////////////
+  public async fetchDataVarByIdAsync(sid: string): Promise<IDataVarDoc> {
+    const pz = this.dataVarsMap.get(sid);
+    if (pz) {
+      return pz;
+    } else {
+      return this.loadDataVarByIdAsync(sid);
+    }
+  } // fetchDataVarByIdAsync
   public async fetchNoteByIdAsync(sid: string): Promise<INoteDoc> {
     const pz = this.notesMap.get(sid);
     if (pz) {
@@ -360,7 +418,9 @@ export class BaseDataManager {
       return this.loadControleByIdAsync(sid);
     }
   } // fetchControleByIdAsync
-  public async fetchEtudAffectationByIdAsync(id: string): Promise<IEtudAffectationDoc> {
+  public async fetchEtudAffectationByIdAsync(
+    id: string
+  ): Promise<IEtudAffectationDoc> {
     const pz = this.etudAffectationsMap.get(id);
     if (pz) {
       return pz;
@@ -479,7 +539,7 @@ export class BaseDataManager {
     pRet.anneename = x.anneename;
     pRet.groupename = x.groupename;
     pRet.unitename = x.unitename;
-    if (pRet.id.length > 0){
+    if (pRet.id.length > 0) {
       this.evtsMap.set(pRet.id, pRet);
     }
     return pRet;
@@ -518,7 +578,7 @@ export class BaseDataManager {
     pRet.anneename = xx.anneename;
     pRet.groupename = xx.groupename;
     pRet.unitename = xx.unitename;
-    if (pRet.id.length > 0){
+    if (pRet.id.length > 0) {
       this.notesMap.set(pRet.id, pRet);
     }
     return pRet;
@@ -555,8 +615,8 @@ export class BaseDataManager {
     }
     pRet.displayenddate = DateToDisplay(pRet.enddate);
     pRet.displaystartdate = DateToDisplay(pRet.startdate);
-    if (pRet.id.length > 0){
-      this.etudAffectationsMap.set(pRet.id,pRet);
+    if (pRet.id.length > 0) {
+      this.etudAffectationsMap.set(pRet.id, pRet);
     }
     return pRet;
   } // convertEtudAffectationDocAsync
@@ -587,8 +647,8 @@ export class BaseDataManager {
     pRet.groupename = g.name;
     pRet.displayenddate = DateToDisplay(pRet.enddate);
     pRet.displaystartdate = DateToDisplay(pRet.startdate);
-    if (pRet.id.length > 0){
-    this.affectationsMap.set(pRet.id, pRet);
+    if (pRet.id.length > 0) {
+      this.affectationsMap.set(pRet.id, pRet);
     }
     return pRet;
   } // convertAffectationDocAsync
@@ -613,8 +673,8 @@ export class BaseDataManager {
     const un = await this.fetchUniteByIdAsync(pRet.uniteid);
     pRet.unitename = un.name;
     pRet.attachments = this.getDocAttachments(p);
-    if (pRet.id.length > 0){
-    this.matieresMap.set(pRet.id, pRet);
+    if (pRet.id.length > 0) {
+      this.matieresMap.set(pRet.id, pRet);
     }
     return pRet;
   } // convertMatiereDocAsync
@@ -646,8 +706,8 @@ export class BaseDataManager {
     pRet.anneename = aff.anneename;
     pRet.semestrename = aff.semestrename;
     pRet.groupename = aff.groupename;
-    if (pRet.id.length > 0){
-    this.controlesMap.set(pRet.id, pRet);
+    if (pRet.id.length > 0) {
+      this.controlesMap.set(pRet.id, pRet);
     }
     return pRet;
   } // convertControleDocAsync
@@ -666,12 +726,12 @@ export class BaseDataManager {
     pRet.displayenddate = DateToDisplay(pRet.enddate);
     pRet.displaystartdate = DateToDisplay(pRet.startdate);
     pRet.attachments = this.getDocAttachments(p);
-    if (pRet.id.length > 0){
-    this.anneesMap.set(pRet.id, pRet);
+    if (pRet.id.length > 0) {
+      this.anneesMap.set(pRet.id, pRet);
     }
     return pRet;
   } // convertAnneeDoc
-  protected convertEtudiantDoc(p: IItemEtudiant): IEtudiantDoc {
+  protected async convertEtudiantDocAsync(p: IItemEtudiant): Promise<IEtudiantDoc> {
     this.register(p._id as string, p);
     const pRet = GetEtudiant();
     pRet.id = p._id ? p._id : "";
@@ -685,13 +745,15 @@ export class BaseDataManager {
     pRet.avatar = p.avatar ? p.avatar : "";
     pRet.status = p.status ? p.status : "";
     pRet.ident = p.ident ? p.ident : "";
+    pRet.data = p.data ? p.data : {};
     pRet.url = this.pStore.formBlobUrl(pRet.id, pRet.avatar);
     pRet.attachments = this.getDocAttachments(p);
-    if (pRet.id.length > 0){
-    this.etudiantsMap.set(pRet.id, pRet);
+    if (pRet.id.length > 0) {
+      await this.checkEtudiantVars(pRet);
+      this.etudiantsMap.set(pRet.id, pRet);
     }
     return pRet;
-  } // convertEtudiantDoc
+  } // convertEtudiantDocAsync
   protected convertSemestreDoc(p: IItemSemestre): ISemestreDoc {
     this.register(p._id as string, p);
     const pRet = GetSemestre();
@@ -702,11 +764,29 @@ export class BaseDataManager {
     pRet.name = p.name ? p.name : "";
     pRet.sigle = p.sigle ? p.sigle : "";
     pRet.attachments = this.getDocAttachments(p);
-    if (pRet.id.length > 0){
-    this.semestresMap.set(pRet.id, pRet);
+    if (pRet.id.length > 0) {
+      this.semestresMap.set(pRet.id, pRet);
     }
     return pRet;
   } // convertSemestreDoc
+  protected convertDataVarDoc(p: IItemDataVar): IDataVarDoc {
+    this.register(p._id as string, p);
+    const pRet = GetDataVarDoc();
+    pRet.id = p._id ? p._id : "";
+    pRet.rev = p._rev ? p._rev : "";
+    pRet.ownerid = p.ownerid ? p.ownerid : "";
+    pRet.observations = p.observations ? p.observations : "";
+    pRet.name = p.name ? p.name : "";
+    pRet.sigle = p.sigle ? p.sigle : "";
+    pRet.modalkeys = p.modalkeys ? p.modalkeys : [];
+    pRet.modelvalues = p.modelvalues ? p.modelvalues : [];
+    pRet.vartype = p.vartype ? p.vartype : "";
+    pRet.attachments = this.getDocAttachments(p);
+    if (pRet.id.length > 0) {
+      this.dataVarsMap.set(pRet.id, pRet);
+    }
+    return pRet;
+  } // convertDataVarDoc
   protected convertUniteDoc(p: IItemUnite): IUniteDoc {
     this.register(p._id as string, p);
     const pRet = GetUnite();
@@ -717,8 +797,8 @@ export class BaseDataManager {
     pRet.name = p.name ? p.name : "";
     pRet.sigle = p.sigle ? p.sigle : "";
     pRet.attachments = this.getDocAttachments(p);
-    if (pRet.id.length > 0){
-    this.unitesMap.set(pRet.id, pRet);
+    if (pRet.id.length > 0) {
+      this.unitesMap.set(pRet.id, pRet);
     }
     return pRet;
   } // convertUniteDoc
@@ -773,4 +853,19 @@ export class BaseDataManager {
   protected register(id: string, data: any) {
     LocalStoreManager.put(id, data);
   } // register
+  protected async checkEtudiantVars(pEtud: IEtudiantDoc) {
+    if (this.dataVarsOptions.length < 1) {
+      this.dataVarsOptions = await this.getDataVarOptionsAsync();
+    }
+    const data = pEtud.data;
+    this.dataVarsOptions.forEach(opt => {
+      const key = opt.id;
+      if (key.length > 0) {
+        if (!data.hasOwnProperty(key)) {
+          data[key] = "";
+        }
+      } // key
+    });
+    pEtud.data = data;
+  } // checkEtudiantVars
 } // class BaseDataManager

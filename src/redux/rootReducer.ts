@@ -7,6 +7,7 @@ import { appDataSubReducer } from '../features/AppData/redux/appDataSubReducer';
 import { appStateSubReducer } from "../features/AppState/redux/appStateSubReducer";
 import { appStatusSubReducer } from "../features/AppStatus/redux/statusSubReducer";
 import { controleSubReducer } from '../features/Controle/redux/controleSubReducer';
+import { datavarSubReducer } from '../features/DataVar/redux/datavarSubReducer';
 import { etudAffectationSubReducer } from '../features/EtudAffectation/redux/etudAffectationSubReducer';
 import { etudiantSubReducer } from '../features/Etudiant/redux/etudiantSubReducer';
 import { detailsSubReducer } from '../features/FicheEtudiant/redux/detailsSubReduder';
@@ -27,6 +28,7 @@ export const createRootReducer = (history:History<any>) => {
     appstate : appStateSubReducer,
     appstatus: appStatusSubReducer,
     controles : controleSubReducer,
+    datavars: datavarSubReducer,
     etudaffectations: etudAffectationSubReducer,
     etudiants: etudiantSubReducer,
     groupes: groupeSubReducer,

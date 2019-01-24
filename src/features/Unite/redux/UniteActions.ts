@@ -8,7 +8,7 @@ export const CHANGE_UNITE_FIELD = "CHANGE_UNITE_FIELD";
 export const changeUniteField = createAction(CHANGE_UNITE_FIELD);
 //
 export const CREATE_UNITE_ITEM = "CREATE_UNITE_ITEM";
-export const createUniteAction = createAction(CREATE_UNITE_ITEM);
+const createUniteAction = createAction(CREATE_UNITE_ITEM);
 export function createUnite(): any {
   return (dispatch: Dispatch, getState: () => IInfoState) => {
     const state = getState();
