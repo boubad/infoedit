@@ -105,7 +105,8 @@ export class BaseDataManager {
   } // sortOptions
   //
   protected pStore: IDataStore;
-  protected dataVarsOptions: IOption[] = [];
+  //
+  private dataVarsOptions: IOption[] = [];
   //
   private semestresMap: Map<string, ISemestreDoc> = new Map<
     string,
@@ -484,28 +485,8 @@ export class BaseDataManager {
       return this.loadEtudiantByIdAsync(id);
     }
   } // fetchEtudiantByIdAsync
-  protected async getItemsOptionsAsync(
-    sel: any,
-    bDesc?: boolean
-  ): Promise<IOption[]> {
-    const pRet: IOption[] = [{ id: "", text: "" }];
-    const fields = ["_id", "name"];
-    const pp = await this.pStore.findAllDocsBySelector(sel, fields);
-    const n = pp.length;
-    if (n < 1) {
-      return pRet;
-    }
-    const bb: IOption[] = [];
-    for (let i = 0; i < n; i++) {
-      const x = pp[i];
-      bb.push({ id: x._id, text: x.name });
-    } // i
-    BaseDataManager.sortOptions(bb);
-    for (let i = 0; i < n; i++) {
-      pRet.push(bb[i]);
-    }
-    return pRet;
-  } // getItemsOptionsAsync
+
+  //
   protected async convertEvtDocAsync(p: IItemEvt): Promise<IEvtDoc> {
     this.register(p._id as string, p);
     const pRet = GetEvt();
@@ -731,7 +712,9 @@ export class BaseDataManager {
     }
     return pRet;
   } // convertAnneeDoc
-  protected async convertEtudiantDocAsync(p: IItemEtudiant): Promise<IEtudiantDoc> {
+  protected async convertEtudiantDocAsync(
+    p: IItemEtudiant
+  ): Promise<IEtudiantDoc> {
     this.register(p._id as string, p);
     const pRet = GetEtudiant();
     pRet.id = p._id ? p._id : "";
@@ -817,7 +800,7 @@ export class BaseDataManager {
     }
     return pRet;
   } // convertGroupeDoc
-  protected getDocAttachments(p: any): IAttachedDoc[] {
+  private getDocAttachments(p: any): IAttachedDoc[] {
     const pRet: IAttachedDoc[] = [];
     const docid: string = p._id ? p._id : "";
     const aa: any = p._attachments;
@@ -850,10 +833,10 @@ export class BaseDataManager {
     } // sort
     return pRet;
   } // getDocAttachments
-  protected register(id: string, data: any) {
+  private register(id: string, data: any) {
     LocalStoreManager.put(id, data);
   } // register
-  protected async checkEtudiantVars(pEtud: IEtudiantDoc) {
+  private async checkEtudiantVars(pEtud: IEtudiantDoc) {
     if (this.dataVarsOptions.length < 1) {
       this.dataVarsOptions = await this.getDataVarOptionsAsync();
     }
@@ -868,4 +851,26 @@ export class BaseDataManager {
     });
     pEtud.data = data;
   } // checkEtudiantVars
+  private async getItemsOptionsAsync(
+    sel: any,
+    bDesc?: boolean
+  ): Promise<IOption[]> {
+    const pRet: IOption[] = [{ id: "", text: "" }];
+    const fields = ["_id", "name"];
+    const pp = await this.pStore.findAllDocsBySelector(sel, fields);
+    const n = pp.length;
+    if (n < 1) {
+      return pRet;
+    }
+    const bb: IOption[] = [];
+    for (let i = 0; i < n; i++) {
+      const x = pp[i];
+      bb.push({ id: x._id, text: x.name });
+    } // i
+    BaseDataManager.sortOptions(bb);
+    for (let i = 0; i < n; i++) {
+      pRet.push(bb[i]);
+    }
+    return pRet;
+  } // getItemsOptionsAsync
 } // class BaseDataManager
