@@ -1,9 +1,16 @@
 import produce from "immer";
-import { GetDataVarDoc as GetDataVar } from "../../../data/DataProcs";
+import {
+  DATAVAR_TYPE_STRING,
+  GetDataVarDoc as GetDataVar
+} from "../../../data/DataProcs";
 import { IDataVarDoc } from "../../../data/DomainData";
 import { IBaseState } from "../../../redux/InfoState";
 import { GetInitialVarDocState } from "../../../redux/initialState";
 import { InfoAction, IPayload } from "../../../redux/IPayload";
+import {
+  ADD_DATAVAR_MODALITE,
+  REMOVE_DATAVAR_MODALITE
+} from "./DataVarActions";
 import {
   CANCEL_DATAVAR_ITEM,
   CHANGE_DATAVAR_FIELD,
@@ -107,6 +114,33 @@ export function datavarSubReducer(
         }
         pRet.previousId = "";
       });
+    case ADD_DATAVAR_MODALITE:
+      return produce(state, pRet => {
+        if (p.field) {
+          const pz = pRet.current;
+          const key = p.field;
+          const ip = pz.modalkeys.indexOf(key);
+          if (ip < 0) {
+            pz.modelvalues.push(pz.modalkeys.length);
+            pz.modalkeys.push(key);
+            pz.modified = true;
+            pz.vartype = DATAVAR_TYPE_STRING;
+          }
+        } // fields
+      });
+    case REMOVE_DATAVAR_MODALITE:
+      return produce(state, pRet => {
+        if (p.field) {
+          const pz = pRet.current;
+          const key = p.field;
+          const ip = pz.modalkeys.indexOf(key);
+          if (ip >= 0) {
+            pz.modalkeys.splice(ip, 1);
+            pz.modelvalues.splice(ip, 1);
+            pz.modified = true;
+          }
+        } // fields
+      });
     case CHANGE_DATAVAR_FIELD:
       return produce(state, pRet => {
         if (p.field && p.value) {
@@ -131,19 +165,6 @@ export function datavarSubReducer(
               pz.modified = true;
               break;
             default:
-              {
-                  const ip = pz.modalkeys.indexOf(key);
-                  if (ip < 0){
-                      pz.modalkeys.push(key);
-                      pz.modelvalues.push(val);
-                      pz.modified = true;
-                  } else {
-                      if (ip < pz.modelvalues.length){
-                          pz.modelvalues[ip] = val;
-                          pz.modified = true;
-                      }
-                  }
-              }
               break;
           } // field
         } // p

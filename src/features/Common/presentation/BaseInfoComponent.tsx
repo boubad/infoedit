@@ -23,6 +23,9 @@ export interface IBaseInfoComponentProps<T extends IBaseDoc> {
   onRemoveAttachment?: (name: string) => void;
   onSetAvatar?: (name: string) => void;
   onCheck?: () => void;
+  //
+  onAddModalite?: (field:string) => void;
+  onRemoveModalite?: (field:string) => void;
 } // interface IBaseInfoComponentProps<T>
 export class BaseInfoComponent<T extends IBaseDoc> extends BaseComponent<IBaseInfoComponentProps<T>> {
   constructor(props?: any) {

@@ -6,15 +6,16 @@ import { IInfoState } from "../../../redux/InfoState";
 import { InfoDispatch } from "../../../redux/IPayload";
 import { DataVar, IDataVarProps } from "../presentation/DataVar";
 import {
+  addDataVarModalite,
   cancelDataVarAction,
   changeDataVarField,
   createDataVar,
   gotoPageDataVar,
   removeDataVar,
   removeDataVarAttachment,
+  removeDataVarModalite,
   saveDataVar,
-  saveDataVarAttachment,
-  selectDataVar
+  saveDataVarAttachment, selectDataVar
 } from "./DataVarActions";
 //
 const getBusy = (state: IInfoState): boolean => {
@@ -80,6 +81,9 @@ function mapDispatchToProps(dispatch: InfoDispatch) {
     gotoPage: (page: number) => {
       dispatch(gotoPageDataVar(page));
     },
+    onAddModalite: (field:string) =>{
+      dispatch(addDataVarModalite({field}))
+    },
     onEditCommand: (mode: string) => {
       switch (mode) {
         case "create":
@@ -103,6 +107,9 @@ function mapDispatchToProps(dispatch: InfoDispatch) {
     },
     onRemoveAttachment: (name: string) => {
       dispatch(removeDataVarAttachment(name));
+    },
+    onRemoveModalite: (field:string) =>{
+      dispatch(removeDataVarModalite({field}));
     },
     onSaveAttachment: (name: string, mime: string, data: Blob | Buffer) => {
       dispatch(saveDataVarAttachment(name, mime, data));

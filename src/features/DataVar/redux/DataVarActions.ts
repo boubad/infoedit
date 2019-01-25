@@ -7,6 +7,12 @@ import { DataVarServices } from "./DataVarServices";
 export const CHANGE_DATAVAR_FIELD = "CHANGE_DATAVAR_FIELD";
 export const changeDataVarField = createAction(CHANGE_DATAVAR_FIELD);
 //
+export const ADD_DATAVAR_MODALITE = "ADD_DATAVAR_MODALITE";
+export const addDataVarModalite = createAction(ADD_DATAVAR_MODALITE);
+//
+export const REMOVE_DATAVAR_MODALITE = "REMOVE_DATAVAR_MODALITE";
+export const removeDataVarModalite = createAction(REMOVE_DATAVAR_MODALITE);
+////////////////////////////////////////////
 export const CREATE_DATAVAR_ITEM = "CREATE_DATAVAR_ITEM";
 const createDataVarAction = createAction(CREATE_DATAVAR_ITEM);
 export function createDataVar(): any {

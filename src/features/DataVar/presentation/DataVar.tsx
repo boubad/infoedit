@@ -22,6 +22,9 @@ export interface IDataVarProps {
   onEditCommand?: (arg: string) => void;
   onSaveAttachment?: (name: string, mime: string, data: Blob) => void;
   onRemoveAttachment?: (name: string) => void;
+  //
+  onAddModalite?: (field:string) => void;
+  onRemoveModalite?: (field:string) => void;
 } // interfaceIAnneesProps
 //
 export class DataVar extends BaseComponent<IDataVarProps> {
@@ -62,6 +65,8 @@ export class DataVar extends BaseComponent<IDataVarProps> {
                 onEditCommand={p.onEditCommand}
                 onSaveAttachment={p.onSaveAttachment}
                 onRemoveAttachment={p.onRemoveAttachment}
+                onAddModalite={p.onAddModalite}
+                onRemoveModalite={p.onRemoveModalite}
               />
             </td>
           </tr>
