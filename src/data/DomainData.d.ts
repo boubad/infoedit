@@ -1,3 +1,7 @@
+export interface INoteStruct {
+  ival:number;
+  sval:string;
+}// interface INoteStruct
 export interface IAttachedDoc {
   docid: string;
   name: string;
