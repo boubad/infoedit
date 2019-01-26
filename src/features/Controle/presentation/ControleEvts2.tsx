@@ -28,6 +28,12 @@ export interface IControleEvtsProps {
   onShowDetail?: (id:string) => void;
 } // IControleEvtsProps
 //
+const tabJustifie:IOption[] = [
+  {id:"",text:""},
+  {id:"O",text:"JUSTIFIE"},
+  {id:"N",text:"NON JUSTIFIE"}
+];
+//
 export class ControleEvts2 extends BaseComponent<IControleEvtsProps> {
   constructor(props?: any) {
     super(props);
@@ -171,6 +177,14 @@ export class ControleEvts2 extends BaseComponent<IControleEvtsProps> {
           propname="duration"
           busy={this.props.busy}
           onTextChanged={this.props.onFieldChanged}
+        />
+         <ItemChoiceComponent
+          text={(p.justifie) ? "O" : "N"}
+          items={tabJustifie}
+          prompt="Raison:"
+          propname="justifie"
+          busy={this.props.busy}
+          onItemChoosen={this.props.onFieldChanged}
         />
         <InputDescComponent
           text={p.observations}

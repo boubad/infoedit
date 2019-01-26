@@ -1,8 +1,8 @@
 import { ISemestreDoc } from '../DomainData';
 import { BaseDataManager } from './BaseDataManager';
 import { IDataStore } from "./IDataStore";
-import { TYPE_SEMESTRE } from "./impl/DomainData";
 import { IItemSemestre } from "./impl/IInfoDomain";
+import { TYPE_SEMESTRE } from "./impl/InfoDomainData";
 import { UniteManager } from './UniteManager';
 //
 export class SemestreManager extends UniteManager {

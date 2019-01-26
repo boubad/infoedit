@@ -1,9 +1,20 @@
 import { ETUDIANT_STATUS_FREE, GetEtudiant, GetNote } from "../DataProcs";
-import { IControleDoc, IEtudiantDoc, IEvtDoc, INoteDoc, IOption } from "../DomainData";
+import {
+  IControleDoc,
+  IEtudiantDoc,
+  IEvtDoc,
+  INoteDoc,
+  IOption
+} from "../DomainData";
 import { IDataStore } from "./IDataStore";
-import { TYPE_ETUD_AFFECTATION, TYPE_ETUDIANT, TYPE_EVT, TYPE_NOTE } from "./impl/DomainData";
 import { IItemEtudiant, IItemEvt, IItemNote } from "./impl/IInfoDomain";
-import { StatDataManager } from './StatDataManager';
+import {
+  TYPE_ETUD_AFFECTATION,
+  TYPE_ETUDIANT,
+  TYPE_EVT,
+  TYPE_NOTE
+} from "./impl/InfoDomainData";
+import { StatDataManager } from "./StatDataManager";
 //
 export class DataPersistManager extends StatDataManager {
   //
@@ -48,16 +59,20 @@ export class DataPersistManager extends StatDataManager {
     await this.pStore.maintainsManyDocs(docs);
   } // changeAnneeSemestreEtudiantsStatus
   //
-  public async importEtudsAsync(data: any[], ownerid:string): Promise<IEtudiantDoc[]> {
+  public async importEtudsAsync(
+    data: any[],
+    ownerid: string
+  ): Promise<IEtudiantDoc[]> {
     const n = data.length;
     const oTemp: Array<Promise<any[]>> = [];
     const docs: IEtudiantDoc[] = [];
     for (let i = 0; i < n; i++) {
       const x: any = data[i];
-      if (x ) {
-        const lastname: string = x.lastname ? x.lastname.trim().toUpperCase()
-            : "";
-        let firstname: string = x.firstname ? x.firstname.trim(): "";
+      if (x) {
+        const lastname: string = x.lastname
+          ? x.lastname.trim().toUpperCase()
+          : "";
+        let firstname: string = x.firstname ? x.firstname.trim() : "";
         if (lastname.length > 0 && firstname.length > 0) {
           const m = firstname.length;
           if (m > 1) {
@@ -79,14 +94,14 @@ export class DataPersistManager extends StatDataManager {
           if (rem.length > 0) {
             pz.observations = rem;
           }
-          pz.ident = x.ident ? x.ident : '';
+          pz.ident = x.ident ? x.ident : "";
           docs.push(pz);
           const sel: any = {
             firstname: { $eq: firstname },
             lastname: { $eq: lastname },
             type: { $eq: TYPE_ETUDIANT }
           };
-          oTemp.push(this.pStore.findDocsBySelector(sel, 0, 1,["_id"]));
+          oTemp.push(this.pStore.findDocsBySelector(sel, 0, 1, ["_id"]));
         } // fullname
       } // x
     } // i
@@ -165,6 +180,7 @@ export class DataPersistManager extends StatDataManager {
       semestreid: p.semestreid,
       groupeid: p.groupeid,
       ownerid: p.ownerid,
+      justifie: p.justifie,
       affectationid: p.affectationid,
       etudaffectationid: p.etudaffectationid
     };
@@ -266,7 +282,7 @@ export class DataPersistManager extends StatDataManager {
       semestreid: { $eq: pCont.semestreid },
       type: { $eq: TYPE_ETUD_AFFECTATION }
     };
-    const fields = ["_id","etudiantid"];
+    const fields = ["_id", "etudiantid"];
     const pp: any[] = await this.pStore.findAllDocsBySelector(sel, fields);
     const n = pp.length;
     if (n < 1) {
@@ -276,7 +292,7 @@ export class DataPersistManager extends StatDataManager {
     for (let i = 0; i < n; i++) {
       const v = pp[i];
       const etudid: string = v.etudiantid;
-      const affid:string = v._id;
+      const affid: string = v._id;
       const ppx: any[] = await this.pStore.findDocsBySelector(
         {
           type: { $eq: TYPE_NOTE },
@@ -409,7 +425,7 @@ export class DataPersistManager extends StatDataManager {
       if (p.id.trim().length > 0) {
         x._id = p.id;
       }
-      if (p.rev.trim().length > 0){
+      if (p.rev.trim().length > 0) {
         x._rev = p.rev;
       }
       docs.push(x);
@@ -435,11 +451,7 @@ export class DataPersistManager extends StatDataManager {
       etudaffectationid: p.etudaffectationid,
       ownerid: p.ownerid
     };
-    if (
-      p.value &&
-      p.value >= 0.0 &&
-      p.value <= 20.0
-    ) {
+    if (p.value && p.value >= 0.0 && p.value <= 20.0) {
       x.value = p.value;
     }
     const sel: any = {
@@ -455,5 +467,6 @@ export class DataPersistManager extends StatDataManager {
       x._id = p.id.trim();
     }
     await this.pStore.maintainsDoc(x);
+    this.checkEtudiantStatItem(p.etudiantid);
   } //  maintainsNoteAsync
 } // class DataPersistManager

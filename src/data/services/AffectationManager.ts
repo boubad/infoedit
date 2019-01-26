@@ -1,8 +1,8 @@
 import { IAffectationDoc } from '../DomainData';
 import { AnneeManager } from './AnneeManager';
 import { IDataStore } from "./IDataStore";
-import { TYPE_AFFECTATION } from "./impl/DomainData";
 import { IItemAffectation } from "./impl/IInfoDomain";
+import { TYPE_AFFECTATION } from "./impl/InfoDomainData";
 //
 export class AffectationManager extends AnneeManager {
   //

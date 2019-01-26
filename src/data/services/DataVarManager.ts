@@ -2,10 +2,11 @@ import { IDataVarDoc } from "../DomainData";
 import { DATAVAR_TYPE_STRING } from "./../DataProcs";
 import { BaseDataManager } from "./BaseDataManager";
 import { IDataStore } from "./IDataStore";
-import { TYPE_DATAVAR } from "./impl/DomainData";
 import { IItemDataVar } from "./impl/IInfoDomain";
+import { TYPE_DATAVAR } from "./impl/InfoDomainData";
+import { StatItemManager } from './StatItemManager';
 //
-export class DataVarManager extends BaseDataManager {
+export class DataVarManager extends StatItemManager {
   //
   constructor(pStore: IDataStore) {
     super(pStore);

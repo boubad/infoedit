@@ -5,8 +5,8 @@ import {
 import { IEtudAffectationDoc } from "../DomainData";
 import { EtudiantManager } from './EtudiantManager';
 import { IDataStore } from "./IDataStore";
-import { TYPE_ETUD_AFFECTATION } from "./impl/DomainData";
 import { IItemEtudAffectation, IItemEtudiant } from "./impl/IInfoDomain";
+import { TYPE_ETUD_AFFECTATION } from "./impl/InfoDomainData";
 //
 export class EtudAffectationManager extends EtudiantManager {
   //

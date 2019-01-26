@@ -14,7 +14,7 @@ import {
   GetUnite
 } from "../DataProcs";
 
-import { DateToDisplay, GetDataVarDoc } from "../DataProcs";
+import { DateToDisplay, GetDataVarDoc, GetStatItem } from '../DataProcs';
 import {
   IAffectationDoc,
   IAnneeDoc,
@@ -30,23 +30,10 @@ import {
   IOption,
   ISemestreDoc,
   ISigleNamedDoc,
+  IStatItemDoc,
   IUniteDoc
 } from "../DomainData";
 import { IDataStore } from "./IDataStore";
-import {
-  TYPE_AFFECTATION,
-  TYPE_ANNEE,
-  TYPE_CONTROLE,
-  TYPE_DATAVAR,
-  TYPE_ETUD_AFFECTATION,
-  TYPE_ETUDIANT,
-  TYPE_EVT,
-  TYPE_GROUPE,
-  TYPE_MATIERE,
-  TYPE_NOTE,
-  TYPE_SEMESTRE,
-  TYPE_UNITE
-} from "./impl/DomainData";
 import {
   IItemAffectation,
   IItemAnnee,
@@ -60,8 +47,24 @@ import {
   IItemMatiere,
   IItemNote,
   IItemSemestre,
+  IItemStat,
   IItemUnite
 } from "./impl/IInfoDomain";
+import {
+  TYPE_AFFECTATION,
+  TYPE_ANNEE,
+  TYPE_CONTROLE,
+  TYPE_DATAVAR,
+  TYPE_ETUD_AFFECTATION,
+  TYPE_ETUDIANT,
+  TYPE_EVT,
+  TYPE_GROUPE,
+  TYPE_MATIERE,
+  TYPE_NOTE,
+  TYPE_SEMESTRE,
+  TYPE_STAT,
+  TYPE_UNITE
+} from "./impl/InfoDomainData";
 import { LocalStoreManager } from "./impl/local/LocalStoreManager";
 //
 export class BaseDataManager {
@@ -216,6 +219,18 @@ export class BaseDataManager {
     return this.pStore.removeBlob(docid, attname);
   } // removeAttachmentAsync
   //////////////////////////
+  public async loadStatItemByIdAsync(id: string): Promise<IStatItemDoc> {
+    const sel: any = {
+      _id: { $eq: id },
+      type: { $eq: TYPE_STAT }
+    };
+    const data: IItemNote[] = await this.pStore.findDocsBySelector(sel, 0, 1);
+    if (data.length > 0) {
+      return await this.convertStatItemDoc(data[0]);
+    } else {
+      return GetStatItem();
+    }
+  } // loadStatItemByIdAsync
   public async loadNoteByIdAsync(id: string): Promise<INoteDoc> {
     const sel: any = {
       _id: { $eq: id },
@@ -485,8 +500,8 @@ export class BaseDataManager {
       return this.loadEtudiantByIdAsync(id);
     }
   } // fetchEtudiantByIdAsync
+//////////////////////////////////////////
 
-  //
   protected async convertEvtDocAsync(p: IItemEvt): Promise<IEvtDoc> {
     this.register(p._id as string, p);
     const pRet = GetEvt();
@@ -501,6 +516,7 @@ export class BaseDataManager {
     pRet.genre = p.evttype ? p.evttype : EvtGenre.Inconnu;
     pRet.genrestring = ConvertEvtTypeToString(pRet.genre);
     pRet.duration = p.duration ? p.duration : "";
+    pRet.justifie = (p.justifie) ? p.justifie : false;
     pRet.attachments = this.getDocAttachments(p);
     pRet.semestreid = p.semestreid ? p.semestreid : "";
     pRet.anneeid = p.anneeid ? p.anneeid : "";
@@ -803,6 +819,15 @@ export class BaseDataManager {
     }
     return pRet;
   } // convertGroupeDoc
+  protected convertStatItemDoc(p: IItemStat): IStatItemDoc {
+    this.register(p._id as string, p);
+    const pRet = GetStatItem();
+    pRet.id = p._id ? p._id : "";
+    pRet.rev = p._rev ? p._rev : "";
+    pRet.data = (p.data) ? p.data : {};
+    pRet.attachments = this.getDocAttachments(p);
+    return pRet;
+  } // convertStatItemDoc
   private getDocAttachments(p: any): IAttachedDoc[] {
     const pRet: IAttachedDoc[] = [];
     const docid: string = p._id ? p._id : "";

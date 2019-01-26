@@ -1,8 +1,8 @@
 import { IAnneeDoc } from '../DomainData';
 import { ControleManager } from './ControleManager';
 import { IDataStore } from "./IDataStore";
-import { TYPE_ANNEE } from "./impl/DomainData";
 import { IItemAnnee } from "./impl/IInfoDomain";
+import { TYPE_ANNEE } from "./impl/InfoDomainData";
 //
 export class AnneeManager extends ControleManager {
   //

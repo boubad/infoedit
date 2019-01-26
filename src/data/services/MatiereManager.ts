@@ -1,8 +1,8 @@
 import { IMatiereDoc } from "../DomainData";
 import { BaseDataManager } from './BaseDataManager';
 import { IDataStore } from "./IDataStore";
-import { TYPE_MATIERE } from "./impl/DomainData";
 import { IItemMatiere } from "./impl/IInfoDomain";
+import { TYPE_MATIERE } from "./impl/InfoDomainData";
 import { SemestreManager } from './SemestreManager';
 //
 //

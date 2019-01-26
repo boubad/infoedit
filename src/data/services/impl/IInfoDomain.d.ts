@@ -169,6 +169,7 @@ export interface IItemEvt {
   etudiantid?: string;
   evttype?: number;
   duration?: string;
+  justifie?:boolean;
 } // interface IItemEvt
 export interface IItemNote {
   _id?: string;
@@ -199,3 +200,14 @@ export interface IItemAttInfo {
   revpos?: number;
   stub?: boolean;
 } // interface IItemAttInfo
+export interface IItemStat {
+  _id?: string;
+  _rev?: string;
+  _deleted?: boolean;
+  _attachments?: any;
+  etudiantid?:string;
+  type?: string;
+  data?: any;
+}// interface IItemStat
+///////////////////////////
+// eof: IInfoDomain.d.ts

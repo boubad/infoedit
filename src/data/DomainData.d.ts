@@ -9,6 +9,13 @@ export interface IAttachedDoc {
   isAvatar: boolean;
   url: string;
 } // interface IAttachedDoc
+export interface IStatItemDoc {
+  id: string;
+  rev: string;
+  etudiantid:string;
+  attachments: IAttachedDoc[];
+  data:any;
+}// interface IStatItemDoc
 export interface IBaseDoc {
   id: string;
   rev: string;
@@ -114,6 +121,7 @@ export interface IEvtDoc extends IControleAffectationDoc {
   genre: number;
   genrestring: string;
   duration: string;
+  justifie:boolean;
 } // interface IEvtDoc
 export interface INoteDoc extends IControleAffectationDoc {
   value: number | null;

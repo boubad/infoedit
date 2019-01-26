@@ -380,6 +380,15 @@ export function controleSubReducer(
           const val = p.value;
           const pz = pRet.evt;
           switch (p.field) {
+            case "justifie":
+            {
+              const s = "" + val;
+              const ss = s.trim().toUpperCase();
+              const b = (ss === "O") ? true : false;
+              pz.justifie = b;
+              pz.modified = true;
+            }
+              break;
             case "evttype":
               pz.genre = val;
               pz.modified = true;

@@ -1,8 +1,8 @@
 import { IControleDoc } from '../DomainData';
 import { EtudAffectationManager } from './EtudAffectationManager';
 import { IDataStore } from "./IDataStore";
-import { TYPE_CONTROLE } from "./impl/DomainData";
 import { IItemControle } from "./impl/IInfoDomain";
+import { TYPE_CONTROLE } from "./impl/InfoDomainData";
 //
 export class ControleManager extends EtudAffectationManager {
   //

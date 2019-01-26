@@ -2,8 +2,8 @@ import { GetEtudiantDesc, GetMatiereDesc } from "../DataProcs";
 import { IEtudiantDesc, IEvtDoc, IMatiereDesc, INoteDoc } from '../DomainData';
 import { AffectationManager } from "./AffectationManager";
 import { IDataStore } from "./IDataStore";
-import { TYPE_EVT, TYPE_NOTE } from "./impl/DomainData";
 import { IItemEvt, IItemNote } from "./impl/IInfoDomain";
+import { TYPE_EVT, TYPE_NOTE } from "./impl/InfoDomainData";
 //
 export class StatDataManager extends AffectationManager {
   //
@@ -80,7 +80,7 @@ export class StatDataManager extends AffectationManager {
     return this.summarizeItems(oMap);
   } // getAnneeSemestreMatiereStats
   ////////////////////////////////////
-  private summarizeItems( oMap: Map<string, IEtudiantDesc>): IEtudiantDesc[]{
+  protected summarizeItems( oMap: Map<string, IEtudiantDesc>): IEtudiantDesc[]{
     const pRet:IEtudiantDesc[] = [];
     oMap.forEach((oDesc,etudiantid) =>{
       pRet.push(oDesc);
@@ -110,7 +110,7 @@ export class StatDataManager extends AffectationManager {
     } // sort
     return pRet;
   }// summarizeItems
-  private async registerItem( oMap: Map<string, IEtudiantDesc>,p:INoteDoc | IEvtDoc) {
+  protected async registerItem( oMap: Map<string, IEtudiantDesc>,p:INoteDoc | IEvtDoc) {
       const etudiantid = p.etudiantid;
       let oDesc = oMap.get(etudiantid);
       if (!oDesc) {

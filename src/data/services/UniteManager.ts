@@ -2,8 +2,8 @@ import { IUniteDoc } from "../DomainData";
 import { BaseDataManager } from "./BaseDataManager";
 import { DataVarManager } from './DataVarManager';
 import { IDataStore } from "./IDataStore";
-import { TYPE_UNITE } from "./impl/DomainData";
 import { IItemUnite } from "./impl/IInfoDomain";
+import { TYPE_UNITE } from "./impl/InfoDomainData";
 //
 export class UniteManager extends DataVarManager {
   //

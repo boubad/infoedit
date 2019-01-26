@@ -1,4 +1,5 @@
 import * as moment from "moment";
+import { IStatItemDoc } from './DomainData';
 import {
   IAffectationDoc,
   IAnneeDoc,
@@ -67,6 +68,16 @@ export function ConvertEvtTypeToString(etype?: EvtGenre): string {
   } // etype
   return stype;
 } // convertEvtTypeToString
+//
+export function GetStatItem():IStatItemDoc {
+  return Object.assign({},{
+    attachments:[],
+    data:{},
+    etudiantid:'',
+    id:'',
+    rev:''
+  });
+}// GetStatItem
 //
 export function GetDataVarDoc(): IDataVarDoc {
   return Object.assign(
@@ -307,7 +318,8 @@ export function GetEvt(): IEvtDoc {
       ownerid: "",
       affectationid: "",
       etudaffectationid: "",
-      unitename: ""
+      unitename: "",
+      justifie:false
     }
   );
 } // GetEvt

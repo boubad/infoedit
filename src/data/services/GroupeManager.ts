@@ -1,8 +1,8 @@
 import { IGroupeDoc } from '../DomainData';
 import { BaseDataManager } from './BaseDataManager';
 import { IDataStore } from "./IDataStore";
-import { TYPE_GROUPE } from "./impl/DomainData";
 import { IItemGroupe } from "./impl/IInfoDomain";
+import { TYPE_GROUPE } from "./impl/InfoDomainData";
 import { MatiereManager } from './MatiereManager';
 //
 export class GroupeManager extends MatiereManager {
