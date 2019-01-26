@@ -17,6 +17,13 @@ export class EtudiantInfo extends BaseInfoComponent<IEtudiantDoc> {
     return (
       <div>
         <Form className={this.getInfoStyle()}>
+        <InputUpperTextComponent
+            text={p.sexe}
+            prompt={"Sexe:"}
+            propname={"sexe"}
+            busy={this.props.busy}
+            onTextChanged={this.props.onFieldChanged}
+          />
           <InputUpperTextComponent
             text={p.lastname}
             prompt={"Nom de famille:"}
@@ -28,6 +35,20 @@ export class EtudiantInfo extends BaseInfoComponent<IEtudiantDoc> {
             text={p.firstname}
             prompt={"Prénom(s):"}
             propname={"firstname"}
+            busy={this.props.busy}
+            onTextChanged={this.props.onFieldChanged}
+          />
+          <InputUpperTextComponent
+            text={p.redoublant}
+            prompt={"Redoublant:"}
+            propname={"redoublant"}
+            busy={this.props.busy}
+            onTextChanged={this.props.onFieldChanged}
+          />
+          <InputUpperTextComponent
+            text={p.sup}
+            prompt={"Etudes supérieures:"}
+            propname={"sup"}
             busy={this.props.busy}
             onTextChanged={this.props.onFieldChanged}
           />

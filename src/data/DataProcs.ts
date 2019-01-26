@@ -12,7 +12,6 @@ import {
   IMatiereDesc,
   IMatiereDoc,
   INoteDoc,
-  INoteStruct,
   ISemestreDoc,
   IUniteDoc
 } from "./DomainData";
@@ -189,7 +188,10 @@ export function GetEtudiant(): IEtudiantDoc {
       affectations: [],
       ownerid: "",
       ident: "",
-      data: {}
+      data: {},
+      sexe:'M',
+      redoublant:'',
+      sup:'',
     }
   );
 } // GetEtudiant

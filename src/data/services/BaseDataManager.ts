@@ -729,6 +729,9 @@ export class BaseDataManager {
     pRet.status = p.status ? p.status : "";
     pRet.ident = p.ident ? p.ident : "";
     pRet.data = p.data ? p.data : {};
+    pRet.sexe = (p.sexe) ? p.sexe: '';
+    pRet.redoublant = (p.redoublant)? p.redoublant: '';
+    pRet.sup = (p.sup) ? p.sup: '';
     pRet.url = this.pStore.formBlobUrl(pRet.id, pRet.avatar);
     pRet.attachments = this.getDocAttachments(p);
     if (pRet.id.length > 0) {

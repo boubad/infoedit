@@ -23,7 +23,7 @@ export class InputFileComponent extends BaseComponent<IInputFileComponentProps> 
       return (
         <Input
         className={this.getInfoStyle()}
-        readOnly={this.props.busy}
+          readOnly={this.props.busy}
           type="file"
           accept={accept}
           onChange={this.handleChange}
@@ -32,8 +32,9 @@ export class InputFileComponent extends BaseComponent<IInputFileComponentProps> 
     } else {
       return (
         <Input
-        className={this.getLinkStyle(this.props.busy)}
+        className={this.getInfoStyle()}
           type="file"
+          readOnly={this.props.busy}
           onChange={this.handleChange}
         />
       );

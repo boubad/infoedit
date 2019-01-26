@@ -180,6 +180,18 @@ export function etudiantSubReducer(
           const val = p.value;
           const pz = pRet.current;
           switch (p.field) {
+            case "sup":
+              pz.sup = val;
+              pz.modified = true;
+              break;
+            case "redoublant":
+              pz.redoublant = val;
+              pz.modified = true;
+              break;
+            case "sexe":
+              pz.sexe = val;
+              pz.modified = true;
+              break;
             case "email":
               pz.email = val;
               pz.modified = true;

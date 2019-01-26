@@ -60,7 +60,10 @@ export class EtudiantManager extends GroupeManager {
       lastname: p.lastname.trim(),
       observations: p.observations.trim(),
       ownerid: p.ownerid,
+      redoublant: p.redoublant,
+      sexe:p.sexe,
       status: p.status.trim().length > 0 ? p.status : ETUDIANT_STATUS_FREE,
+      sup: p.sup,
       type: TYPE_ETUDIANT
     };
     const pp = await this.pStore.findDocsBySelector(

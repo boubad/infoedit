@@ -94,6 +94,9 @@ export interface IItemEtudiant {
   status?: string;
   ident?: string;
   data?: string;
+  sexe?:string;
+  redoublant?:string;
+  sup?:string;
 } // interface IItemEtudiant
 export interface IItemAffectation {
   _id?: string;

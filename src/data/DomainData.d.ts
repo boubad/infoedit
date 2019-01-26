@@ -73,6 +73,9 @@ export interface IEtudiantDoc extends IBaseDoc {
   email: string;
   avatar: string;
   status: string;
+  sexe:string;
+  redoublant:string;
+  sup:string;
   url: string;
   fullname: string;
   data:any;
