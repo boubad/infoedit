@@ -197,12 +197,25 @@ export class StatItemManager extends BaseDataManager {
             }
           }
         });
-        dataRes.sexe = pEtud.sexe;
-        dataRes.redoublant = pEtud.redoublant;
-        dataRes.sup = pEtud.sup;
-        const data = Object.assign(dataRes, pEtud.data);
+        if (pEtud.sexe.trim().length > 0){
+          dataRes.sexe = pEtud.sexe.trim();
+        }
+        if (pEtud.redoublant.trim().length  > 0){
+          dataRes.redoublant = pEtud.redoublant.trim();
+        }
+        if (pEtud.sup.trim().length > 0){
+          dataRes.sup = pEtud.sup.trim();
+        }
+        const d1:object = pEtud.data;
+        // tslint:disable-next-line:forin
+        for (const k in d1){
+          const st = "" + d1[k];
+          if (st.trim().length > 0){
+            dataRes[k] = st.trim();
+          }
+        }// k
         const pItem = GetStatItem();
-        pItem.data = data;
+        pItem.data = dataRes;
         pItem.etudiantid = etudiantid;
         await this.saveStatItemAsync(pItem);
       } // jEtudiant
@@ -366,12 +379,25 @@ export class StatItemManager extends BaseDataManager {
         }
       }
     });
-    dataRes.sexe = pEtud.sexe;
-    dataRes.redoublant = pEtud.redoublant;
-    dataRes.sup = pEtud.sup;
-    const data = Object.assign(dataRes, pEtud.data);
+    if (pEtud.sexe.trim().length > 0){
+      dataRes.sexe = pEtud.sexe.trim();
+    }
+    if (pEtud.redoublant.trim().length  > 0){
+      dataRes.redoublant = pEtud.redoublant.trim();
+    }
+    if (pEtud.sup.trim().length > 0){
+      dataRes.sup = pEtud.sup.trim();
+    }
+    const d1:object = pEtud.data;
+    // tslint:disable-next-line:forin
+    for (const k in d1){
+      const st = "" + d1[k];
+      if (st.trim().length > 0){
+        dataRes[k] = st.trim();
+      }
+    }// k
     const pItem = GetStatItem();
-    pItem.data = data;
+    pItem.data = dataRes;
     pItem.etudiantid = etudiantid;
     const pz = await this.saveStatItemAsync(pItem);
     if (pz.id.length < 1) {
