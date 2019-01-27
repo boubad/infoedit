@@ -4,6 +4,7 @@ import { SYNC_DATA_BEGIN } from "../../../features/Outils/redux/OutilsActions";
 import { IAppStatus } from "../../../redux/InfoState";
 import { GetInitialAppStatus } from "../../../redux/initialState";
 import { InfoAction } from "../../../redux/IPayload";
+import { CHECK_DATA_BEGIN } from '../../Outils/redux/OutilsActions';
 /////////////////////////////////////////////
 export function appStatusSubReducer(
   state: IAppStatus,
@@ -14,6 +15,7 @@ export function appStatusSubReducer(
   }
   const p = action.payload ? action.payload : {};
   switch (action.type) {
+    case CHECK_DATA_BEGIN:
     case SYNC_DATA_BEGIN:
       return produce(state, pRet => {
         pRet.busy = true;

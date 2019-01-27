@@ -7,6 +7,7 @@ export interface ISynchoDataProps {
   busy: boolean;
   //
   doSync?: () => any;
+  doCheck?: () => any;
 } // interface ISynchoDataProps
 //
 export class SynchroData extends BaseComponent<ISynchoDataProps> {
@@ -14,6 +15,7 @@ export class SynchroData extends BaseComponent<ISynchoDataProps> {
   constructor(props?: any) {
     super(props);
     this.performSync = this.performSync.bind(this);
+    this.performCheck = this.performCheck.bind(this);
   } // constructor
   //
   public render(): React.ReactNode {
@@ -28,7 +30,14 @@ export class SynchroData extends BaseComponent<ISynchoDataProps> {
           <tr hidden={this.props.busy}>
             <td className="center">
               <Button color="primary" onClick={this.performSync}>
-                Synchroniser!
+                Locales!
+              </Button>
+            </td>
+          </tr>
+          <tr hidden={this.props.busy}>
+            <td className="center">
+              <Button color="primary" onClick={this.performCheck}>
+                Export!
               </Button>
             </td>
           </tr>
@@ -42,4 +51,9 @@ export class SynchroData extends BaseComponent<ISynchoDataProps> {
       this.props.doSync();
     }
   } // performSave
+  private performCheck(){
+    if (this.props.doCheck){
+      this.props.doCheck();
+    }
+  }
 } // class ImportEtudiants

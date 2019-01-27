@@ -20,10 +20,13 @@ import { IOutilsState } from "../../../redux/InfoState";
 import { GetInitialOutilsState } from "../../../redux/initialState";
 import { InfoAction } from "../../../redux/IPayload";
 import {
+  GET_DATA_BEGIN,
+  GET_DATA_SUCCESS,
   IMPORT_ETUDIANT_BEGIN,
   IMPORT_ETUDIANT_SUCCESS,
   REFRESHANNEESEMESTRE_STATUS_BEGIN,
-  REFRESHANNEESEMESTRE_STATUS_SUCCESS} from "./OutilsActions";
+  REFRESHANNEESEMESTRE_STATUS_SUCCESS
+} from "./OutilsActions";
 //////////////////////////////////////////
 export function outilsSubReducer(
   state: IOutilsState,
@@ -37,11 +40,13 @@ export function outilsSubReducer(
       ? action.payload
       : {};
   switch (action.type) {
+    case GET_DATA_BEGIN:
     case IMPORT_ETUDIANT_BEGIN:
     case REFRESHANNEESEMESTRE_STATUS_BEGIN:
       return produce(state, pRet => {
         pRet.busy = true;
       });
+    case GET_DATA_SUCCESS:
     case ETUDAFFECTATION_REMOVE_ATTACHMENT_SUCCESS:
     case ETUDAFFECTATION_SAVE_ATTACHMENT_SUCCESS:
     case GOTO_PAGE_ETUDAFFECTATION_SUCCESS:
@@ -57,6 +62,9 @@ export function outilsSubReducer(
     case REFRESHANNEESEMESTRE_STATUS_SUCCESS:
       return produce(state, pRet => {
         pRet.busy = false;
+        if (p.stringData) {
+          pRet.stringData = p.stringData;
+        }
         if (p.importedEtudiants !== undefined) {
           pRet.importedEtudiants = p.importedEtudiants;
         }

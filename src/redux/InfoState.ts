@@ -76,6 +76,7 @@ export interface IOutilsState {
   readonly importedEtudiants: IEtudiantDoc[];
   readonly freeEtudiantsOpts: IOption[];
   readonly etudAffectations: IEtudAffectationDoc[];
+  readonly stringData:string[];
  
 } // interface IOutilsState
 export interface IDetailState {

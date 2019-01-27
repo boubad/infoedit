@@ -2,8 +2,11 @@ import { connect } from "react-redux";
 import { createSelector } from "reselect";
 import { IInfoState } from "src/redux/InfoState";
 import { InfoDispatch } from "../../../redux/IPayload";
-import { ISynchoDataProps, SynchroData } from "../presentation/SynchroData";
-import { checkData, syncData } from './OutilsActions';
+import { getStatData } from "../../Outils/redux/OutilsActions";
+import {
+  IStatEtudiantDataProps,
+  StatEtudiantData
+} from "../presentation/StatEtudiantData";
 
 //
 const getBusy = (state: IInfoState): boolean => {
@@ -21,25 +24,26 @@ const getBusy = (state: IInfoState): boolean => {
     state.appstatus.busy
   );
 };
+const getStringData = (state: IInfoState): string[] => {
+  return state.outils.stringData;
+};
 const selector = createSelector(
-  [getBusy],
-  (busy: boolean) => {
+  [getBusy, getStringData],
+  (busy: boolean, stringData: string[]) => {
     return {
-      busy
+      busy,
+      stringData
     };
   }
 );
 //
-function mapStateToProps(state: IInfoState): ISynchoDataProps {
+function mapStateToProps(state: IInfoState): IStatEtudiantDataProps {
   return selector(state);
 } // mapStateToProps
 function mapDispatchToProps(dispatch: InfoDispatch) {
   return {
     doCheck: () => {
-      dispatch(checkData());
-    },
-    doSync: () => {
-      dispatch(syncData());
+      dispatch(getStatData());
     }
   };
 } // mapDispatchToProps
@@ -47,5 +51,5 @@ function mapDispatchToProps(dispatch: InfoDispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SynchroData);
+)(StatEtudiantData);
 //

@@ -5,6 +5,22 @@ import { IPayload } from 'src/redux/IPayload';
 
 export class OutilsServices {
   //
+  public static async getStatItemsTextAsync( state: IInfoState): Promise<IPayload> {
+    const pMan = BaseServices.getPersistManager(state);
+    const stringData = await pMan.getStatItemsTextAsync();
+    return ({
+      stringData,
+    });
+  }// getStatItemsTextAsync
+  //
+  public static async checkEtudiantsData( state: IInfoState): Promise<IPayload> {
+    const pMan = BaseServices.getPersistManager(state);
+    await pMan.checkAllEtudiantsStatItem();
+    return ({
+      status: "Les données ont été mises à jour!"
+    });
+  }// checkEtudiantsData
+  //
   public static async syncDataAsync(
     state: IInfoState
   ): Promise<IPayload> {

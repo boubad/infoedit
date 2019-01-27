@@ -16,6 +16,8 @@ interface IWorkItem {
   value: number | null;
 }
 //
+const STRING_COMMA = ",";
+//
 export class StatItemManager extends BaseDataManager {
   //
   constructor(pStore: IDataStore) {
@@ -188,36 +190,44 @@ export class StatItemManager extends BaseDataManager {
           } // i
         } // while
         const dataRes: any = {};
+        let bRegister = false;
         oMap.forEach((item, key) => {
           if (item.count > 0) {
             const note = item.total / item.count;
             const nx = ConvertNote(note);
             if (nx) {
               dataRes[key] = nx.ival;
+              bRegister = true;
             }
           }
         });
-        if (pEtud.sexe.trim().length > 0){
+        if (pEtud.sexe.trim().length > 0) {
           dataRes.sexe = pEtud.sexe.trim();
+          bRegister = true;
         }
-        if (pEtud.redoublant.trim().length  > 0){
+        if (pEtud.redoublant.trim().length > 0) {
           dataRes.redoublant = pEtud.redoublant.trim();
+          bRegister = true;
         }
-        if (pEtud.sup.trim().length > 0){
+        if (pEtud.sup.trim().length > 0) {
           dataRes.sup = pEtud.sup.trim();
+          bRegister = true;
         }
-        const d1:object = pEtud.data;
+        const d1: object = pEtud.data;
         // tslint:disable-next-line:forin
-        for (const k in d1){
+        for (const k in d1) {
           const st = "" + d1[k];
-          if (st.trim().length > 0){
+          if (st.trim().length > 0) {
             dataRes[k] = st.trim();
+            bRegister = true;
           }
-        }// k
-        const pItem = GetStatItem();
-        pItem.data = dataRes;
-        pItem.etudiantid = etudiantid;
-        await this.saveStatItemAsync(pItem);
+        } // k
+        if (bRegister) {
+          const pItem = GetStatItem();
+          pItem.data = dataRes;
+          pItem.etudiantid = etudiantid;
+          await this.saveStatItemAsync(pItem);
+        }
       } // jEtudiant
     } // etuds
   } // checkAllEtudiantsStatItem
@@ -370,39 +380,47 @@ export class StatItemManager extends BaseDataManager {
       } // i
     } // while
     const dataRes: any = {};
+    let bRegister = false;
     oMap.forEach((item, key) => {
       if (item.count > 0) {
         const note = item.total / item.count;
         const nx = ConvertNote(note);
         if (nx) {
           dataRes[key] = nx.ival;
+          bRegister = true;
         }
       }
     });
-    if (pEtud.sexe.trim().length > 0){
+    if (pEtud.sexe.trim().length > 0) {
       dataRes.sexe = pEtud.sexe.trim();
+      bRegister = true;
     }
-    if (pEtud.redoublant.trim().length  > 0){
+    if (pEtud.redoublant.trim().length > 0) {
       dataRes.redoublant = pEtud.redoublant.trim();
+      bRegister = true;
     }
-    if (pEtud.sup.trim().length > 0){
+    if (pEtud.sup.trim().length > 0) {
       dataRes.sup = pEtud.sup.trim();
+      bRegister = true;
     }
-    const d1:object = pEtud.data;
+    const d1: object = pEtud.data;
     // tslint:disable-next-line:forin
-    for (const k in d1){
+    for (const k in d1) {
       const st = "" + d1[k];
-      if (st.trim().length > 0){
+      if (st.trim().length > 0) {
         dataRes[k] = st.trim();
+        bRegister = true;
       }
-    }// k
-    const pItem = GetStatItem();
-    pItem.data = dataRes;
-    pItem.etudiantid = etudiantid;
-    const pz = await this.saveStatItemAsync(pItem);
-    if (pz.id.length < 1) {
-      throw new TypeError("Cannot save statitem");
-    }
+    } // k
+    if (bRegister) {
+      const pItem = GetStatItem();
+      pItem.data = dataRes;
+      pItem.etudiantid = etudiantid;
+      const pz = await this.saveStatItemAsync(pItem);
+      if (pz.id.length < 1) {
+        throw new TypeError("Cannot save statitem");
+      }
+    } // register
   } // checkEtudiantStatItem
   ////
   public async removeStatItemAsync(id: string): Promise<void> {
@@ -467,5 +485,83 @@ export class StatItemManager extends BaseDataManager {
     }
     return pRet;
   } // getStatItemsAsync
+  //
+  public async getStatItemsTextAsync(): Promise<string[]> {
+    const sel: any = {
+      type: { $eq: TYPE_STAT }
+    };
+    const nTotal = await this.pStore.findDocsCountBySelector(sel);
+    let nOffset = 0;
+    const limit = 128;
+    const varsMap: Map<string, string> = new Map<string, string>();
+    while (nOffset < nTotal) {
+      const pp: IItemStat[] = await this.pStore.findDocsBySelector(
+        sel,
+        nOffset,
+        limit
+      );
+      const np = pp.length;
+      nOffset = nOffset + np;
+      for (let i = 0; i < np; i++) {
+        const p = pp[i];
+        const data = p.data;
+        // tslint:disable-next-line:forin
+        for (const key in data) {
+          const v = "" + data[key];
+          if (v.trim().length > 0) {
+            if (!varsMap.get(key)) {
+              varsMap.set(key, key);
+            }
+          } // ok
+        } // key
+      } // i
+    } // offset
+    const sRes: string[] = [];
+    let title: string = "";
+    varsMap.forEach(key => {
+      if (title.length > 0) {
+        title = title + STRING_COMMA;
+      }
+      title = title + key;
+    });
+    sRes.push(title);
+    nOffset = 0;
+    while (nOffset < nTotal) {
+      const pp: IItemStat[] = await this.pStore.findDocsBySelector(
+        sel,
+        nOffset,
+        limit
+      );
+      const np = pp.length;
+      nOffset = nOffset + np;
+      for (let i = 0; i < np; i++) {
+        let cur = "";
+        const p = pp[i];
+        const data = p.data;
+        let bRegister = false;
+        varsMap.forEach(key => {
+          if (cur.length > 0) {
+            cur = cur + STRING_COMMA;
+          }
+          let sx = "";
+          if (data[key] !== undefined && data[key] !== null) {
+            const v = "" + data[key];
+            sx = v.trim();
+          }
+          if (sx.length < 1) {
+            cur = cur + "NA";
+          } else {
+            cur = cur + sx;
+            bRegister = true;
+          }
+        });
+        if (bRegister) {
+          sRes.push(cur);
+        }
+      } // i
+    } // nOffset
+    return sRes;
+  } // getStatItemsTextAsync
+
   //
 } // class StatItemManager

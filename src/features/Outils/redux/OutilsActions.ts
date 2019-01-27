@@ -2,6 +2,64 @@ import { Dispatch } from "redux";
 import { createAction } from "redux-actions";
 import { IInfoState } from "src/redux/InfoState";
 import { OutilsServices } from "./OutilsServices";
+//////////////////////////////////////////////
+export const GET_DATA_BEGIN = "GET_DATA_BEGIN";
+const getDataBeginAction = createAction(GET_DATA_BEGIN);
+export const GET_DATA_SUCCESS = "GET_DATA_SUCCESS";
+const getDataSuccessAction = createAction(GET_DATA_SUCCESS);
+export const GET_DATA_FAIL = "GET_DATA_FAIL";
+const getDataFailAction = createAction(GET_DATA_FAIL);
+//
+export function getStatData(): any {
+  return (dispatch: Dispatch, getState: () => IInfoState) => {
+    dispatch(getDataBeginAction());
+    const promise = new Promise((resolve, reject) => {
+      const doRequest = OutilsServices.getStatItemsTextAsync(
+        getState()
+      );
+      doRequest.then(
+        res => {
+          dispatch(getDataSuccessAction(res));
+          resolve(res);
+        },
+        err => {
+          dispatch(getDataFailAction(err));
+          reject(err);
+        }
+      );
+    });
+    return promise;
+  };
+} // checkData
+////////////////////////////////////////////////////
+export const CHECK_DATA_BEGIN = "CHECK_DATA_BEGIN";
+const checkDataBeginAction = createAction(CHECK_DATA_BEGIN);
+export const CHECK_DATA_SUCCESS = "CHECK_DATA_SUCCESS";
+const checkDataSuccessAction = createAction(CHECK_DATA_SUCCESS);
+export const CHECK_DATA_FAIL = "CHECK_DATA_FAIL";
+const checkDataFailAction = createAction(CHECK_DATA_FAIL);
+//
+export function checkData(): any {
+  return (dispatch: Dispatch, getState: () => IInfoState) => {
+    dispatch(checkDataBeginAction());
+    const promise = new Promise((resolve, reject) => {
+      const doRequest = OutilsServices.checkEtudiantsData(
+        getState()
+      );
+      doRequest.then(
+        res => {
+          dispatch(checkDataSuccessAction(res));
+          resolve(res);
+        },
+        err => {
+          dispatch(checkDataFailAction(err));
+          reject(err);
+        }
+      );
+    });
+    return promise;
+  };
+} // checkData
 /////////////////////////////////////////////////////
 export const SYNC_DATA_BEGIN = "SYNC_DATA_BEGIN";
 const syncDataBeginAction = createAction(SYNC_DATA_BEGIN);

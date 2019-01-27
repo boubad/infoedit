@@ -240,7 +240,8 @@ export function GetInitialOutilsState(): IOutilsState {
     // tslint:disable-next-line:object-literal-sort-keys
     busy: false,
     etudAffectations: [],
-    importedEtudiants: []
+    importedEtudiants: [],
+    stringData:[],
   };
 } // GetInitialOutilsState
 export function GetInitialDetailState(): IDetailState {

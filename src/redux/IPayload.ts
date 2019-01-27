@@ -97,6 +97,8 @@ export interface IPayload {
   dataVarsCount?:number;
   dataVar?:IDataVarDoc;
   dataVars?:IDataVarDoc[];
+  //
+  stringData?:string[];
 } // interface IPayload
 ////////////////////////////////
 export type InfoAction = FluxStandardAction<IPayload>;
