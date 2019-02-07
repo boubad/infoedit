@@ -29,28 +29,28 @@ export function ConvertNote(n: number): INoteStruct | undefined {
     };
     if (n < 5.0) {
       pRet.ival = 0;
-      pRet.sval = "000";
+      pRet.sval = "H";
     } else if (n >= 5.0 && n < 8.0) {
       pRet.ival = 1;
-      pRet.sval = "001";
+      pRet.sval = "G";
     } else if (n >= 8.0 && n < 9.0) {
       pRet.ival = 2;
-      pRet.sval = "010";
+      pRet.sval = "F";
     } else if (n >= 9.0 && n < 9.5) {
       pRet.ival = 3;
-      pRet.sval = "011";
+      pRet.sval = "E";
     } else if (n >= 9.5 && n < 10.0) {
       pRet.ival = 4;
-      pRet.sval = "100";
+      pRet.sval = "D";
     } else if (n >= 10.0 && n < 12.0) {
       pRet.ival = 5;
-      pRet.sval = "101";
+      pRet.sval = "C";
     } else if (n >= 12.0 && n < 14.0) {
       pRet.ival = 6;
-      pRet.sval = "110";
+      pRet.sval = "B";
     } else {
       pRet.ival = 7;
-      pRet.sval = "111";
+      pRet.sval = "A";
     }
     return pRet;
   }

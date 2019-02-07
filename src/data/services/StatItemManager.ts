@@ -200,7 +200,8 @@ export class StatItemManager extends BaseDataManager {
             const note = item.total / item.count;
             const nx = ConvertNote(note);
             if (nx) {
-              dataRes[key] = nx.ival;
+            //  dataRes[key] = nx.ival;
+              dataRes[key] = nx.sval;
               bRegister = true;
             }
           }
