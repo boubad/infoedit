@@ -8,7 +8,7 @@ import {
   REFRESH_ALL_SUCCESS
 } from "../../../features/AppState/redux/AppStateActions";
 import { IBaseState } from "../../../redux/InfoState";
-import { GetInitialSemestreState } from '../../../redux/initialState';
+import { GetInitialSemestreState } from "../../../redux/initialState";
 import { IPayload } from "../../../redux/IPayload";
 import {
   CANCEL_SEMESTRE_ITEM,
@@ -65,7 +65,7 @@ export function semestreSubReducer(
   state: IBaseState<ISemestreDoc>,
   action: FluxStandardAction<IPayload>
 ): IBaseState<ISemestreDoc> {
-  if (!state){
+  if (!state) {
     return GetInitialSemestreState();
   }
   const p = action.payload ? action.payload : {};
@@ -82,7 +82,7 @@ export function semestreSubReducer(
       });
     case CREATE_SEMESTRE_ITEM:
       return produce(state, pRet => {
-        if (p.semestre){
+        if (p.semestre) {
           pRet.addMode = true;
           pRet.previousId = pRet.current.id;
           pRet.current = p.semestre;
@@ -100,7 +100,7 @@ export function semestreSubReducer(
       return refreshSemestre(state, p);
     case SELECT_SEMESTRE_ITEM:
       return produce(state, pRet => {
-        if (p.semestre){
+        if (p.semestre) {
           pRet.current = p.semestre;
         }
         pRet.busy = false;
@@ -136,6 +136,10 @@ export function semestreSubReducer(
               break;
             case "sigle":
               pz.sigle = val;
+              pz.modified = true;
+              break;
+            case "tag":
+              pz.tag = val;
               pz.modified = true;
               break;
             default:

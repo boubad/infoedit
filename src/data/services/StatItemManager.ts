@@ -17,6 +17,10 @@ interface IWorkItem {
 }
 //
 const STRING_COMMA = ",";
+const STRING_TAG = "tag";
+const STRING_ID = "_id";
+const STRING_COEFF = "coefficient";
+const STRING_NA = "NA";
 //
 export class StatItemManager extends BaseDataManager {
   //
@@ -83,7 +87,7 @@ export class StatItemManager extends BaseDataManager {
                   { id: { $eq: controleid } },
                   0,
                   1,
-                  ["coefficient"]
+                  [STRING_COEFF]
                 );
                 if (pp.length > 0) {
                   const x = pp[0];
@@ -111,11 +115,11 @@ export class StatItemManager extends BaseDataManager {
                   { id: { $eq: anneeid } },
                   0,
                   1,
-                  ["sigle"]
+                  [STRING_TAG]
                 );
                 if (pp.length > 0) {
                   const x = pp[0];
-                  anneesigle = x.sigle;
+                  anneesigle = x.tag;
                   anneesMap.set(anneeid, anneesigle);
                 } else {
                   continue;
@@ -134,11 +138,11 @@ export class StatItemManager extends BaseDataManager {
                   { id: { $eq: semestreid } },
                   0,
                   1,
-                  ["sigle"]
+                  [STRING_TAG]
                 );
                 if (pp.length > 0) {
                   const x = pp[0];
-                  semestresigle = x.sigle;
+                  semestresigle = x.tag;
                   semestresMap.set(semestreid, semestresigle);
                 } else {
                   continue;
@@ -157,17 +161,17 @@ export class StatItemManager extends BaseDataManager {
                   { id: { $eq: matiereid } },
                   0,
                   1,
-                  ["sigle"]
+                  [STRING_TAG]
                 );
                 if (pp.length > 0) {
                   const x = pp[0];
-                  matieresigle = x.sigle;
+                  matieresigle = x.tag;
                   matieresMap.set(matiereid, matieresigle);
                 } else {
                   continue;
                 }
               }
-              const key = anneesigle + semestresigle + matieresigle;
+              const key = semestresigle + matieresigle;
               let item = oMap.get(key);
               if (!item) {
                 item = {
@@ -273,7 +277,7 @@ export class StatItemManager extends BaseDataManager {
               { id: { $eq: controleid } },
               0,
               1,
-              ["coefficient"]
+              [STRING_COEFF]
             );
             if (pp.length > 0) {
               const x = pp[0];
@@ -301,11 +305,11 @@ export class StatItemManager extends BaseDataManager {
               { id: { $eq: anneeid } },
               0,
               1,
-              ["sigle"]
+              [STRING_TAG]
             );
             if (pp.length > 0) {
               const x = pp[0];
-              anneesigle = x.sigle;
+              anneesigle = x.tag;
               anneesMap.set(anneeid, anneesigle);
             } else {
               continue;
@@ -324,11 +328,11 @@ export class StatItemManager extends BaseDataManager {
               { id: { $eq: semestreid } },
               0,
               1,
-              ["sigle"]
+              [STRING_TAG]
             );
             if (pp.length > 0) {
               const x = pp[0];
-              semestresigle = x.sigle;
+              semestresigle = x.tag;
               semestresMap.set(semestreid, semestresigle);
             } else {
               continue;
@@ -347,17 +351,17 @@ export class StatItemManager extends BaseDataManager {
               { id: { $eq: matiereid } },
               0,
               1,
-              ["sigle"]
+              [STRING_TAG]
             );
             if (pp.length > 0) {
               const x = pp[0];
-              matieresigle = x.sigle;
+              matieresigle = x.tag;
               matieresMap.set(matiereid, matieresigle);
             } else {
               continue;
             }
           }
-          const key = anneesigle + semestresigle + matieresigle;
+          const key = semestresigle + matieresigle;
           let item = oMap.get(key);
           if (!item) {
             item = {
@@ -444,7 +448,7 @@ export class StatItemManager extends BaseDataManager {
       },
       0,
       1,
-      ["_id"]
+      [STRING_ID]
     );
     if (pp.length > 0) {
       const x = pp[0];
@@ -549,7 +553,7 @@ export class StatItemManager extends BaseDataManager {
             sx = v.trim();
           }
           if (sx.length < 1) {
-            cur = cur + "NA";
+            cur = cur + STRING_NA;
           } else {
             cur = cur + sx;
             bRegister = true;

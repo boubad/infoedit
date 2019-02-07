@@ -158,6 +158,9 @@ export function matiereSubReducer(
             case "name":
               pz.name = val;
               pz.modified = true;
+            case "tag":
+              pz.tag = val;
+              pz.modified = true;
               break;
             default:
               break;

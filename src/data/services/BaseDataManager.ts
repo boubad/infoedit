@@ -664,6 +664,7 @@ export class BaseDataManager {
     pRet.name = p.name ? p.name : "";
     pRet.uniteid = p.uniteid ? p.uniteid : "";
     pRet.modname = p.modname ? p.modname : "";
+    pRet.tag = (p.tag) ? p.tag : pRet.sigle;
     pRet.coefficient =
       p.coefficient && p.coefficient > 0.0 ? p.coefficient : 1.0;
     pRet.ecs = p.ecs && p.ecs >= 0.0 ? p.ecs : 0.0;
@@ -720,6 +721,7 @@ export class BaseDataManager {
     pRet.enddate = p.enddate ? p.enddate : "";
     pRet.sigle = p.sigle ? p.sigle : "";
     pRet.name = p.name ? p.name : "";
+    pRet.tag = (p.tag) ? p.tag : pRet.sigle;
     pRet.displayenddate = DateToDisplay(pRet.enddate);
     pRet.displaystartdate = DateToDisplay(pRet.startdate);
     pRet.attachments = this.getDocAttachments(p);
@@ -765,6 +767,7 @@ export class BaseDataManager {
     pRet.observations = p.observations ? p.observations : "";
     pRet.name = p.name ? p.name : "";
     pRet.sigle = p.sigle ? p.sigle : "";
+    pRet.tag = (p.tag) ? p.tag : pRet.sigle;
     pRet.attachments = this.getDocAttachments(p);
     if (pRet.id.length > 0) {
       this.semestresMap.set(pRet.id, pRet);
@@ -780,7 +783,7 @@ export class BaseDataManager {
     pRet.observations = p.observations ? p.observations : "";
     pRet.name = p.name ? p.name : "";
     pRet.sigle = p.sigle ? p.sigle : "";
-    pRet.modalkeys = p.modalkeys ? p.modalkeys : [];
+    pRet.tag = (p.tag) ? p.tag : pRet.sigle;
     pRet.modelvalues = p.modelvalues ? p.modelvalues : [];
     pRet.vartype = p.vartype ? p.vartype : "";
     pRet.attachments = this.getDocAttachments(p);

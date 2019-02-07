@@ -34,14 +34,17 @@ export interface IAnneeDoc extends ISigleNamedDoc {
   enddate: string;
   displaystartdate: string;
   displayenddate: string;
+  tag:string;
 } // interface IAnneeDoc
-export interface ISemestreDoc extends ISigleNamedDoc {} // interface IUniteDoc
+export interface ISemestreDoc extends ISigleNamedDoc {
+  tag:string;
+} // interface IUniteDoc
 export interface IUniteDoc extends ISigleNamedDoc {} // interface IUniteDoc
 export interface IGroupeDoc extends ISigleNamedDoc {} // interface IGroupeDoc
 export interface IDataVarDoc extends ISigleNamedDoc {
-  modalkeys:string[];
   modelvalues:number[];
   vartype:string;
+  tag:string;
 }// interface IDataVarDoc
 //
 export interface IMatiereDoc extends ISigleNamedDoc {
@@ -50,6 +53,7 @@ export interface IMatiereDoc extends ISigleNamedDoc {
   modname: string;
   coefficient: number;
   ecs: number;
+  tag:string;
 } // interface IMatiereDoc
 export interface IBaseAffectationDoc extends IBaseDoc {
   anneeid: string;

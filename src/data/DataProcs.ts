@@ -93,9 +93,9 @@ export function GetDataVarDoc(): IDataVarDoc {
       attachments: [],
       loaded: false,
       ownerid: "",
-      modalkeys: [],
       modelvalues: [],
-      vartype: ""
+      vartype: "",
+      tag:""
     }
   );
 } // GetGroupe
@@ -148,7 +148,8 @@ export function GetSemestre(): ISemestreDoc {
       modified: false,
       attachments: [],
       loaded: false,
-      ownerid: ""
+      ownerid: "",
+      tag:""
     }
   );
 } // GetSemestre
@@ -171,7 +172,8 @@ export function GetMatiere(): IMatiereDoc {
       uniteid: "",
       loaded: false,
       unitename: "",
-      ownerid: ""
+      ownerid: "",
+      tag:""
     }
   );
 } // GetMatiere
@@ -224,7 +226,8 @@ export function GetAnnee(): IAnneeDoc {
       sigle: "",
       ownerid: "",
       displaystartdate: "",
-      displayenddate: ""
+      displayenddate: "",
+      tag:""
     }
   );
 } // GetAnnee

@@ -2,7 +2,7 @@ import produce from "immer";
 import { IAnneeDoc } from "../../../data/DomainData";
 import { ComputePagesCount } from "../../../redux/BaseReducer";
 import { IBaseState } from "../../../redux/InfoState";
-import { GetInitialAnneeState } from '../../../redux/initialState';
+import { GetInitialAnneeState } from "../../../redux/initialState";
 import { InfoAction, IPayload } from "../../../redux/IPayload";
 import { CHANGE_ANNEE_SUCCESS } from "../../AppState/redux/AppStateActions";
 import {
@@ -46,22 +46,22 @@ function refreshAnnee(
       pRet.current = p.annee;
       pRet.addMode = false;
       const id = pRet.current.id;
-      if (id.length > 0){
+      if (id.length > 0) {
         const bb = state.pageData;
         const n = bb.length;
         const vv = [];
-        for (let i = 0; i < n; i++){
-           const x = bb[i];
-           if (x.id === id){
-             const y = Object.assign({},pRet.current);
-             vv.push(y);
-           } else {
-             vv.push(x);
-           }
-        }// i
+        for (let i = 0; i < n; i++) {
+          const x = bb[i];
+          if (x.id === id) {
+            const y = Object.assign({}, pRet.current);
+            vv.push(y);
+          } else {
+            vv.push(x);
+          }
+        } // i
         pRet.pageData = vv;
-      }// id
-    }// annee
+      } // id
+    } // annee
   });
 } // refreshAnnee
 /////////////////////////////////////////////
@@ -69,7 +69,7 @@ export function anneeSubReducer(
   state: IBaseState<IAnneeDoc>,
   action: InfoAction
 ): IBaseState<IAnneeDoc> {
-  if (!state){
+  if (!state) {
     return GetInitialAnneeState();
   }
   const p = action.payload ? action.payload : {};
@@ -95,7 +95,7 @@ export function anneeSubReducer(
       });
     case CREATE_ANNEE_ITEM:
       return produce(state, pRet => {
-        if (p.annee){
+        if (p.annee) {
           pRet.previousId = pRet.current.id;
           pRet.current = p.annee;
           pRet.addMode = true;
@@ -146,6 +146,10 @@ export function anneeSubReducer(
               break;
             case "sigle":
               pz.sigle = val;
+              pz.modified = true;
+              break;
+            case "tag":
+              pz.tag = val;
               pz.modified = true;
               break;
             default:

@@ -44,6 +44,7 @@ export class MatiereManager extends SemestreManager {
       observations: p.observations,
       ownerid: p.ownerid,
       sigle,
+      tag: (p.tag.trim().length < 1) ? sigle.toUpperCase() : p.tag.trim().toUpperCase(),
       type: TYPE_MATIERE,
       uniteid,
     };

@@ -37,6 +37,7 @@ export class AnneeManager extends ControleManager {
       ownerid: p.ownerid,
       sigle,
       startdate: d1,
+      tag: (p.tag.trim().length < 1) ? sigle.toUpperCase() : p.tag.trim().toUpperCase(),
       type: TYPE_ANNEE
     };
     const pp = await this.pStore.findDocsBySelector(

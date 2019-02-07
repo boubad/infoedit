@@ -9,9 +9,9 @@ export interface IItemDataVar {
   observations?: string;
   sigle?: string;
   name?: string;
-  modalkeys?: string[];
   modelvalues?: number[];
   vartype?: string;
+  tag?:string;
 } // interface IItemDataVar
 export interface IItemAnnee {
   _id?: string;
@@ -25,6 +25,7 @@ export interface IItemAnnee {
   name?: string;
   startdate?: string;
   enddate?: string;
+  tag?:string;
 } // interface IItemAnnee
 //
 export interface IItemGroupe {
@@ -61,6 +62,7 @@ export interface IItemSemestre {
   observations?: string;
   sigle?: string;
   name?: string;
+  tag?:string;
 } // interface IItemUnite
 //
 export interface IItemMatiere {
@@ -77,6 +79,7 @@ export interface IItemMatiere {
   modname?: string;
   coefficient?: number;
   ecs?: number;
+  tag?:string;
 } // interface IItemMatiere
 //
 export interface IItemEtudiant {

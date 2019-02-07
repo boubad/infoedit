@@ -5,6 +5,7 @@ import { InputCoefficientComponent } from "../../../components/InputCoefficientC
 import { InputDescComponent } from "../../../components/InputDescComponent";
 import { InputLowerTextComponent } from "../../../components/InputLowerTextComponent";
 import { InputNameTextComponent } from "../../../components/InputNameTextComponent";
+import { InputUpperTextComponent } from '../../../components/InputUpperTextComponent';
 import { IMatiereDoc, IOption } from "../../../data/DomainData";
 import { SigleNamedInfoComponent } from "../../../features/Common/presentation/SigleNamedInfoComponent";
 
@@ -70,6 +71,13 @@ export class MatiereInfo extends SigleNamedInfoComponent<IMatiereDoc> {
           prompt={"ECS:"}
           busy={this.props.busy}
           onNumberChanged={this.props.onFieldChanged}
+        />
+         <InputUpperTextComponent
+          text={this.props.current.tag}
+          prompt={"Tag:"}
+          propname={"tag"}
+          busy={this.props.busy}
+          onTextChanged={this.props.onFieldChanged}
         />
         <InputDescComponent
           text={this.props.current.observations}

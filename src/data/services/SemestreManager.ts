@@ -29,6 +29,7 @@ export class SemestreManager extends UniteManager {
       observations: p.observations,
       ownerid: p.ownerid,
       sigle,
+      tag: (p.tag.trim().length < 1) ? sigle.toUpperCase() : p.tag.trim().toUpperCase(),
       type: TYPE_SEMESTRE
     };
     const pp: any[] = await this.pStore.findDocsBySelector(
