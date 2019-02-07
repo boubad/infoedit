@@ -27,7 +27,7 @@ export class DataVarManager extends StatItemManager {
       vartype = DATAVAR_TYPE_STRING;
     }
     const doc: any = {
-      modalvalues: p.modelvalues,
+      modalvalues: p.modalvalues,
       name,
       observations: p.observations,
       ownerid: p.ownerid,

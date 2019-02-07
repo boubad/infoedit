@@ -9,7 +9,7 @@ export interface IItemDataVar {
   observations?: string;
   sigle?: string;
   name?: string;
-  modelvalues?: number[];
+  modalvalues?: string[];
   vartype?: string;
   tag?:string;
 } // interface IItemDataVar

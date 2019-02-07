@@ -93,7 +93,7 @@ export function GetDataVarDoc(): IDataVarDoc {
       attachments: [],
       loaded: false,
       ownerid: "",
-      modelvalues: [],
+      modalvalues: [],
       vartype: "",
       tag:""
     }

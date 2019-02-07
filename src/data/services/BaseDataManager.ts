@@ -784,7 +784,7 @@ export class BaseDataManager {
     pRet.name = p.name ? p.name : "";
     pRet.sigle = p.sigle ? p.sigle : "";
     pRet.tag = (p.tag) ? p.tag : pRet.sigle;
-    pRet.modelvalues = p.modelvalues ? p.modelvalues : [];
+    pRet.modalvalues = p.modalvalues ? p.modalvalues : [];
     pRet.vartype = p.vartype ? p.vartype : "";
     pRet.attachments = this.getDocAttachments(p);
     if (pRet.id.length > 0) {

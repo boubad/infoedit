@@ -119,10 +119,9 @@ export function datavarSubReducer(
         if (p.field) {
           const pz = pRet.current;
           const key = p.field;
-          const ip = pz.modalkeys.indexOf(key);
+          const ip = pz.modalvalues.indexOf(key);
           if (ip < 0) {
-            pz.modelvalues.push(pz.modalkeys.length);
-            pz.modalkeys.push(key);
+            pz.modalvalues.push(key);
             pz.modified = true;
             pz.vartype = DATAVAR_TYPE_STRING;
           }
@@ -133,10 +132,9 @@ export function datavarSubReducer(
         if (p.field) {
           const pz = pRet.current;
           const key = p.field;
-          const ip = pz.modalkeys.indexOf(key);
+          const ip = pz.modalvalues.indexOf(key);
           if (ip >= 0) {
-            pz.modalkeys.splice(ip, 1);
-            pz.modelvalues.splice(ip, 1);
+            pz.modalvalues.splice(ip, 1);
             pz.modified = true;
           }
         } // fields
@@ -162,6 +160,10 @@ export function datavarSubReducer(
               break;
             case "vartype":
               pz.vartype = val;
+              pz.modified = true;
+              break;
+            case "tag":
+              pz.tag = val;
               pz.modified = true;
               break;
             default:

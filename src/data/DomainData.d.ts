@@ -42,7 +42,7 @@ export interface ISemestreDoc extends ISigleNamedDoc {
 export interface IUniteDoc extends ISigleNamedDoc {} // interface IUniteDoc
 export interface IGroupeDoc extends ISigleNamedDoc {} // interface IGroupeDoc
 export interface IDataVarDoc extends ISigleNamedDoc {
-  modelvalues:number[];
+  modalvalues:string[];
   vartype:string;
   tag:string;
 }// interface IDataVarDoc

@@ -6,7 +6,7 @@ import { GetInitialUnite } from "../../../redux/StateProcs";
 
 export class UniteServices {
   public static createUnite(state: IInfoState): IPayload {
-    return { semestre: GetInitialUnite(state) };
+    return { unite: GetInitialUnite(state) };
   } // createUnite
   public static async selectUniteAsync(
     state: IInfoState,
