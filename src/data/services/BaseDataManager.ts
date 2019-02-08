@@ -827,6 +827,8 @@ export class BaseDataManager {
     const pRet = GetStatItem();
     pRet.id = p._id ? p._id : "";
     pRet.rev = p._rev ? p._rev : "";
+    pRet.etudiantid = (p.etudiantid) ? p.etudiantid : '';
+    pRet.anneetag = (p.anneetag) ? p.anneetag : "";
     pRet.data = (p.data) ? p.data : {};
     pRet.attachments = this.getDocAttachments(p);
     return pRet;

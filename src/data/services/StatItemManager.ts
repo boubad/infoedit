@@ -10,10 +10,11 @@ interface IWorkItem {
   key: string;
   matieresigle: string;
   semestresigle: string;
-  anneesigle: string;
+  anneetag: string;
   count: number;
   total: number;
   value: number | null;
+  result: string | null;
 }
 //
 const STRING_COMMA = ",";
@@ -29,10 +30,6 @@ export class StatItemManager extends BaseDataManager {
   } // constructor
   //
   public async checkAllEtudiantsStatItem(): Promise<void> {
-    const oCoeffsMap: Map<string, number> = new Map<string, number>();
-    const anneesMap: Map<string, string> = new Map<string, string>();
-    const semestresMap: Map<string, string> = new Map<string, string>();
-    const matieresMap: Map<string, string> = new Map<string, string>();
     const limit = 128;
     let nOffset = 0;
     const etudSel: any = {
@@ -52,187 +49,7 @@ export class StatItemManager extends BaseDataManager {
       for (let j = 0; j < ny; j++) {
         const y = aa[j];
         const etudiantid = y._id;
-        const pEtud = await this.fetchEtudiantByIdAsync(etudiantid);
-        if (pEtud.id !== etudiantid) {
-          continue;
-        }
-        const oMap: Map<string, IWorkItem> = new Map<string, IWorkItem>();
-        const sel: any = {
-          etudiantid: { $eq: etudiantid },
-          type: { $eq: TYPE_NOTE }
-        };
-        const nTotal = await this.pStore.findDocsCountBySelector(sel);
-        let offset = 0;
-        while (offset < nTotal) {
-          const nn: IItemNote[] = await this.pStore.findDocsBySelector(
-            sel,
-            offset,
-            limit
-          );
-          const n = nn.length;
-          offset = offset + n;
-          for (let i = 0; i < n; i++) {
-            const p = nn[i];
-            if (p.value) {
-              const controleid = p.controleid ? p.controleid : "";
-              if (controleid.length < 1) {
-                continue;
-              }
-              let coef: number = 1.0;
-              let c = oCoeffsMap.get(controleid);
-              if (c && c > 0) {
-                coef = c;
-              } else {
-                const pp = await this.pStore.findDocsBySelector(
-                  { id: { $eq: controleid } },
-                  0,
-                  1,
-                  [STRING_COEFF]
-                );
-                if (pp.length > 0) {
-                  const x = pp[0];
-                  c = x.coefficient;
-                  if (c && c > 0) {
-                    coef = c;
-                  } else {
-                    coef = 1.0;
-                  }
-                  oCoeffsMap.set(controleid, coef);
-                } else {
-                  continue;
-                }
-              }
-              let anneesigle = "";
-              const anneeid = p.anneeid ? p.anneeid : "";
-              if (anneeid.length < 1) {
-                continue;
-              }
-              const px = anneesMap.get(anneeid);
-              if (px) {
-                anneesigle = px;
-              } else {
-                const pp = await this.pStore.findDocsBySelector(
-                  { id: { $eq: anneeid } },
-                  0,
-                  1,
-                  [STRING_TAG]
-                );
-                if (pp.length > 0) {
-                  const x = pp[0];
-                  anneesigle = x.tag;
-                  anneesMap.set(anneeid, anneesigle);
-                } else {
-                  continue;
-                }
-              }
-              let semestresigle = "";
-              const semestreid = p.semestreid ? p.semestreid : "";
-              if (semestreid.length < 1) {
-                continue;
-              }
-              const px1 = semestresMap.get(semestreid);
-              if (px1) {
-                semestresigle = px1;
-              } else {
-                const pp = await this.pStore.findDocsBySelector(
-                  { id: { $eq: semestreid } },
-                  0,
-                  1,
-                  [STRING_TAG]
-                );
-                if (pp.length > 0) {
-                  const x = pp[0];
-                  semestresigle = x.tag;
-                  semestresMap.set(semestreid, semestresigle);
-                } else {
-                  continue;
-                }
-              }
-              let matieresigle = "";
-              const matiereid = p.matiereid ? p.matiereid : "";
-              if (matiereid.length < 1) {
-                continue;
-              }
-              const px2 = matieresMap.get(matiereid);
-              if (px2) {
-                semestresigle = px2;
-              } else {
-                const pp = await this.pStore.findDocsBySelector(
-                  { id: { $eq: matiereid } },
-                  0,
-                  1,
-                  [STRING_TAG]
-                );
-                if (pp.length > 0) {
-                  const x = pp[0];
-                  matieresigle = x.tag;
-                  matieresMap.set(matiereid, matieresigle);
-                } else {
-                  continue;
-                }
-              }
-              const key = semestresigle + matieresigle;
-              let item = oMap.get(key);
-              if (!item) {
-                item = {
-                  key,
-                  matieresigle,
-                  semestresigle,
-                  // tslint:disable-next-line:object-literal-sort-keys
-                  anneesigle,
-                  count: 0,
-                  total: 0,
-                  value: null
-                };
-              }
-              if (p.value && p.value >= 0 && p.value <= 20.0) {
-                item.count = item.count + coef;
-                item.total = item.total + coef * p.value;
-              }
-              oMap.set(key, item);
-            } // p.value
-          } // i
-        } // while
-        const dataRes: any = {};
-        let bRegister = false;
-        oMap.forEach((item, key) => {
-          if (item.count > 0) {
-            const note = item.total / item.count;
-            const nx = ConvertNote(note);
-            if (nx) {
-            //  dataRes[key] = nx.ival;
-              dataRes[key] = nx.sval;
-              bRegister = true;
-            }
-          }
-        });
-        if (pEtud.sexe.trim().length > 0) {
-          dataRes.sexe = pEtud.sexe.trim();
-          bRegister = true;
-        }
-        if (pEtud.redoublant.trim().length > 0) {
-          dataRes.redoublant = pEtud.redoublant.trim();
-          bRegister = true;
-        }
-        if (pEtud.sup.trim().length > 0) {
-          dataRes.sup = pEtud.sup.trim();
-          bRegister = true;
-        }
-        const d1: object = pEtud.data;
-        // tslint:disable-next-line:forin
-        for (const k in d1) {
-          const st = "" + d1[k];
-          if (st.trim().length > 0) {
-            dataRes[k] = st.trim();
-            bRegister = true;
-          }
-        } // k
-        if (bRegister) {
-          const pItem = GetStatItem();
-          pItem.data = dataRes;
-          pItem.etudiantid = etudiantid;
-          await this.saveStatItemAsync(pItem);
-        }
+        await this.checkEtudiantStatItem(etudiantid);
       } // jEtudiant
     } // etuds
   } // checkAllEtudiantsStatItem
@@ -362,7 +179,7 @@ export class StatItemManager extends BaseDataManager {
               continue;
             }
           }
-          const key = semestresigle + matieresigle;
+          const key = anneesigle + semestresigle + matieresigle;
           let item = oMap.get(key);
           if (!item) {
             item = {
@@ -370,9 +187,10 @@ export class StatItemManager extends BaseDataManager {
               matieresigle,
               semestresigle,
               // tslint:disable-next-line:object-literal-sort-keys
-              anneesigle,
+              anneetag: anneesigle,
               count: 0,
               total: 0,
+              result:null,
               value: null
             };
           }
@@ -384,48 +202,55 @@ export class StatItemManager extends BaseDataManager {
         } // p.value
       } // i
     } // while
-    const dataRes: any = {};
-    let bRegister = false;
-    oMap.forEach((item, key) => {
+    const xMap:Map<string,IWorkItem[]> = new Map<string,IWorkItem[]>();
+    let bRegister:boolean = false;
+    oMap.forEach((item,key) =>{
       if (item.count > 0) {
         const note = item.total / item.count;
         const nx = ConvertNote(note);
         if (nx) {
-          dataRes[key] = nx.ival;
+          item.result = nx.sval;
           bRegister = true;
         }
       }
+       const vx = item.anneetag;
+       let dd = xMap.get(vx);
+       if (dd){
+         dd.push(item);
+       } else {
+         dd = [];
+         dd.push(item);
+         xMap[vx] = dd;
+       }
     });
-    if (pEtud.sexe.trim().length > 0) {
-      dataRes.sexe = pEtud.sexe.trim();
-      bRegister = true;
+    if (!bRegister){
+      return;
     }
-    if (pEtud.redoublant.trim().length > 0) {
-      dataRes.redoublant = pEtud.redoublant.trim();
-      bRegister = true;
-    }
-    if (pEtud.sup.trim().length > 0) {
-      dataRes.sup = pEtud.sup.trim();
-      bRegister = true;
-    }
-    const d1: object = pEtud.data;
-    // tslint:disable-next-line:forin
-    for (const k in d1) {
-      const st = "" + d1[k];
-      if (st.trim().length > 0) {
-        dataRes[k] = st.trim();
-        bRegister = true;
-      }
-    } // k
-    if (bRegister) {
-      const pItem = GetStatItem();
-      pItem.data = dataRes;
-      pItem.etudiantid = etudiantid;
-      const pz = await this.saveStatItemAsync(pItem);
-      if (pz.id.length < 1) {
-        throw new TypeError("Cannot save statitem");
-      }
-    } // register
+    xMap.forEach(async (items,anneetag) =>{
+      let bExists = false;
+      items.forEach((item) =>{
+        if (item.result && item.count > 0){
+          bExists = true;
+        }
+      }); // item
+      if (bExists){
+         const vd:any = {};
+         items.forEach((item) =>{
+          if (item.count > 0 && item.result){
+            const sk = item.semestresigle + item.matieresigle;
+            vd[sk] = item.result;
+          }// ok
+         });
+         const pItem = GetStatItem();
+         pItem.data = vd;
+         pItem.etudiantid = etudiantid;
+         pItem.anneetag = anneetag;
+         const pz = await this.saveStatItemAsync(pItem);
+         if (pz.id.length < 1) {
+           throw new TypeError("Cannot save statitem");
+         }
+      }// Exists
+    }); // items
   } // checkEtudiantStatItem
   ////
   public async removeStatItemAsync(id: string): Promise<void> {
@@ -438,6 +263,7 @@ export class StatItemManager extends BaseDataManager {
       throw new TypeError("Cannot save statitem");
     }
     const doc: any = {
+      anneetag: p.anneetag,
       data: p.data,
       etudiantid: p.etudiantid,
       type: TYPE_STAT
@@ -567,6 +393,4 @@ export class StatItemManager extends BaseDataManager {
     } // nOffset
     return sRes;
   } // getStatItemsTextAsync
-
-  //
 } // class StatItemManager

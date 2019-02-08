@@ -71,6 +71,7 @@ export function ConvertEvtTypeToString(etype?: EvtGenre): string {
 //
 export function GetStatItem():IStatItemDoc {
   return Object.assign({},{
+    anneetag:'',
     attachments:[],
     data:{},
     etudiantid:'',
