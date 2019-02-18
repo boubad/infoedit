@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Table } from 'reactstrap';
 import { BaseComponent } from '../../../components/BaseComponent';
-import { IAnneeDoc } from '../../../data/DomainData';
+import { IAnneeDoc } from '../../../data/domain/DomainData';
 import { AnneeInfo } from "./AnneeInfo";
 import { AnneeList } from "./AnneeList";
 //

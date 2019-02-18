@@ -1,6 +1,9 @@
 import produce from "immer";
-import { GetControle, GetEvt, GetNote } from "../../../data/DataProcs";
-import { IControleDoc } from "../../../data/DomainData";
+import { GetControle, GetEvt, GetNote } from '../../../data/domain/DataProcs';
+import { IControleDoc } from '../../../data/domain/DomainData';
+import { IControleState } from '../../../data/state/InfoState';
+import { InfoAction, IPayload } from '../../../data/state/IPayload';
+import { GetInitialControleState } from '../../../data/state/stores/initialState';
 import { REMOVE_ANNEE_ITEM_SUCCESS } from "../../../features/Annee/redux/AnneeActions";
 import {
   CHANGE_ANNEE_SUCCESS,
@@ -18,10 +21,6 @@ import { REMOVE_MATIERE_ITEM_SUCCESS } from "../../../features/Matiere/redux/Mat
 import { REFRESHANNEESEMESTRE_STATUS_SUCCESS } from "../../../features/Outils/redux/OutilsActions";
 import { REMOVE_SEMESTRE_ITEM_SUCCESS } from "../../../features/Semestre/redux/SemestreActions";
 import { REMOVE_UNITE_ITEM_SUCCESS } from "../../../features/Unite/redux/UniteActions";
-import { IControleState } from "../../../redux/InfoState";
-import { GetInitialControleState } from "../../../redux/initialState";
-import { InfoAction } from "../../../redux/IPayload";
-import { IPayload } from "../../../redux/IPayload";
 import {
   CANCEL_CONTROLE_EVT,
   CANCEL_CONTROLE_ITEM,

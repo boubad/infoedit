@@ -6,7 +6,7 @@ import { InputDescComponent } from "../../../components/InputDescComponent";
 import { InputLowerTextComponent } from "../../../components/InputLowerTextComponent";
 import { InputNameTextComponent } from "../../../components/InputNameTextComponent";
 import { InputUpperTextComponent } from '../../../components/InputUpperTextComponent';
-import { IMatiereDoc, IOption } from "../../../data/DomainData";
+import { IMatiereDoc, IOption } from "../../../data/domain/DomainData";
 import { SigleNamedInfoComponent } from "../../../features/Common/presentation/SigleNamedInfoComponent";
 
 export class MatiereInfo extends SigleNamedInfoComponent<IMatiereDoc> {

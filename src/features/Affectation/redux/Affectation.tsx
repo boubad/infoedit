@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
-import { IAffectationDoc, IOption } from "src/data/DomainData";
-import { IInfoState } from "src/redux/InfoState";
-import { InfoDispatch } from "../../../redux/IPayload";
+import { IAffectationDoc, IOption } from "../../../data/domain/DomainData";
+import { IInfoState } from '../../../data/state/InfoState';
+import { InfoDispatch } from '../../../data/state/IPayload';
 import { Affectation, IAffectationsProps } from "../presentation/Affectation";
 import {
   cancelAffectationAction,

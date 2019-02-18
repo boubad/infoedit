@@ -2,7 +2,7 @@ import * as React from "react";
 import { Form } from "reactstrap";
 import { InputDescComponent } from "../../../components/InputDescComponent";
 import { InputNoteComponent } from "../../../components/InputNoteComponent";
-import { INoteDoc } from "../../../data/DomainData";
+import { INoteDoc } from "../../../data/domain/DomainData";
 import { ItemDetailComponent } from "./ItemDetailComponent";
 
 export class BaseNoteComponent extends ItemDetailComponent<INoteDoc> {

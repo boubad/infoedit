@@ -1,8 +1,9 @@
-import { GetInitialAnnee } from 'src/redux/StateProcs';
-import { IAnneeDoc } from "../../../data/DomainData";
-import { BaseServices } from "../../../redux/BaseServices";
-import { IInfoState } from "../../../redux/InfoState";
-import { IPayload } from "../../../redux/IPayload";
+import { IAnneeDoc } from '../../../data/domain/DomainData';
+import { IInfoState } from '../../../data/state/InfoState';
+import { IPayload } from '../../../data/state/IPayload';
+import { BaseServices } from '../../../data/state/services/BaseServices';
+import { GetInitialAnnee } from '../../../data/state/stores/StateProcs';
+
 
 //
 export class AnneeServices {

@@ -1,17 +1,9 @@
-import { GetMatiere } from '../../../data/DataProcs';
-import { BaseServices } from "../../../redux/BaseServices";
-import { IInfoState } from "../../../redux/InfoState";
-import { IPayload } from "../../../redux/IPayload";
-import {
-  GetInitialAffectation,
-  GetInitialAnnee,
-  GetInitialControle,
-  GetInitialEtudAffectation,
-  GetInitialGroupe,
-  GetInitialMatiere,
-  GetInitialSemestre,
-  GetInitialUnite
-} from "../../../redux/StateProcs";
+import { GetMatiere } from '../../../data/domain/DataProcs';
+import { IInfoState } from '../../../data/state/InfoState';
+import { IPayload } from '../../../data/state/IPayload';
+import { BaseServices } from '../../../data/state/services/BaseServices';
+import { GetInitialAffectation, GetInitialAnnee, GetInitialControle, GetInitialEtudAffectation, GetInitialGroupe, GetInitialMatiere, GetInitialSemestre, GetInitialUnite } from '../../../data/state/stores/StateProcs';
+
 //
 
 //

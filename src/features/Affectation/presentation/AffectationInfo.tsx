@@ -6,7 +6,7 @@ import { EditCommandsComponent } from "../../../components/EditCommandsComponent
 import { ItemChoiceComponent } from "../../../components/InputChoiceComponent";
 import { InputDateComponent } from "../../../components/InputDateComponent";
 import { InputDescComponent } from "../../../components/InputDescComponent";
-import { IAffectationDoc, IOption } from "../../../data/DomainData";
+import { IAffectationDoc, IOption } from "../../../data/domain/DomainData";
 
 export interface IAffectationInfoProps {
   addMode: boolean;

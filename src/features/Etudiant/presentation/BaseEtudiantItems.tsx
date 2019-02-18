@@ -6,7 +6,7 @@ import {
   IBaseDoc,
   IControleAffectationDoc,
   IEtudiantDoc
-} from "src/data/DomainData";
+} from "src/data/domain/DomainData";
 
 export interface IEtudiantItemsProps {
   busy: boolean;

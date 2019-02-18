@@ -1,5 +1,5 @@
 import * as React from "react";
-import { INoteDoc } from "../../../data/DomainData";
+import { INoteDoc } from "../../../data/domain/DomainData";
 import { ControleNoteComponent } from "../../../features/Common/presentation/ControleNoteComponent";
 import { ItemDetail } from "../../../features/Common/presentation/ItemDetails";
 

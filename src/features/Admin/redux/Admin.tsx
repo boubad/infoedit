@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
-import { IInfoState } from "../../../redux/InfoState";
+import { IInfoState } from '../../../data/state/InfoState';
 import { Admin, IAdminProps } from '../presentation/Admin';
 
 //

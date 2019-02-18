@@ -1,12 +1,12 @@
 import produce from "immer";
+import { IAppState } from '../../../data/state/InfoState';
+import { InfoAction } from '../../../data/state/IPayload';
+import { GetInitialAppState } from '../../../data/state/stores/initialState';
 import { REMOVE_DATAVAR_ITEM_SUCCESS, SAVE_DATAVAR_ITEM_SUCCESS } from '../../../features/DataVar/redux/DataVarActions';
 import {
   REMOVE_SEMESTRE_ITEM_SUCCESS,
   SAVE_SEMESTRE_ITEM_SUCCESS
 } from "../../../features/Semestre/redux/SemestreActions";
-import { IAppState } from "../../../redux/InfoState";
-import { GetInitialAppState } from "../../../redux/initialState";
-import { InfoAction } from "../../../redux/IPayload";
 import {
   REMOVE_AFFECTATION_ITEM_SUCCESS,
   SAVE_AFFECTATION_ITEM_SUCCESS

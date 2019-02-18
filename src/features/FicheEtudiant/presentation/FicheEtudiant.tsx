@@ -2,7 +2,7 @@ import classnames from "classnames";
 import * as React from "react";
 import { Nav, NavItem, NavLink, TabContent, Table, TabPane } from "reactstrap";
 import { BaseComponent } from "../../../components/BaseComponent";
-import { IEtudiantDoc } from "../../../data/DomainData";
+import { IEtudiantDoc } from "../../../data/domain/DomainData";
 import { FicheEtudiantAffectations } from "./FicheEtudiantAffectations";
 import { FicheEtudiantEvts } from "./FicheEtudiantEvts";
 import { FicheEtudiantInfo } from "./FicheEtudiantInfo";

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Table } from "reactstrap";
 import { BaseComponent } from '../../../components/BaseComponent';
-import { IGroupeDoc } from '../../../data/DomainData';
+import { IGroupeDoc } from '../../../data/domain/DomainData';
 import { GroupeInfo } from './GroupeInfo';
 import { GroupeList } from './GroupeList';
 //

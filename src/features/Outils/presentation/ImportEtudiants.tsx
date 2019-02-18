@@ -1,9 +1,9 @@
 import * as Papa from "papaparse";
 import * as React from "react";
 import { Button, Input, Table } from "reactstrap";
-import { BaseComponent } from 'src/components/BaseComponent';
-import { InputTableItemComponent } from 'src/components/InputTableItemComponent';
-import { IEtudiantDoc } from 'src/data/DomainData';
+import { BaseComponent } from '../../../components/BaseComponent';
+import { InputTableItemComponent } from '../../../components/InputTableItemComponent';
+import { IEtudiantDoc } from '../../../data/domain/DomainData';
 //
 interface IMyEvent extends EventTarget {
   target: { files: any; result: any };

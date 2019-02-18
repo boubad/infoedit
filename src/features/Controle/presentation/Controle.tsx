@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Table } from "reactstrap";
 import { BaseComponent } from '../../../components/BaseComponent';
-import { IControleDoc, IEvtDoc, INoteDoc, IOption } from '../../../data/DomainData';
+import { IControleDoc, IEvtDoc, INoteDoc, IOption } from '../../../data/domain/DomainData';
 import ControleDetail from "./ControleDetail";
 import { ControleList } from "./ControleList";
 //

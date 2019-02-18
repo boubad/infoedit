@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { createAction } from "redux-actions";
-import { IInfoState } from '../../../redux/InfoState';
-import { GetInitialDataVar } from '../../../redux/StateProcs';
+import { IInfoState } from '../../../data/state/InfoState';
+import { GetInitialDataVar } from '../../../data/state/stores/StateProcs';
 import { DataVarServices } from "./DataVarServices";
 //
 export const CHANGE_DATAVAR_FIELD = "CHANGE_DATAVAR_FIELD";

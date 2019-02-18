@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IEtudiantDoc } from '../../../data/DomainData';
+import { IEtudiantDoc } from '../../../data/domain/DomainData';
 import { BaseListComponent } from '../../../features/Common/presentation/BaseListComponent';
 
 //

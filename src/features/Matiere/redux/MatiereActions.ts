@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { createAction } from "redux-actions";
-import { IInfoState } from "../../../redux/InfoState";
-import { GetInitialMatiere } from '../../../redux/StateProcs';
+import { IInfoState } from '../../../data/state/InfoState';
+import { GetInitialMatiere } from '../../../data/state/stores/StateProcs';
 import { MatiereServices } from "./MatiereServices";
 //
 export const CHANGE_MATIERE_FIELD = "CHANGE_MATIERE_FIELD";

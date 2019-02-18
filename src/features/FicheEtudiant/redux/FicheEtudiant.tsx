@@ -1,10 +1,10 @@
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
-import { IEtudiantDoc } from "../../../data/DomainData";
+import { IEtudiantDoc } from '../../../data/domain/DomainData';
+import { IInfoState } from '../../../data/state/InfoState';
+import { InfoDispatch } from '../../../data/state/IPayload';
 import { removeEtudiantAttachment, saveEtudiantAttachment, setEtudiantAvatar } from '../../../features/Etudiant/redux/EtudiantActions';
 import { showControle } from '../../../features/FicheControle/redux/FicheControleActions';
-import { IInfoState } from "../../../redux/InfoState";
-import { InfoDispatch } from "../../../redux/IPayload";
 import { FicheEtudiant, IFicheEtudiantProps } from '../presentation/FicheEtudiant';
 //
 const getBusy = (state: IInfoState): boolean => {

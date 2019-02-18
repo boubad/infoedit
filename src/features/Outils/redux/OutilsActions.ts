@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { createAction } from "redux-actions";
-import { IInfoState } from "src/redux/InfoState";
+import { IInfoState } from '../../../data/state/InfoState';
 import { OutilsServices } from "./OutilsServices";
 //////////////////////////////////////////////
 export const GET_DATA_BEGIN = "GET_DATA_BEGIN";

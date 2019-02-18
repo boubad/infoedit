@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Table } from "reactstrap";
 import { BaseComponent } from '../../../components/BaseComponent';
-import { IUniteDoc } from '../../../data/DomainData';
+import { IUniteDoc } from '../../../data/domain/DomainData';
 import { UniteInfo } from './UniteInfo';
 import { UniteList } from './UniteList';
 //

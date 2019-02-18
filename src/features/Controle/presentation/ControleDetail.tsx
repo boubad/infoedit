@@ -7,7 +7,7 @@ import {
   IEvtDoc,
   INoteDoc,
   IOption
-} from "../../../data/DomainData";
+} from "../../../data/domain/DomainData";
 import { ControleEvts2 } from "./ControleEvts2";
 import { ControleInfo } from "./ControleInfo";
 import { ControleNotes } from "./ControleNotes";

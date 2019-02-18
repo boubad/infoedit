@@ -1,11 +1,8 @@
-import { ETUDIANT_STATUS_FREE } from '../../../data/DataProcs';
-import { BaseServices } from "../../../redux/BaseServices";
-import { IInfoState } from "../../../redux/InfoState";
-import { IPayload } from "../../../redux/IPayload";
-import {
-  FindEtudiantById,
-  GetInitialEtudiant
-} from "../../../redux/StateProcs";
+import { ETUDIANT_STATUS_FREE } from '../../../data/domain/DataProcs';
+import { IInfoState } from '../../../data/state/InfoState';
+import { IPayload } from '../../../data/state/IPayload';
+import { BaseServices } from '../../../data/state/services/BaseServices';
+import { FindEtudiantById, GetInitialEtudiant } from '../../../data/state/stores/StateProcs';
 
 //
 export class EtudiantServices {

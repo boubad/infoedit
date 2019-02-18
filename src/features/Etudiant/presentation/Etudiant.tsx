@@ -2,7 +2,7 @@ import * as React from "react";
 import { Form, Table } from "reactstrap";
 import { BaseComponent } from '../../../components/BaseComponent';
 import { StatusChoiceComponent } from '../../../components/StatusChoiceComponent';
-import { IEtudiantDoc } from '../../../data/DomainData';
+import { IEtudiantDoc } from '../../../data/domain/DomainData';
 import EtudiantDetail from "./EtudiantDetail";
 import { EtudiantList } from "./EtudiantList";
 //

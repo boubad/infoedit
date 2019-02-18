@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { createAction } from "redux-actions";
-import { IInfoState } from "../../../redux/InfoState";
-import { GetInitialGroupe } from '../../../redux/StateProcs';
+import { IInfoState } from '../../../data/state/InfoState';
+import { GetInitialGroupe } from '../../../data/state/stores/StateProcs';
 import { GroupeServices } from "./GroupeServices";
 //
 export const CHANGE_GROUPE_FIELD = "CHANGE_GROUPE_FIELD";

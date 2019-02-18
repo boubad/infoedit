@@ -10,7 +10,7 @@ import { InputItemComponent } from "../../../components/InputItemComponent";
 import {
   IEvtDoc,
   IOption
-} from "../../../data/DomainData";
+} from "../../../data/domain/DomainData";
 //
 export interface IControleEvtsProps {
   addMode: boolean;

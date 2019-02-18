@@ -1,9 +1,9 @@
 import { isError } from "flux-standard-action";
 import produce from "immer";
+import { IAppStatus } from '../../../data/state/InfoState';
+import { InfoAction } from '../../../data/state/IPayload';
+import { GetInitialAppStatus } from '../../../data/state/stores/initialState';
 import { SYNC_DATA_BEGIN } from "../../../features/Outils/redux/OutilsActions";
-import { IAppStatus } from "../../../redux/InfoState";
-import { GetInitialAppStatus } from "../../../redux/initialState";
-import { InfoAction } from "../../../redux/IPayload";
 import { CHECK_DATA_BEGIN } from '../../Outils/redux/OutilsActions';
 /////////////////////////////////////////////
 export function appStatusSubReducer(

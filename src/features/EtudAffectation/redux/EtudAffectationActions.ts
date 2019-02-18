@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { createAction } from "redux-actions";
-import { IInfoState } from "../../../redux/InfoState";
-import { GetInitialEtudAffectation } from '../../../redux/StateProcs';
+import { IInfoState } from '../../../data/state/InfoState';
+import { GetInitialEtudAffectation } from '../../../data/state/stores/StateProcs';
 import { EtudAffectationServices } from "./EtudAffectationServices";
 //
 export const CHANGE_ETUDAFFECTATION_FIELD = "CHANGE_ETUDAFFECTATION_FIELD";

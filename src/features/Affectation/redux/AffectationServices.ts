@@ -1,8 +1,8 @@
-import { IAffectationDoc } from "../../../data/DomainData";
-import { BaseServices } from "../../../redux/BaseServices";
-import { IInfoState } from "../../../redux/InfoState";
-import { IPayload } from "../../../redux/IPayload";
-import { GetInitialAffectation } from "../../../redux/StateProcs";
+import { IAffectationDoc } from '../../../data/domain/DomainData';
+import { IInfoState } from '../../../data/state/InfoState';
+import { IPayload } from '../../../data/state/IPayload';
+import { BaseServices } from '../../../data/state/services/BaseServices';
+import { GetInitialAffectation } from '../../../data/state/stores/StateProcs';
 
 export class AffectationServices {
   //

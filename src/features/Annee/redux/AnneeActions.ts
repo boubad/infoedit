@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { createAction } from "redux-actions";
-import { IInfoState } from '../../../redux/InfoState';
+import { IInfoState } from '../../../data/state/InfoState';
 import { AnneeServices } from './AnneeServices';
 //
 export const CHANGE_ANNEE_FIELD = "CHANGE_ANNEE_FIELD";

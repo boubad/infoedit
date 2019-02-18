@@ -1,6 +1,6 @@
 import { SigleNamedListComponent } from '../../../features/Common/presentation/SigleNamedListComponent';
 
-import { IUniteDoc } from '../../../data/DomainData';
+import { IUniteDoc } from '../../../data/domain/DomainData';
 
 //
 export class UniteList extends SigleNamedListComponent<IUniteDoc> {

@@ -1,8 +1,8 @@
-import { IDataVarDoc } from 'src/data/DomainData';
-import { GetInitialDataVar } from 'src/redux/StateProcs';
-import { BaseServices } from "../../../redux/BaseServices";
-import { IInfoState } from "../../../redux/InfoState";
-import { IPayload } from "../../../redux/IPayload";
+import { IDataVarDoc } from '../../../data/domain/DomainData';
+import { IInfoState } from '../../../data/state/InfoState';
+import { IPayload } from '../../../data/state/IPayload';
+import { BaseServices } from '../../../data/state/services/BaseServices';
+import { GetInitialDataVar } from '../../../data/state/stores/StateProcs';
 
 export class DataVarServices {
   public static createVarDoc(state: IInfoState): IPayload {

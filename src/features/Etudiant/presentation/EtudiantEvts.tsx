@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IControleAffectationDoc, IEvtDoc } from '../../../data/DomainData';
+import { IControleAffectationDoc, IEvtDoc } from '../../../data/domain/DomainData';
 import { BaseEtudiantItems } from './BaseEtudiantItems';
 
 export class EtudiantEvts extends BaseEtudiantItems {

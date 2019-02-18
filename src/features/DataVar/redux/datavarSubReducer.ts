@@ -2,11 +2,12 @@ import produce from "immer";
 import {
   DATAVAR_TYPE_STRING,
   GetDataVarDoc as GetDataVar
-} from "../../../data/DataProcs";
-import { IDataVarDoc } from "../../../data/DomainData";
-import { IBaseState } from "../../../redux/InfoState";
-import { GetInitialVarDocState } from "../../../redux/initialState";
-import { InfoAction, IPayload } from "../../../redux/IPayload";
+} from "../../../data/domain/DataProcs";
+import { IDataVarDoc } from "../../../data/domain/DomainData";
+
+import { IBaseState } from '../../../data/state/InfoState';
+import { InfoAction, IPayload } from '../../../data/state/IPayload';
+import { GetInitialVarDocState } from '../../../data/state/stores/initialState';
 import {
   ADD_DATAVAR_MODALITE,
   REMOVE_DATAVAR_MODALITE

@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
-import { IControleDoc, IEvtDoc, INoteDoc, IOption } from "src/data/DomainData";
-import { IInfoState } from "src/redux/InfoState";
+import { IControleDoc, IEvtDoc, INoteDoc, IOption } from '../../../data/domain/DomainData';
+import { IInfoState } from '../../../data/state/InfoState';
+import { InfoDispatch } from '../../../data/state/IPayload';
 import { showEtudiant } from '../../../features/FicheEtudiant/redux/FicheEtudiantActions';
-import { InfoDispatch } from "../../../redux/IPayload";
 import { Controle, IControlesProps } from "../presentation/Controle";
 import {
   cancelControleAction,

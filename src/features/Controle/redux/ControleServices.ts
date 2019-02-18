@@ -1,7 +1,7 @@
-import { FindControleById, GetInitialControle } from "src/redux/StateProcs";
-import { BaseServices } from "../../../redux/BaseServices";
-import { IInfoState } from "../../../redux/InfoState";
-import { IPayload } from "../../../redux/IPayload";
+import { IInfoState } from '../../../data/state/InfoState';
+import { IPayload } from '../../../data/state/IPayload';
+import { BaseServices } from '../../../data/state/services/BaseServices';
+import { FindControleById, GetInitialControle } from '../../../data/state/stores/StateProcs';
 
 //
 export class ControleServices {

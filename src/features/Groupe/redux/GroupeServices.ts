@@ -1,8 +1,8 @@
-import { IGroupeDoc } from '../../../data/DomainData';
-import { BaseServices } from '../../../redux/BaseServices';
-import { IInfoState } from '../../../redux/InfoState';
-import { IPayload } from '../../../redux/IPayload';
-import { GetInitialGroupe } from '../../../redux/StateProcs';
+import { IGroupeDoc } from '../../../data/domain/DomainData';
+import { IInfoState } from '../../../data/state/InfoState';
+import { IPayload } from '../../../data/state/IPayload';
+import { BaseServices } from '../../../data/state/services/BaseServices';
+import { GetInitialGroupe } from '../../../data/state/stores/StateProcs';
 
 export class GroupeServices {
   //

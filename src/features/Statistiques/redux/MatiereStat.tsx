@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
-import { IEtudiantDesc } from "../../../data/DomainData";
+import { IEtudiantDesc } from '../../../data/domain/DomainData';
+import { IInfoState } from '../../../data/state/InfoState';
+import { InfoDispatch } from '../../../data/state/IPayload';
 import { showEtudiant } from "../../../features/FicheEtudiant/redux/FicheEtudiantActions";
-import { IInfoState } from "../../../redux/InfoState";
-import { InfoDispatch } from "../../../redux/IPayload";
 import { IMatiereStatProps, MatiereStat } from "../presentation/MatiereStat";
 //
 const getDescs = (state: IInfoState): IEtudiantDesc[] => {

@@ -1,7 +1,7 @@
 import produce from "immer";
-import { IAppData } from "../../../redux/InfoState";
-import { GetInitialAppData } from "../../../redux/initialState";
-import { InfoAction } from "../../../redux/IPayload";
+import { IAppData } from '../../../data/state/InfoState';
+import { InfoAction } from '../../../data/state/IPayload';
+import { GetInitialAppData } from '../../../data/state/stores/initialState';
 import { CHANGE_APPDATA_FIELD } from './AppDataActions';
 /////////////////////////////////////////////
 export function appDataSubReducer(

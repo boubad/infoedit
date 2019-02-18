@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
-import { IInfoState } from "src/redux/InfoState";
-import { InfoDispatch } from "../../../redux/IPayload";
+import { IInfoState } from '../../../data/state/InfoState';
+import { InfoDispatch } from '../../../data/state/IPayload';
 import { ISynchoDataProps, SynchroData } from "../presentation/SynchroData";
 import { checkData, syncData } from './OutilsActions';
 

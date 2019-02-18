@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Table } from "reactstrap";
 import { BaseComponent } from "../../../components/BaseComponent";
-import { IControleAffectationDoc, IOption } from "../../../data/DomainData";
+import { IControleAffectationDoc, IOption } from "../../../data/domain/DomainData";
 //
 export interface IItemDetailProps<T extends IControleAffectationDoc> {
   addMode: boolean;

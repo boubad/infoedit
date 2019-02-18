@@ -1,14 +1,14 @@
 import { FluxStandardAction } from "flux-standard-action";
 import produce from "immer";
-import { GetGroupe } from "../../../data/DataProcs";
-import { IGroupeDoc } from "../../../data/DomainData";
+import { GetGroupe } from '../../../data/domain/DataProcs';
+import { IGroupeDoc } from '../../../data/domain/DomainData';
+import { IBaseState } from '../../../data/state/InfoState';
+import { IPayload } from '../../../data/state/IPayload';
+import { GetInitialGroupeState } from '../../../data/state/stores/initialState';
 import {
   CHANGE_GROUPE_SUCCESS,
   REFRESH_ALL_SUCCESS
 } from "../../../features/AppState/redux/AppStateActions";
-import { IBaseState } from "../../../redux/InfoState";
-import { GetInitialGroupeState } from "../../../redux/initialState";
-import { IPayload } from "../../../redux/IPayload";
 import {
   CANCEL_GROUPE_ITEM,
   CHANGE_GROUPE_FIELD,

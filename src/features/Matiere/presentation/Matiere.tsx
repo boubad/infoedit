@@ -2,7 +2,7 @@ import * as React from "react";
 import { Table } from "reactstrap";
 
 import { BaseComponent } from '../../../components/BaseComponent';
-import { IMatiereDoc, IOption } from '../../../data/DomainData';
+import { IMatiereDoc, IOption } from '../../../data/domain/DomainData';
 import { MatiereInfo } from "./MatiereInfo";
 import { MatiereList } from "./MatiereList";
 //

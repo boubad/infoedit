@@ -1,8 +1,13 @@
-import { ISemestreDoc } from "../../../data/DomainData";
-import { BaseServices } from "../../../redux/BaseServices";
-import { IInfoState } from "../../../redux/InfoState";
-import { IPayload } from "../../../redux/IPayload";
-import { GetInitialSemestre } from '../../../redux/StateProcs';
+import { IInfoState } from '../../../data/state/InfoState';
+
+import { IPayload } from '../../../data/state/IPayload';
+
+import { GetInitialSemestre } from '../../../data/state/stores/StateProcs';
+
+import { BaseServices } from '../../../data/state/services/BaseServices';
+
+import { ISemestreDoc } from '../../../data/domain/DomainData';
+
 //
 export class SemestreServices {
   public static createSemestre(state: IInfoState): IPayload {

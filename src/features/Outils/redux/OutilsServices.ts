@@ -1,7 +1,7 @@
-import { ETUDIANT_STATUS_FREE } from 'src/data/DataProcs';
-import { BaseServices } from 'src/redux/BaseServices';
-import { IInfoState } from 'src/redux/InfoState';
-import { IPayload } from 'src/redux/IPayload';
+import { ETUDIANT_STATUS_FREE } from '../../../data/domain/DataProcs';
+import { IInfoState } from '../../../data/state/InfoState';
+import { IPayload } from '../../../data/state/IPayload';
+import { BaseServices } from '../../../data/state/services/BaseServices';
 
 export class OutilsServices {
   //

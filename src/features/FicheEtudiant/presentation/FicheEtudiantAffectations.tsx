@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Table } from "reactstrap";
 import { BaseComponent } from "../../../components/BaseComponent";
-import { IAttachedDoc, IEtudAffectationDoc } from "../../../data/DomainData";
+import { IAttachedDoc, IEtudAffectationDoc } from "../../../data/domain/DomainData";
 
 export interface IFicheEtudiantAffectationsProps {
   affectations: IEtudAffectationDoc[];

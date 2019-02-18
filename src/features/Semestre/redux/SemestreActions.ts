@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { createAction } from "redux-actions";
-import { IInfoState } from "src/redux/InfoState";
-import { GetInitialSemestre } from '../../../redux/StateProcs';
+import { IInfoState } from '../../../data/state/InfoState';
+import { GetInitialSemestre } from '../../../data/state/stores/StateProcs';
 import { SemestreServices } from "./SemestreServices";
 //
 export const CHANGE_SEMESTRE_FIELD = "CHANGE_SEMESTRE_FIELD";

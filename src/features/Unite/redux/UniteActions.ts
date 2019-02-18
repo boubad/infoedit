@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { createAction } from "redux-actions";
-import { IInfoState } from '../../../redux/InfoState';
-import { GetInitialUnite } from '../../../redux/StateProcs';
+import { IInfoState } from '../../../data/state/InfoState';
+import { GetInitialUnite } from '../../../data/state/stores/StateProcs';
 import { UniteServices } from "./UniteServices";
 //
 export const CHANGE_UNITE_FIELD = "CHANGE_UNITE_FIELD";

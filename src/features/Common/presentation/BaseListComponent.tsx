@@ -2,7 +2,7 @@ import * as React from "react";
 import { Button, Table } from 'reactstrap';
 import { BaseComponent } from "../../../components/BaseComponent";
 import { PageNavigatorComponent } from "../../../components/PageNavigatorComponent";
-import { IBaseDoc } from "../../../data/DomainData";
+import { IBaseDoc } from '../../../data/domain/DomainData';
 
 export interface IBaseListComponentProps<T extends IBaseDoc> {
   addMode: boolean;

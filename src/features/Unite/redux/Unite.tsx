@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
 
-import { IUniteDoc } from "../../../data/DomainData";
-import { IInfoState } from "../../../redux/InfoState";
-import { InfoDispatch } from "../../../redux/IPayload";
+import { IUniteDoc } from '../../../data/domain/DomainData';
+import { IInfoState } from '../../../data/state/InfoState';
+import { InfoDispatch } from '../../../data/state/IPayload';
 import { IUnitesProps, Unite } from "../presentation/Unite";
 import {
   cancelUniteAction,

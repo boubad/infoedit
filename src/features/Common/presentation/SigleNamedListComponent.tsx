@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ISigleNamedDoc } from 'src/data/DomainData';
+import { ISigleNamedDoc } from '../../../data/domain/DomainData';
 import { BaseListComponent } from "./BaseListComponent";
 
 //

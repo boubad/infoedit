@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
 
-import { IGroupeDoc } from "src/data/DomainData";
-import { IInfoState } from "../../../redux/InfoState";
-import { InfoDispatch } from "../../../redux/IPayload";
+import { IGroupeDoc } from '../../../data/domain/DomainData';
+import { IInfoState } from '../../../data/state/InfoState';
+import { InfoDispatch } from '../../../data/state/IPayload';
 import { Groupe, IGroupesProps } from "../presentation/Groupe";
 import {
   cancelGroupeAction,

@@ -1,9 +1,9 @@
-import { ETUDIANT_STATUS_FREE } from 'src/data/DataProcs';
-import { IAffectationDoc } from 'src/data/DomainData';
-import { BaseServices } from 'src/redux/BaseServices';
-import { IInfoState } from 'src/redux/InfoState';
-import { IPayload } from 'src/redux/IPayload';
-import { GetInitialEtudAffectation } from 'src/redux/StateProcs';
+import { ETUDIANT_STATUS_FREE } from '../../../data/domain/DataProcs';
+import { IAffectationDoc } from '../../../data/domain/DomainData';
+import { IInfoState } from '../../../data/state/InfoState';
+import { IPayload } from '../../../data/state/IPayload';
+import { BaseServices } from '../../../data/state/services/BaseServices';
+import { GetInitialEtudAffectation } from '../../../data/state/stores/StateProcs';
 
 export class EtudAffectationServices {
   //

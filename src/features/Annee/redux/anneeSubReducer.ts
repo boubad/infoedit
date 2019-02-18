@@ -1,9 +1,10 @@
 import produce from "immer";
-import { IAnneeDoc } from "../../../data/DomainData";
-import { ComputePagesCount } from "../../../redux/BaseReducer";
-import { IBaseState } from "../../../redux/InfoState";
-import { GetInitialAnneeState } from "../../../redux/initialState";
-import { InfoAction, IPayload } from "../../../redux/IPayload";
+
+import { IAnneeDoc } from '../../../data/domain/DomainData';
+import { IBaseState } from '../../../data/state/InfoState';
+import { InfoAction, IPayload } from '../../../data/state/IPayload';
+import { ComputePagesCount } from '../../../data/state/reducers/BaseReducer';
+import { GetInitialAnneeState } from '../../../data/state/stores/initialState';
 import { CHANGE_ANNEE_SUCCESS } from "../../AppState/redux/AppStateActions";
 import {
   ANNEE_REMOVE_ATTACHMENT_BEGIN,

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Table } from "reactstrap";
 import { BaseComponent } from "../../../components/BaseComponent";
-import { ISemestreDoc } from "../../../data/DomainData";
+import { ISemestreDoc } from "../../../data/domain/DomainData";
 import { SemestreInfo } from "./SemestreInfo";
 import { SemestreList } from "./SemestreList";
 //

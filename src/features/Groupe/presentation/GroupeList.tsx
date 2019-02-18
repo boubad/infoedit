@@ -1,6 +1,6 @@
 import { SigleNamedListComponent } from '../../../features/Common/presentation/SigleNamedListComponent';
 
-import { IGroupeDoc } from '../../../data/DomainData';
+import { IGroupeDoc } from '../../../data/domain/DomainData';
 
 //
 export class GroupeList extends SigleNamedListComponent<IGroupeDoc> {

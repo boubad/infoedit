@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
-import { IOption } from '../../../data/DomainData';
+import { IOption } from '../../../data/domain/DomainData';
+import { IInfoState } from '../../../data/state/InfoState';
+import { InfoDispatch } from '../../../data/state/IPayload';
 import { changeAnnee, changeGroupe, changeSemestre, refreshAll } from '../../../features/AppState/redux/AppStateActions';
-import { IInfoState } from '../../../redux/InfoState';
-import { InfoDispatch } from '../../../redux/IPayload';
 import { Home, IHomeProps } from '../presentation/Home';
 //
 const getBusy = (state: IInfoState) : boolean => {

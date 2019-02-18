@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Form } from 'reactstrap';
-import { InputDescComponent } from 'src/components/InputDescComponent';
-import { InputLowerTextComponent } from 'src/components/InputLowerTextComponent';
-import { InputNameTextComponent } from 'src/components/InputNameTextComponent';
-import { ISigleNamedDoc } from 'src/data/DomainData';
+import { InputDescComponent } from '../../../components/InputDescComponent';
+import { InputLowerTextComponent } from '../../../components/InputLowerTextComponent';
+import { InputNameTextComponent } from '../../../components/InputNameTextComponent';
+import { ISigleNamedDoc } from '../../../data/domain/DomainData';
 import { BaseInfoComponent } from './BaseInfoComponent';
 
 export class SigleNamedInfoComponent<T extends ISigleNamedDoc> extends BaseInfoComponent<T> {

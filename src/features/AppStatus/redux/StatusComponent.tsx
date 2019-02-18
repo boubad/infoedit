@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
-import { IInfoState } from '../../../redux/InfoState';
+import { IInfoState } from '../../../data/state/InfoState';
 import { IStatusComponentProps, StatusComponent } from '../presentation/StatusComponent';
 //
 const getStatus = (state: IInfoState): string => {

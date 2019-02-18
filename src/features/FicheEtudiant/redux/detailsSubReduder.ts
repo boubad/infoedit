@@ -1,12 +1,12 @@
 import { FluxStandardAction } from "flux-standard-action";
 import produce from "immer";
+import { IDetailState } from '../../../data/state/InfoState';
+import { IPayload } from '../../../data/state/IPayload';
+import { GetInitialDetailState } from '../../../data/state/stores/initialState';
 import {
   SHOW_CONTROLE,
   SHOW_CONTROLE_BEGIN
 } from "../../../features/FicheControle/redux/FicheControleActions";
-import { IDetailState } from "../../../redux/InfoState";
-import { GetInitialDetailState } from "../../../redux/initialState";
-import { IPayload } from "../../../redux/IPayload";
 import { SHOW_ETUDIANT, SHOW_ETUDIANT_BEGIN } from './FicheEtudiantActions';
 //////////////////////////////////////////
 export function detailsSubReducer(

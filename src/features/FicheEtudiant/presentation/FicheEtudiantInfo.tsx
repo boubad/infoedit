@@ -1,13 +1,13 @@
 import * as React from "react";
 import { Form, Table } from 'reactstrap';
-import { InputDescComponent } from 'src/components/InputDescComponent';
-import { InputEmailComponent } from 'src/components/InputEmailComponent';
-import { InputNameTextComponent } from 'src/components/InputNameTextComponent';
-import { InputUpperTextComponent } from 'src/components/InputUpperTextComponent';
-import { StatusChoiceComponent } from 'src/components/StatusChoiceComponent';
 import { BaseComponent } from '../../../components/BaseComponent';
 import { BlobInfo } from '../../../components/BlobInfo';
-import { IEtudiantDoc } from '../../../data/DomainData';
+import { InputDescComponent } from '../../../components/InputDescComponent';
+import { InputEmailComponent } from '../../../components/InputEmailComponent';
+import { InputNameTextComponent } from '../../../components/InputNameTextComponent';
+import { InputUpperTextComponent } from '../../../components/InputUpperTextComponent';
+import { StatusChoiceComponent } from '../../../components/StatusChoiceComponent';
+import { IEtudiantDoc } from '../../../data/domain/DomainData';
 
 
 export interface IFicheEtudiantInfoProps {

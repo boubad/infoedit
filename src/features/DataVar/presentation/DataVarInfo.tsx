@@ -7,8 +7,8 @@ import { InputLowerTextComponent } from "../../../components/InputLowerTextCompo
 import { InputNameTextComponent } from "../../../components/InputNameTextComponent";
 import { InputUpperTextComponent } from "../../../components/InputUpperTextComponent";
 import { VariableTypeChoiceComponent } from "../../../components/VariableTypeChoiceComponent";
-import { DATAVAR_TYPE_STRING } from "../../../data/DataProcs";
-import { IDataVarDoc } from "../../../data/DomainData";
+import { DATAVAR_TYPE_STRING } from '../../../data/domain/DataProcs';
+import { IDataVarDoc } from '../../../data/domain/DomainData';
 import { BaseInfoComponent } from "../../../features/Common/presentation/BaseInfoComponent";
 export class DataVarInfo extends BaseInfoComponent<IDataVarDoc> {
   constructor(props?: any) {

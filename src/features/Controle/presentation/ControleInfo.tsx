@@ -4,7 +4,7 @@ import { InputCoefficientComponent } from "../../../components/InputCoefficientC
 import { InputDateComponent } from "../../../components/InputDateComponent";
 import { InputDescComponent } from "../../../components/InputDescComponent";
 import { InputNameTextComponent } from "../../../components/InputNameTextComponent";
-import { IControleDoc } from "../../../data/DomainData";
+import { IControleDoc } from "../../../data/domain/DomainData";
 import { BaseInfoComponent } from "../../../features/Common/presentation/BaseInfoComponent";
 
 export class ControleInfo extends BaseInfoComponent<IControleDoc> {

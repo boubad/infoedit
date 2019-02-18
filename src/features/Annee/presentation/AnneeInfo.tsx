@@ -4,7 +4,7 @@ import { InputDateComponent } from "../../../components/InputDateComponent";
 import { InputDescComponent } from "../../../components/InputDescComponent";
 import { InputNameTextComponent } from "../../../components/InputNameTextComponent";
 import { InputUpperTextComponent } from "../../../components/InputUpperTextComponent";
-import { IAnneeDoc } from "../../../data/DomainData";
+import { IAnneeDoc } from "../../../data/domain/DomainData";
 import { SigleNamedInfoComponent } from "../../../features/Common/presentation/SigleNamedInfoComponent";
 
 export class AnneeInfo extends SigleNamedInfoComponent<IAnneeDoc> {

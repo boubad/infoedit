@@ -8,7 +8,7 @@ import {
   IBaseDoc,
   IControleAffectationDoc,
   IOption
-} from "../../../data/DomainData";
+} from "../../../data/domain/DomainData";
 //
 export interface IBaseItemDetailComponentProps<T extends IControleAffectationDoc> {
   addMode: boolean;

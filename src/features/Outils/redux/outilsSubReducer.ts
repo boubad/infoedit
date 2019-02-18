@@ -1,4 +1,7 @@
 import produce from "immer";
+import { IOutilsState } from '../../../data/state/InfoState';
+import { InfoAction } from '../../../data/state/IPayload';
+import { GetInitialOutilsState } from '../../../data/state/stores/initialState';
 import {
   CHANGE_ANNEE_SUCCESS,
   CHANGE_GROUPE_SUCCESS,
@@ -16,9 +19,6 @@ import {
   REMOVE_ETUDIANT_ITEM_SUCCESS,
   SAVE_ETUDIANT_ITEM_SUCCESS
 } from "../../../features/Etudiant/redux/EtudiantActions";
-import { IOutilsState } from "../../../redux/InfoState";
-import { GetInitialOutilsState } from "../../../redux/initialState";
-import { InfoAction } from "../../../redux/IPayload";
 import {
   GET_DATA_BEGIN,
   GET_DATA_SUCCESS,

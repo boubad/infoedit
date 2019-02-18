@@ -2,7 +2,7 @@ import * as moment from "moment";
 import * as React from "react";
 import { Table } from "reactstrap";
 import { BaseComponent } from '../../../components/BaseComponent';
-import { IAttachedDoc, IEtudAffectationDoc, IEtudiantDoc } from '../../../data/DomainData';
+import { IAttachedDoc, IEtudAffectationDoc, IEtudiantDoc } from '../../../data/domain/DomainData';
 
 
 export interface IEtudiantAffectationsProps {

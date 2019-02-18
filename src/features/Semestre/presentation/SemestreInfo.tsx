@@ -4,7 +4,7 @@ import { InputDescComponent } from "../../../components/InputDescComponent";
 import { InputLowerTextComponent } from "../../../components/InputLowerTextComponent";
 import { InputNameTextComponent } from "../../../components/InputNameTextComponent";
 import { InputUpperTextComponent } from "../../../components/InputUpperTextComponent";
-import { ISemestreDoc } from "../../../data/DomainData";
+import { ISemestreDoc } from "../../../data/domain/DomainData";
 import { SigleNamedInfoComponent } from "../../../features/Common/presentation/SigleNamedInfoComponent";
 
 export class SemestreInfo extends SigleNamedInfoComponent<ISemestreDoc> {

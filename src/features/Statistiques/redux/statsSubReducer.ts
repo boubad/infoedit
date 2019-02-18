@@ -1,12 +1,12 @@
 import produce from "immer";
+import { IStatState } from '../../../data/state/InfoState';
+import { InfoAction } from '../../../data/state/IPayload';
+import { GetInitialStatState } from '../../../data/state/stores/initialState';
 import {
   CHANGE_ANNEE_SUCCESS,
   CHANGE_MATIERE_SUCCESS,
   CHANGE_SEMESTRE_SUCCESS
 } from "../../../features/AppState/redux/AppStateActions";
-import { IStatState } from "../../../redux/InfoState";
-import { GetInitialStatState } from "../../../redux/initialState";
-import { InfoAction } from "../../../redux/IPayload";
 
 //////////////////////////////////////////
 export function statsSubReducer(

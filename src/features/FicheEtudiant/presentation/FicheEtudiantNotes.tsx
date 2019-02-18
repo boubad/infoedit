@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Table } from "reactstrap";
 import { BaseComponent } from "../../../components/BaseComponent";
-import { IAttachedDoc, INoteDoc } from "../../../data/DomainData";
+import { IAttachedDoc, INoteDoc } from "../../../data/domain/DomainData";
 
 export interface IFicheEtudiantNotesProps {
   notes: INoteDoc[];

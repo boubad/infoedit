@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { createAction } from "redux-actions";
-import { IInfoState } from '../../../redux/InfoState';
-import { GetInitialEvt } from '../../../redux/StateProcs';
+import { IInfoState } from '../../../data/state/InfoState';
+import { GetInitialEvt } from '../../../data/state/stores/StateProcs';
 import { ControleServices } from "./ControleServices";
 ///////////////////////////////
 export const CHANGE_CONTROLE_FIELD = "CHANGE_CONTROLE_FIELD";

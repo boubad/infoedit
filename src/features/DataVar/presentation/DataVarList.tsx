@@ -1,7 +1,7 @@
 import * as React from "react";
 import { SigleNamedListComponent } from '../../../features/Common/presentation/SigleNamedListComponent';
 
-import { IDataVarDoc } from '../../../data/DomainData';
+import { IDataVarDoc } from '../../../data/domain/DomainData';
 
 //
 export class DataVarList extends SigleNamedListComponent<IDataVarDoc> {

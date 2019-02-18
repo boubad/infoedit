@@ -1,16 +1,11 @@
 import produce from "immer";
 
-import { GetMatiere } from "src/data/DataProcs";
-import { IMatiereDoc } from "src/data/DomainData";
-import {
-  CHANGE_MATIERE_SUCCESS,
-  CHANGE_UNITE_SUCCESS,
-  REFRESH_ALL_SUCCESS
-} from "src/features/AppState/redux/AppStateActions";
-import { IBaseState } from "src/redux/InfoState";
-import { IPayload } from "src/redux/IPayload";
-import { GetInitialMatiereState } from "../../../redux/initialState";
-import { InfoAction } from "../../../redux/IPayload";
+import { GetMatiere } from '../../../data/domain/DataProcs';
+import { IMatiereDoc } from '../../../data/domain/DomainData';
+import { IBaseState } from '../../../data/state/InfoState';
+import { InfoAction, IPayload } from '../../../data/state/IPayload';
+import { GetInitialMatiereState } from '../../../data/state/stores/initialState';
+import { CHANGE_MATIERE_SUCCESS, CHANGE_UNITE_SUCCESS, REFRESH_ALL_SUCCESS } from '../../../features/AppState/redux/AppStateActions';
 import {
   CANCEL_MATIERE_ITEM,
   CHANGE_MATIERE_FIELD,

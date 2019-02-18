@@ -2,7 +2,7 @@ import * as React from "react";
 import { Form, Table } from "reactstrap";
 import { BaseComponent } from '../../../components/BaseComponent';
 import { ItemChoiceComponent } from '../../../components/InputChoiceComponent';
-import { IOption } from '../../../data/DomainData';
+import { IOption } from '../../../data/domain/DomainData';
 //
 export interface IHomeProps {
     anneeid: string;

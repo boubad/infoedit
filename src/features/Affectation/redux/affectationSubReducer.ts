@@ -1,14 +1,10 @@
 import produce from "immer";
-import { GetAffectation } from "src/data/DataProcs";
-import { IAffectationDoc } from "src/data/DomainData";
-import {
-  CHANGE_ANNEE_SUCCESS,
-  CHANGE_SEMESTRE_SUCCESS
-} from "src/features/AppState/redux/AppStateActions";
-import { IBaseState } from "src/redux/InfoState";
-import { IPayload } from "src/redux/IPayload";
-import { GetInitialAffectationState } from "../../../redux/initialState";
-import { InfoAction } from "../../../redux/IPayload";
+import { GetAffectation } from '../../../data/domain/DataProcs';
+import { IAffectationDoc } from '../../../data/domain/DomainData';
+import { IBaseState } from '../../../data/state/InfoState';
+import { InfoAction, IPayload } from '../../../data/state/IPayload';
+import { GetInitialAffectationState } from '../../../data/state/stores/initialState';
+import { CHANGE_ANNEE_SUCCESS, CHANGE_SEMESTRE_SUCCESS } from '../../../features/AppState/redux/AppStateActions';
 import {
   AFFECTATION_REMOVE_ATTACHMENT_BEGIN,
   AFFECTATION_REMOVE_ATTACHMENT_SUCCESS,

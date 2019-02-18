@@ -1,11 +1,11 @@
 import { FluxStandardAction } from "flux-standard-action";
 import produce from "immer";
-import { IMPORT_ETUDIANT_SUCCESS, REFRESHANNEESEMESTRE_STATUS_SUCCESS } from 'src/features/Outils/redux/OutilsActions';
-import { GetEtudiant } from '../../../data/DataProcs';
-import { IEtudiantDoc } from '../../../data/DomainData';
-import { IEtudiantState } from '../../../redux/InfoState';
-import { GetInitialEtudiantState } from '../../../redux/initialState';
-import { IPayload } from '../../../redux/IPayload';
+import { GetEtudiant } from '../../../data/domain/DataProcs';
+import { IEtudiantDoc } from '../../../data/domain/DomainData';
+import { IEtudiantState } from '../../../data/state/InfoState';
+import { IPayload } from '../../../data/state/IPayload';
+import { GetInitialEtudiantState } from '../../../data/state/stores/initialState';
+import { IMPORT_ETUDIANT_SUCCESS, REFRESHANNEESEMESTRE_STATUS_SUCCESS } from '../../../features/Outils/redux/OutilsActions';
 import { ETUDIANT_REMOVE_ATTACHMENT_SUCCESS, ETUDIANT_SAVE_ATTACHMENT_SUCCESS } from './EtudiantActions';
 import {
   CANCEL_ETUDIANT_ITEM,

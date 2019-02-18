@@ -1,8 +1,8 @@
-import { IUniteDoc } from "../../../data/DomainData";
-import { BaseServices } from "../../../redux/BaseServices";
-import { IInfoState } from "../../../redux/InfoState";
-import { IPayload } from "../../../redux/IPayload";
-import { GetInitialUnite } from "../../../redux/StateProcs";
+import { IUniteDoc } from '../../../data/domain/DomainData';
+import { IInfoState } from '../../../data/state/InfoState';
+import { IPayload } from '../../../data/state/IPayload';
+import { BaseServices } from '../../../data/state/services/BaseServices';
+import { GetInitialUnite } from '../../../data/state/stores/StateProcs';
 
 export class UniteServices {
   public static createUnite(state: IInfoState): IPayload {

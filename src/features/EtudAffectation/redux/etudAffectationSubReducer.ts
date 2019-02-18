@@ -1,6 +1,9 @@
 import produce from "immer";
-import { GetEtudAffectation } from "../../../data/DataProcs";
-import { IEtudAffectationDoc } from "../../../data/DomainData";
+import { GetEtudAffectation } from '../../../data/domain/DataProcs';
+import { IEtudAffectationDoc } from '../../../data/domain/DomainData';
+import { IBaseState } from '../../../data/state/InfoState';
+import { InfoAction, IPayload } from '../../../data/state/IPayload';
+import { GetInitialEtudAffectationState } from '../../../data/state/stores/initialState';
 import {
   CHANGE_ANNEE_SUCCESS,
   CHANGE_GROUPE_SUCCESS,
@@ -11,10 +14,6 @@ import {
   REMOVE_ETUDIANT_ITEM_SUCCESS,
   SAVE_ETUDIANT_ITEM_SUCCESS
 } from "../../../features/Etudiant/redux/EtudiantActions";
-import { IBaseState } from "../../../redux/InfoState";
-import { GetInitialEtudAffectationState } from "../../../redux/initialState";
-import { IPayload } from "../../../redux/IPayload";
-import { InfoAction } from "../../../redux/IPayload";
 import {
   CANCEL_ETUDAFFECTATION_ITEM,
   CHANGE_ETUDAFFECTATION_FIELD,

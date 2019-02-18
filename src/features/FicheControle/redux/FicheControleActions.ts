@@ -1,7 +1,7 @@
 import { push } from "connected-react-router";
 import { Dispatch } from "redux";
 import { createAction } from "redux-actions";
-import { IInfoState } from "../../../redux/InfoState";
+import { IInfoState } from '../../../data/state/InfoState';
 import { ROUTE_CONTROLE } from '../../../Routes';
 import { FicheControleServices } from "./FicheControleServices";
 ///////////////////////////////

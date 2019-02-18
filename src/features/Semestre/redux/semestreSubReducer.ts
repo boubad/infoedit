@@ -1,15 +1,15 @@
 import { FluxStandardAction } from "flux-standard-action";
 import produce from "immer";
 
-import { GetSemestre } from "../../../data/DataProcs";
-import { ISemestreDoc } from "../../../data/DomainData";
+import { GetSemestre } from '../../../data/domain/DataProcs';
+import { ISemestreDoc } from '../../../data/domain/DomainData';
+import { IBaseState } from '../../../data/state/InfoState';
+import { IPayload } from '../../../data/state/IPayload';
+import { GetInitialSemestreState } from '../../../data/state/stores/initialState';
 import {
   CHANGE_SEMESTRE_SUCCESS,
   REFRESH_ALL_SUCCESS
 } from "../../../features/AppState/redux/AppStateActions";
-import { IBaseState } from "../../../redux/InfoState";
-import { GetInitialSemestreState } from "../../../redux/initialState";
-import { IPayload } from "../../../redux/IPayload";
 import {
   CANCEL_SEMESTRE_ITEM,
   CHANGE_SEMESTRE_FIELD,

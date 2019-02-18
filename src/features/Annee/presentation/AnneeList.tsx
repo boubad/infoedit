@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IAnneeDoc } from "../../../data/DomainData";
+import { IAnneeDoc } from "../../../data/domain/DomainData";
 import { BaseListComponent } from "../../../features/Common/presentation/BaseListComponent";
 
 //

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Table } from "reactstrap";
 import { BaseComponent } from "../../../components/BaseComponent";
-import { IAttachedDoc, IEvtDoc } from "../../../data/DomainData";
+import { IAttachedDoc, IEvtDoc } from "../../../data/domain/DomainData";
 
 export interface IFicheEtudiantEvtsProps {
   evts: IEvtDoc[];

@@ -3,7 +3,7 @@ import * as React from "react";
 import { Nav, NavItem, NavLink, TabContent, Table, TabPane } from "reactstrap";
 import { BaseComponent } from "../../../components/BaseComponent";
 import {
-  IControleDoc} from "../../../data/DomainData";
+  IControleDoc} from "../../../data/domain/DomainData";
 import { FicheControleEvts } from './FicheControleEvts';
 import { FicheControleInfo } from './FicheControleInfo';
 import { FicheControleNotes } from './FicheControleNotes';

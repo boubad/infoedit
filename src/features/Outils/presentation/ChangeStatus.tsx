@@ -3,8 +3,8 @@ import * as React from "react";
 import { Button, Form, Table } from "reactstrap";
 import { BaseComponent } from '../../../components/BaseComponent';
 import { StatusChoiceComponent } from '../../../components/StatusChoiceComponent';
-import { ETUDIANT_STATUS_BUSY, ETUDIANT_STATUS_DEMISSION, ETUDIANT_STATUS_DONE, ETUDIANT_STATUS_FREE } from '../../../data/DataProcs';
-import { IEtudAffectationDoc } from '../../../data/DomainData';
+import { ETUDIANT_STATUS_BUSY, ETUDIANT_STATUS_DEMISSION, ETUDIANT_STATUS_DONE, ETUDIANT_STATUS_FREE } from '../../../data/domain/DataProcs';
+import { IEtudAffectationDoc } from '../../../data/domain/DomainData';
 //
 export interface IChangeStatusProps {
   affectations: IEtudAffectationDoc[];

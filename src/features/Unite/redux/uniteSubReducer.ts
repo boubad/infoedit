@@ -1,13 +1,13 @@
 import produce from "immer";
-import { GetUnite } from "../../../data/DataProcs";
-import { IUniteDoc } from "../../../data/DomainData";
+import { GetUnite } from '../../../data/domain/DataProcs';
+import { IUniteDoc } from '../../../data/domain/DomainData';
+import { IBaseState } from '../../../data/state/InfoState';
+import { InfoAction, IPayload } from '../../../data/state/IPayload';
+import { GetInitialUniteState } from '../../../data/state/stores/initialState';
 import {
   CHANGE_UNITE_SUCCESS,
   REFRESH_ALL_SUCCESS
 } from "../../../features/AppState/redux/AppStateActions";
-import { IBaseState } from "../../../redux/InfoState";
-import { GetInitialUniteState } from '../../../redux/initialState';
-import { InfoAction, IPayload } from "../../../redux/IPayload";
 import {
   CANCEL_UNITE_ITEM,
   CHANGE_UNITE_FIELD,

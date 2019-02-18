@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
-import { IEtudAffectationDoc } from 'src/data/DomainData';
-import { IInfoState } from '../../../redux/InfoState';
-import { InfoDispatch } from '../../../redux/IPayload';
+import { IEtudAffectationDoc } from '../../../data/domain/DomainData';
+import { IInfoState } from '../../../data/state/InfoState';
+import { InfoDispatch } from '../../../data/state/IPayload';
 import { ChangeStatus, IChangeStatusProps } from '../presentation/ChangeStatus';
 import { changeAnneeSemestreEtudiantsStatus, refreshAnneeSemestreEtudiantsStatus } from './OutilsActions';
 //

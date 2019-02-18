@@ -19,7 +19,7 @@ import {
   IEvtDoc,
   IExportEtudiantDesc,
   IMatiereDesc
-} from "../../../data/DomainData";
+} from "../../../data/domain/DomainData";
 //
 export interface IMatiereStatProps {
   matieresigle: string;

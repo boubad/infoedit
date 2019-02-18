@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { createAction } from "redux-actions";
-import { GetInitialAffectation } from "src/redux/StateProcs";
-import { IInfoState } from "../../../redux/InfoState";
+import { IInfoState } from '../../../data/state/InfoState';
+import { GetInitialAffectation } from '../../../data/state/stores/StateProcs';
 import { AffectationServices } from "./AffectationServices";
 //
 export const CHANGE_AFFECTATION_FIELD = "CHANGE_AFFECTATION_FIELD";

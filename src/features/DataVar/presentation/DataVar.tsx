@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Table } from "reactstrap";
 import { BaseComponent } from "../../../components/BaseComponent";
-import { IDataVarDoc } from "../../../data/DomainData";
+import { IDataVarDoc } from "../../../data/domain/DomainData";
 import { DataVarInfo } from "./DataVarInfo";
 import { DataVarList } from "./DataVarList";
 //

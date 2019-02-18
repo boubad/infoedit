@@ -2,9 +2,9 @@ import { FluxStandardAction } from "flux-standard-action";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { createSelector } from "reselect";
-import { IEtudiantDoc } from "../../../data/DomainData";
-import { IInfoState } from "../../../redux/InfoState";
-import { IPayload } from "../../../redux/IPayload";
+import { IEtudiantDoc } from '../../../data/domain/DomainData';
+import { IInfoState } from '../../../data/state/InfoState';
+import { IPayload } from '../../../data/state/IPayload';
 import EtudiantDetail, {
   IEtudiantDetailProps
 } from "../presentation/EtudiantDetail";

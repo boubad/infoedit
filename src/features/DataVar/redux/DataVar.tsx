@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
 
-import { IDataVarDoc } from "../../../data/DomainData";
-import { IInfoState } from "../../../redux/InfoState";
-import { InfoDispatch } from "../../../redux/IPayload";
+import { IDataVarDoc } from '../../../data/domain/DomainData';
+import { IInfoState } from '../../../data/state/InfoState';
+import { InfoDispatch } from '../../../data/state/IPayload';
 import { DataVar, IDataVarProps } from "../presentation/DataVar";
 import {
   addDataVarModalite,

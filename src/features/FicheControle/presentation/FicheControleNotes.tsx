@@ -3,7 +3,7 @@ import { Table } from "reactstrap";
 import { BaseComponent } from "../../../components/BaseComponent";
 import {
   IControleDoc,
-  INoteDoc} from "../../../data/DomainData";
+  INoteDoc} from "../../../data/domain/DomainData";
 //
 export interface IFicheControleNotesProps {
   current: IControleDoc;

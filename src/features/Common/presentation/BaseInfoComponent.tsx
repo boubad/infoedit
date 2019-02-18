@@ -3,7 +3,7 @@ import { Button, Table } from 'reactstrap';
 import { BaseComponent } from '../../../components/BaseComponent';
 import { BlobInfo } from '../../../components/BlobInfo';
 import { EditCommandsComponent } from '../../../components/EditCommandsComponent';
-import { IBaseDoc, IEtudAffectationDoc, IOption } from '../../../data/DomainData';
+import { IBaseDoc, IEtudAffectationDoc, IOption } from "../../../data/domain/DomainData";
 
 
 export interface IBaseInfoComponentProps<T extends IBaseDoc> {

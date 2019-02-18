@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IAffectationDoc } from "../../../data/DomainData";
+import { IAffectationDoc } from "../../../data/domain/DomainData";
 import { BaseListComponent } from "../../../features/Common/presentation/BaseListComponent";
 //
 export class AffectationList extends BaseListComponent<IAffectationDoc> {

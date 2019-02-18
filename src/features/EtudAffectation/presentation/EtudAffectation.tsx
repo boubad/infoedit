@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Table } from "reactstrap";
 import { BaseComponent } from "../../../components/BaseComponent";
-import { IEtudAffectationDoc, IOption } from "../../../data/DomainData";
+import { IEtudAffectationDoc, IOption } from "../../../data/domain/DomainData";
 import { EtudAffectationInfo } from "./EtudAffectationInfo";
 import { EtudAffectationList } from "./EtudAffectationList";
 //

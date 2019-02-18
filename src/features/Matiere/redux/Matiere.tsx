@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
-import { IMatiereDoc, IOption } from "../../../data/DomainData";
-import { IInfoState } from "../../../redux/InfoState";
-import { InfoDispatch } from "../../../redux/IPayload";
+import { IMatiereDoc, IOption } from '../../../data/domain/DomainData';
+import { IInfoState } from '../../../data/state/InfoState';
+import { InfoDispatch } from '../../../data/state/IPayload';
 import { IMatieresProps, Matiere } from "../presentation/Matiere";
 import {
   cancelMatiereAction,

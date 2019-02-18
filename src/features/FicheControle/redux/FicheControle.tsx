@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
-import { IControleDoc } from "../../../data/DomainData";
+import { IControleDoc } from '../../../data/domain/DomainData';
+import { IInfoState } from '../../../data/state/InfoState';
+import { InfoDispatch } from '../../../data/state/IPayload';
 import { showEtudiant } from '../../../features/FicheEtudiant/redux/FicheEtudiantActions';
-import { IInfoState } from "../../../redux/InfoState";
-import { InfoDispatch } from "../../../redux/IPayload";
 import { FicheControle, IFicheControleProps } from '../presentation/FicheControle';
 //
 const getBusy = (state: IInfoState): boolean => {

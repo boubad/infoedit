@@ -5,7 +5,7 @@ import { InputEmailComponent } from "../../../components/InputEmailComponent";
 import { InputNameTextComponent } from "../../../components/InputNameTextComponent";
 import { InputUpperTextComponent } from "../../../components/InputUpperTextComponent";
 import { StatusChoiceComponent } from "../../../components/StatusChoiceComponent";
-import { IEtudiantDoc } from "../../../data/DomainData";
+import { IEtudiantDoc } from "../../../data/domain/DomainData";
 import { BaseInfoComponent } from "../../../features/Common/presentation/BaseInfoComponent";
 
 export class EtudiantInfo extends BaseInfoComponent<IEtudiantDoc> {

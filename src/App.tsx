@@ -2,13 +2,13 @@ import { ConnectedRouter } from "connected-react-router";
 import * as React from "react";
 import { Link, Route } from "react-router-dom";
 import { Nav, NavItem } from "reactstrap";
+import { history } from "./data/state/stores/InfoStore";
 import Admin from "./features/Admin/redux/Admin";
 import Consult from "./features/Consult/redux/Consult";
 import FicheControle from "./features/FicheControle/redux/FicheControle";
 import FicheEtudiant from "./features/FicheEtudiant/redux/FicheEtudiant";
 import Home from "./features/Home/redux/Home";
 import StatEtudiantData from './features/Statistiques/redux/StatEtudiantData';
-import { history } from "./redux/InfoStore";
 import {
   ROUTE_ADMIN,
   ROUTE_CONSULT,

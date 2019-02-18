@@ -6,7 +6,7 @@ import { InputDescComponent } from "src/components/InputDescComponent";
 import { InputNameTextComponent } from "src/components/InputNameTextComponent";
 import { BaseComponent } from "../../../components/BaseComponent";
 import { BlobInfo } from "../../../components/BlobInfo";
-import { IControleDoc } from "../../../data/DomainData";
+import { IControleDoc } from "../../../data/domain/DomainData";
 
 export interface IFicheControleInfoProps {
   current: IControleDoc;

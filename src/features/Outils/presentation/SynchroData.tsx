@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Button, Table } from "reactstrap";
-import { BaseComponent } from "src/components/BaseComponent";
+import { BaseComponent } from '../../../components/BaseComponent';
 //
 //
 export interface ISynchoDataProps {

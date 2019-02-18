@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Table } from "reactstrap";
 import { BaseComponent } from '../../../components/BaseComponent';
-import { IAffectationDoc, IOption } from '../../../data/DomainData';
+import { IAffectationDoc, IOption } from '../../../data/domain/DomainData';
 import { AffectationInfo } from "./AffectationInfo";
 import { AffectationList } from "./AffectationList";
 //
