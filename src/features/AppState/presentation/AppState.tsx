@@ -31,33 +31,18 @@ export class AppState extends BaseComponent<IAppStateProps> {
       <Table bordered={true}>
         <tbody className={this.getInfoStyle()}>
           <tr>
+
             <td className="text-center">
               <Form inline={true}>
+              <ItemChoiceComponent
+                  text={p.anneeid}
+                  items={this.props.annees}
+                  prompt="Année:"
+                  propname="anneeid"
+                  busy={busy}
+                  onItemChoosen={p.ValueChanged}
+                />
                 <ItemChoiceComponent
-                  text={p.matiereid}
-                  items={p.matieres}
-                  prompt="Matière:"
-                  propname="matiereid"
-                  busy={busy}
-                  onItemChoosen={p.ValueChanged}
-                />
-                 <ItemChoiceComponent
-                  text={p.uniteid}
-                  items={p.unites}
-                  prompt="Unité:"
-                  propname="uniteid"
-                  busy={busy}
-                  onItemChoosen={p.ValueChanged}
-                />
-                 <ItemChoiceComponent
-                  text={p.groupeid}
-                  items={p.groupes}
-                  prompt="Groupe:"
-                  propname="groupeid"
-                  busy={busy}
-                  onItemChoosen={p.ValueChanged}
-                />
-                 <ItemChoiceComponent
                   text={p.semestreid}
                   items={p.semestres}
                   prompt="Semestre:"
@@ -66,10 +51,26 @@ export class AppState extends BaseComponent<IAppStateProps> {
                   onItemChoosen={p.ValueChanged}
                 />
                 <ItemChoiceComponent
-                  text={p.anneeid}
-                  items={this.props.annees}
-                  prompt="Année:"
-                  propname="anneeid"
+                  text={p.groupeid}
+                  items={p.groupes}
+                  prompt="Groupe:"
+                  propname="groupeid"
+                  busy={busy}
+                  onItemChoosen={p.ValueChanged}
+                />
+                <ItemChoiceComponent
+                  text={p.uniteid}
+                  items={p.unites}
+                  prompt="Unité:"
+                  propname="uniteid"
+                  busy={busy}
+                  onItemChoosen={p.ValueChanged}
+                />
+                <ItemChoiceComponent
+                  text={p.matiereid}
+                  items={p.matieres}
+                  prompt="Matière:"
+                  propname="matiereid"
                   busy={busy}
                   onItemChoosen={p.ValueChanged}
                 />

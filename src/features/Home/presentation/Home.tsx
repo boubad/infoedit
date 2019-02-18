@@ -34,15 +34,15 @@ export class Home extends BaseComponent<IHomeProps>{
               <tr>
                 <td className="text-center">
                   <Form inline={true}>
-                     <ItemChoiceComponent
-                      text={p.groupeid}
-                      items={p.groupes}
-                      prompt="Groupe:"
-                      propname="groupeid"
+                  <ItemChoiceComponent
+                      text={p.anneeid}
+                      items={this.props.annees}
+                      prompt="Année:"
+                      propname="anneeid"
                       busy={p.busy}
                       onItemChoosen={p.ValueChanged}
                     />
-                     <ItemChoiceComponent
+                    <ItemChoiceComponent
                       text={p.semestreid}
                       items={p.semestres}
                       prompt="Semestre:"
@@ -50,11 +50,11 @@ export class Home extends BaseComponent<IHomeProps>{
                       busy={p.busy}
                       onItemChoosen={p.ValueChanged}
                     />
-                    <ItemChoiceComponent
-                      text={p.anneeid}
-                      items={this.props.annees}
-                      prompt="Année:"
-                      propname="anneeid"
+                     <ItemChoiceComponent
+                      text={p.groupeid}
+                      items={p.groupes}
+                      prompt="Groupe:"
+                      propname="groupeid"
                       busy={p.busy}
                       onItemChoosen={p.ValueChanged}
                     />

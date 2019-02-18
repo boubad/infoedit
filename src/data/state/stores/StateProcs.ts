@@ -1,5 +1,5 @@
-import { DateToDisplay, ETUDIANT_STATUS_FREE, GetAffectation, GetAnnee, GetControle, GetDataVarDoc, GetEtudAffectation, GetEtudiant, GetEvt, GetGroupe, GetMatiere, GetNote, GetSemestre, GetUnite } from 'src/data/domain/DataProcs';
-import { IAffectationDoc, IAnneeDoc, IControleDoc, IDataVarDoc, IEtudAffectationDoc, IEtudiantDoc, IEvtDoc, IGroupeDoc, IMatiereDoc, INoteDoc, ISemestreDoc, IUniteDoc } from 'src/data/domain/DomainData';
+import { DateToDisplay, ETUDIANT_STATUS_FREE, GetAffectation, GetAnnee, GetControle, GetDataVarDoc, GetEtudAffectation, GetEtudiant, GetEvt, GetGroupe, GetMatiere, GetNote, GetSemestre, GetUnite } from '../../../data/domain/DataProcs';
+import { IAffectationDoc, IAnneeDoc, IControleDoc, IDataVarDoc, IEtudAffectationDoc, IEtudiantDoc, IEvtDoc, IGroupeDoc, IMatiereDoc, INoteDoc, ISemestreDoc, IUniteDoc } from '../../../data/domain/DomainData';
 import { IInfoState } from '../InfoState';
 
 

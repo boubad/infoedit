@@ -1,8 +1,8 @@
 import { IAppData, IAppState, IAppStatus, IBaseState, IControleState, IDetailState, IEtudiantState, IInfoState, IOutilsState, IStatState } from '../InfoState';
 
-import { IAffectationDoc, IAnneeDoc, IDataVarDoc, IEtudAffectationDoc, IGroupeDoc, IMatiereDoc, ISemestreDoc, IUniteDoc } from 'src/data/domain/DomainData';
+import { IAffectationDoc, IAnneeDoc, IDataVarDoc, IEtudAffectationDoc, IGroupeDoc, IMatiereDoc, ISemestreDoc, IUniteDoc } from '../../../data/domain/DomainData';
 
-import { GetAffectation, GetAnnee, GetControle, GetDataVarDoc, GetEtudAffectation, GetEtudiant, GetEvt, GetGroupe, GetMatiere, GetNote, GetSemestre, GetUnite } from 'src/data/domain/DataProcs';
+import { GetAffectation, GetAnnee, GetControle, GetDataVarDoc, GetEtudAffectation, GetEtudiant, GetEvt, GetGroupe, GetMatiere, GetNote, GetSemestre, GetUnite } from '../../../data/domain/DataProcs';
 
 ///////////////////////////////////
 export function GetInitialAppData(): IAppData {
