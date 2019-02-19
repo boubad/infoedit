@@ -3,7 +3,7 @@ import { createSelector } from "reselect";
 import { IOption } from '../../../data/domain/DomainData';
 import { IInfoState } from '../../../data/state/InfoState';
 import { InfoDispatch } from '../../../data/state/IPayload';
-import { changeAnnee, changeGroupe, changeSemestre, refreshAll } from '../../../features/AppState/redux/AppStateActions';
+import { changeAnnee, changeGroupe, changeSemestre, changeUnite, refreshGlobal } from '../../../features/AppState/redux/AppStateActions';
 import { Home, IHomeProps } from '../presentation/Home';
 //
 const getBusy = (state: IInfoState) : boolean => {
@@ -18,6 +18,9 @@ const getSemestreid = (state: IInfoState): string => {
 const getAnneeid = (state: IInfoState): string => {
   return state.appstate.anneeid;
 };
+const getUniteid = (state: IInfoState): string => {
+  return state.appstate.uniteid;
+};
 const getAnnees = (state: IInfoState): IOption[] => {
   return state.appstate.anneesOptions;
 };
@@ -26,6 +29,9 @@ const getGroupes = (state: IInfoState): IOption[] => {
 };
 const getSemestres = (state: IInfoState): IOption[] => {
   return state.appstate.semestresOptions;
+};
+const getUnites = (state: IInfoState): IOption[] => {
+  return state.appstate.unitesOptions;
 };
 //
 const selector = createSelector(
@@ -36,7 +42,9 @@ const selector = createSelector(
     getAnneeid,
     getAnnees,
     getGroupes,
-    getSemestres
+    getSemestres,
+    getUniteid,
+    getUnites
   ],
   (
     busy:boolean,
@@ -45,7 +53,9 @@ const selector = createSelector(
     anneeid: string,
     annees: IOption[],
     groupes: IOption[],
-    semestres: IOption[]
+    semestres: IOption[],
+    uniteid:string,
+    unites:IOption[]
   ) => {
     return {
       anneeid,
@@ -54,7 +64,9 @@ const selector = createSelector(
       groupeid,
       groupes,
       semestreid,
-      semestres
+      semestres,
+      uniteid,
+      unites
     };
   }
 );
@@ -65,7 +77,7 @@ function mapStateToProps(state: IInfoState): IHomeProps {
 function mapDispatchToProps(dispatch: InfoDispatch) {
   return {
     RefreshAll: () => {
-      dispatch(refreshAll());
+      dispatch(refreshGlobal());
     },
     ValueChanged: (val: any, s: string) => {
       if (s === "groupeid") {
@@ -74,6 +86,8 @@ function mapDispatchToProps(dispatch: InfoDispatch) {
         dispatch(changeSemestre(val));
       }  else if (s === "anneeid") {
         dispatch(changeAnnee(val));
+      } else if (s === "uniteid") {
+        dispatch(changeUnite(val));
       } 
     }
   };

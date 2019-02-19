@@ -1,13 +1,14 @@
 import produce from "immer";
-import { GetUnite } from '../../../data/domain/DataProcs';
-import { IUniteDoc } from '../../../data/domain/DomainData';
-import { IBaseState } from '../../../data/state/InfoState';
-import { InfoAction, IPayload } from '../../../data/state/IPayload';
-import { GetInitialUniteState } from '../../../data/state/stores/initialState';
+import { GetUnite } from "../../../data/domain/DataProcs";
+import { IUniteDoc } from "../../../data/domain/DomainData";
+import { IBaseState } from "../../../data/state/InfoState";
+import { InfoAction, IPayload } from "../../../data/state/IPayload";
+import { GetInitialUniteState } from "../../../data/state/stores/initialState";
 import {
   CHANGE_UNITE_SUCCESS,
   REFRESH_ALL_SUCCESS
 } from "../../../features/AppState/redux/AppStateActions";
+import { REFRESH_GLOBAL_SUCCESS } from "./../../AppState/redux/AppStateActions";
 import {
   CANCEL_UNITE_ITEM,
   CHANGE_UNITE_FIELD,
@@ -38,12 +39,11 @@ function refreshUnite(
     if (p.unitesCount) {
       const n = p.unitesCount;
       pRet.itemsCount = n;
-      const nc = pRet.pageSize;
-      let np = Math.floor(n / nc);
-      if (n % nc !== 0) {
-        np = np + 1;
+      if (pRet.pageSize < n) {
+        pRet.pageSize = n;
       }
-      pRet.pagesCount = np;
+      pRet.pagesCount = n > 0 ? 1 : 0;
+      pRet.currentPage = n > 0 ? 1 : 0;
     }
     if (p.unites) {
       pRet.pageData = p.unites;
@@ -56,10 +56,10 @@ function refreshUnite(
 } // refreshUnite
 /////////////////////////////////////////////
 export function uniteSubReducer(
-  state:IBaseState<IUniteDoc>,
+  state: IBaseState<IUniteDoc>,
   action: InfoAction
 ): IBaseState<IUniteDoc> {
-  if (!state){
+  if (!state) {
     return GetInitialUniteState();
   }
   const p = action.payload ? action.payload : {};
@@ -75,13 +75,14 @@ export function uniteSubReducer(
       });
     case CREATE_UNITE_ITEM:
       return produce(state, pRet => {
-        if (p.unite){
+        if (p.unite) {
           pRet.addMode = true;
           pRet.previousId = pRet.current.id;
           pRet.current = p.unite;
         }
         pRet.busy = false;
       });
+    case REFRESH_GLOBAL_SUCCESS:
     case REFRESH_ALL_SUCCESS:
     case UNITE_REMOVE_ATTACHMENT_SUCCESS:
     case UNITE_SAVE_ATTACHMENT_SUCCESS:
@@ -93,7 +94,7 @@ export function uniteSubReducer(
       return refreshUnite(state, p);
     case SELECT_UNITE_ITEM:
       return produce(state, pRet => {
-        if (p.unite){
+        if (p.unite) {
           pRet.current = p.unite;
           pRet.addMode = false;
         }
@@ -130,6 +131,10 @@ export function uniteSubReducer(
               break;
             case "sigle":
               pz.sigle = val;
+              pz.modified = true;
+              break;
+            case "ownerid":
+              pz.ownerid = val;
               pz.modified = true;
               break;
             default:

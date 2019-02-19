@@ -1,14 +1,15 @@
 import { FluxStandardAction } from "flux-standard-action";
 import produce from "immer";
-import { GetGroupe } from '../../../data/domain/DataProcs';
-import { IGroupeDoc } from '../../../data/domain/DomainData';
-import { IBaseState } from '../../../data/state/InfoState';
-import { IPayload } from '../../../data/state/IPayload';
-import { GetInitialGroupeState } from '../../../data/state/stores/initialState';
+import { GetGroupe } from "../../../data/domain/DataProcs";
+import { IGroupeDoc } from "../../../data/domain/DomainData";
+import { IBaseState } from "../../../data/state/InfoState";
+import { IPayload } from "../../../data/state/IPayload";
+import { GetInitialGroupeState } from "../../../data/state/stores/initialState";
 import {
   CHANGE_GROUPE_SUCCESS,
   REFRESH_ALL_SUCCESS
 } from "../../../features/AppState/redux/AppStateActions";
+import { REFRESH_GLOBAL_SUCCESS } from "./../../AppState/redux/AppStateActions";
 import {
   CANCEL_GROUPE_ITEM,
   CHANGE_GROUPE_FIELD,
@@ -32,21 +33,17 @@ function refreshGroupe(
 ): IBaseState<IGroupeDoc> {
   return produce(state, pRet => {
     pRet.busy = false;
-    if (p.page) {
-      pRet.currentPage = p.page;
-    }
-    if (p.groupesCount) {
-      const n = p.groupesCount;
-      pRet.itemsCount = n;
-      const nc = pRet.pageSize;
-      let np = Math.floor(n / nc);
-      if (n % nc !== 0) {
-        np = np + 1;
-      }
-      pRet.pagesCount = np;
-    }
     if (p.groupes) {
       pRet.pageData = p.groupes;
+      const n = pRet.pageData.length;
+      if (pRet.pageSize < n) {
+        pRet.pageSize = n;
+      }
+      pRet.pagesCount = n > 0 ? 1 : 0;
+      pRet.currentPage = n > 0 ? 1 : 0;
+    }
+    if (p.page) {
+      pRet.currentPage = p.page;
     }
     if (p.groupe) {
       pRet.current = p.groupe;
@@ -84,6 +81,7 @@ export function groupeSubReducer(
         pRet.busy = false;
       });
     case REFRESH_ALL_SUCCESS:
+    case REFRESH_GLOBAL_SUCCESS:
     case SAVE_GROUPE_ITEM_SUCCESS:
     case REMOVE_GROUPE_ITEM_SUCCESS:
     case GROUPE_REMOVE_ATTACHMENT_SUCCESS:
@@ -130,6 +128,10 @@ export function groupeSubReducer(
               break;
             case "name":
               pz.name = val;
+              pz.modified = true;
+              break;
+            case "ownerid":
+              pz.ownerid = val;
               pz.modified = true;
               break;
             default:

@@ -1,11 +1,16 @@
 import produce from "immer";
+import { REFRESH_GLOBAL_SUCCESS } from "./../../AppState/redux/AppStateActions";
 
-import { GetMatiere } from '../../../data/domain/DataProcs';
-import { IMatiereDoc } from '../../../data/domain/DomainData';
-import { IBaseState } from '../../../data/state/InfoState';
-import { InfoAction, IPayload } from '../../../data/state/IPayload';
-import { GetInitialMatiereState } from '../../../data/state/stores/initialState';
-import { CHANGE_MATIERE_SUCCESS, CHANGE_UNITE_SUCCESS, REFRESH_ALL_SUCCESS } from '../../../features/AppState/redux/AppStateActions';
+import { GetMatiere } from "../../../data/domain/DataProcs";
+import { IMatiereDoc } from "../../../data/domain/DomainData";
+import { IBaseState } from "../../../data/state/InfoState";
+import { InfoAction, IPayload } from "../../../data/state/IPayload";
+import { GetInitialMatiereState } from "../../../data/state/stores/initialState";
+import {
+  CHANGE_MATIERE_SUCCESS,
+  CHANGE_UNITE_SUCCESS,
+  REFRESH_ALL_SUCCESS
+} from "../../../features/AppState/redux/AppStateActions";
 import {
   CANCEL_MATIERE_ITEM,
   CHANGE_MATIERE_FIELD,
@@ -31,21 +36,15 @@ function refreshMatiere(
 ): IBaseState<IMatiereDoc> {
   return produce(state, pRet => {
     pRet.busy = false;
-    if (p.page) {
-      pRet.currentPage = p.page;
-    }
-    if (p.matieresCount) {
-      const n = p.matieresCount;
-      pRet.itemsCount = n;
-      const nc = pRet.pageSize;
-      let np = Math.floor(n / nc);
-      if (n % nc !== 0) {
-        np = np + 1;
-      }
-      pRet.pagesCount = np;
-    }
     if (p.matieres) {
       pRet.pageData = p.matieres;
+      const n = pRet.pageData.length;
+      pRet.itemsCount = n;
+      if (pRet.pageSize < n) {
+        pRet.pageSize = n;
+      }
+      pRet.pagesCount = n > 0 ? 1 : 0;
+      pRet.currentPage = n > 0 ? 1 : 0;
     }
     if (p.matiere) {
       pRet.current = p.matiere;
@@ -87,6 +86,7 @@ export function matiereSubReducer(
         }
         pRet.busy = false;
       });
+    case REFRESH_GLOBAL_SUCCESS:
     case REFRESH_ALL_SUCCESS:
     case MATIERE_REMOVE_ATTACHMENT_SUCCESS:
     case MATIERE_SAVE_ATTACHMENT_SUCCESS:
@@ -155,6 +155,10 @@ export function matiereSubReducer(
               pz.modified = true;
             case "tag":
               pz.tag = val;
+              pz.modified = true;
+              break;
+            case "ownerid":
+              pz.ownerid = val;
               pz.modified = true;
               break;
             default:

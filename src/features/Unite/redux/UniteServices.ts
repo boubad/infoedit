@@ -1,4 +1,4 @@
-import { IUniteDoc } from '../../../data/domain/DomainData';
+import { IOption, IUniteDoc } from '../../../data/domain/DomainData';
 import { IInfoState } from '../../../data/state/InfoState';
 import { IPayload } from '../../../data/state/IPayload';
 import { BaseServices } from '../../../data/state/services/BaseServices';
@@ -23,25 +23,40 @@ export class UniteServices {
       const pMan = BaseServices.getPersistManager(state);
       px = await pMan.fetchUniteByIdAsync(sid);
     }
-    return { unite: px };
+    const uniteid = px.id;
+    return { unite: px, uniteid };
   } // selectUniteAsync
   //
   public static async saveUniteAsync(state: IInfoState): Promise<IPayload> {
     const pMan = BaseServices.getPersistManager(state);
     const p = state.unites.current;
-    await pMan.saveUniteAsync(p);
-    return this.RefreshUnitesAsync(state);
+    const px = await pMan.saveUniteAsync(p);
+    const pRet =  await UniteServices.RefreshUnitesAsync(state);
+    pRet.unite = px;
+    return pRet;
   } // saveUniteAsync
 
   public static async removeUniteAsync(state: IInfoState): Promise<IPayload> {
     const pMan = BaseServices.getPersistManager(state);
     const id = state.unites.current.id;
     await pMan.removeUniteAsync(id);
-    return this.RefreshUnitesAsync(state);
+    return UniteServices.RefreshUnitesAsync(state);
   } // removeUniteAsync
-  public static RefreshUnitesAsync(state: IInfoState): Promise<IPayload> {
-    return this.gotoPageUniteAsync(state, state.unites.currentPage);
-  } // RefreshControles
+  public static async RefreshUnitesAsync(state: IInfoState): Promise<IPayload> {
+    const pMan = BaseServices.getPersistManager(state);
+    const nTotal = await pMan.getUnitesCountAsync();
+    const unites = await pMan.getUnitesAsync(0, nTotal);
+    const opts:IOption[] = [{id:'',text:''}];
+        unites.forEach((x) =>{
+            opts.push({id:x.id,text:x.sigle});
+        }); // x
+    return {
+      page:1,
+      unites,
+      unitesCount: nTotal,
+      unitesOptions: opts
+    };
+  } // RefreshUnitesAsync
   public static async gotoPageUniteAsync(
     state: IInfoState,
     page: number

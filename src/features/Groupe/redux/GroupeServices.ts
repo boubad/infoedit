@@ -30,18 +30,36 @@ export class GroupeServices {
   public static async saveGroupeAsync(state: IInfoState): Promise<IPayload> {
     const pMan = BaseServices.getPersistManager(state);
     const p = state.groupes.current;
-    await pMan.saveGroupeAsync(p);
-    return this.refreshGroupesAsync(state);
+    const px = await pMan.saveGroupeAsync(p);
+    const pRet = await GroupeServices.refreshGroupesAsync(state);
+    pRet.groupe = px;
+    return pRet;
   } // saveGroupeAsync
 
   public static async removeGroupeAsync(state: IInfoState): Promise<IPayload> {
     const pMan = BaseServices.getPersistManager(state);
     const id = state.groupes.current.id;
     await pMan.removeGroupeAsync(id);
-    return this.refreshGroupesAsync(state);
+    return GroupeServices.refreshGroupesAsync(state);
   } // removeGroupeAsync
-  public static refreshGroupesAsync(state: IInfoState): Promise<IPayload> {
-    return this.gotoPageGroupeAsync(state, state.groupes.currentPage);
+  public static async  refreshGroupesAsync(state: IInfoState): Promise<IPayload> {
+    const pMan = BaseServices.getPersistManager(state);
+    const nTotal = await pMan.getGroupesCountAsync();
+    const anneeid = state.appstate.anneeid;
+    const semestreid = state.appstate.semestreid;
+    const groupeid = state.appstate.groupeid;
+    const nx = await pMan.getEtudAffectationsCountAsync(anneeid,semestreid,groupeid);
+    const affs = await pMan.getEtudAffectationsAsync(anneeid,semestreid,groupeid,0,nx);
+    const opts = await pMan.getAnneeSemestreGroupeEtudiantsOptionsAsync(anneeid,semestreid,groupeid);
+    const groupes = await pMan.getGroupesAsync(0, nTotal);
+    return {
+      etudAffectations:affs,
+      etudiantsOptions: opts,
+      groupes,
+      groupesCount: nTotal,
+      groupesOptions: await pMan.getGroupesOptionsAsync(),
+      page:1,
+    };
   } // RefreshControles
   public static async gotoPageGroupeAsync(
     state: IInfoState,

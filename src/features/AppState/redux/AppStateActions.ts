@@ -170,3 +170,30 @@ export function refreshAll() : any {
   };
 } // refreshAsync
 //////////////////////////////////////////
+export const REFRESH_GLOBAL_BEGIN = "REFRESH_GLOBAL_BEGIN";
+const refreshGlobalBeginAction = createAction(REFRESH_GLOBAL_BEGIN);
+export const REFRESH_GLOBAL_SUCCESS = "REFRESH_GLOBAL_SUCCESS";
+const refreshGlobalSuccessAction = createAction(REFRESH_GLOBAL_SUCCESS);
+export const REFRESH_GLOBAL_FAIL = "REFRESH_GLOBAL_FAIL";
+const refreshGlobalFailAction = createAction(REFRESH_GLOBAL_FAIL);
+//
+export function refreshGlobal() : any {
+  return (dispatch: Dispatch, getState:()=>IInfoState) => {
+    dispatch(refreshGlobalBeginAction());
+    const promise = new Promise((resolve, reject) => {
+        const doRequest = AppStateServices.RefreshGlobalOptionsAsync(getState());
+        doRequest.then(
+          (res) => {
+            dispatch(refreshGlobalSuccessAction(res));
+            resolve(res);
+          },
+          (err) => {
+            dispatch(refreshGlobalFailAction(err));
+            reject(err);
+          },
+        );
+      });
+      return promise;
+  };
+} // refreshGlobal
+//////////////////////////////////////////

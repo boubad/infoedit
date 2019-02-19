@@ -1,9 +1,10 @@
 import produce from "immer";
+import { REFRESH_GLOBAL_SUCCESS } from './../../AppState/redux/AppStateActions';
 
+import { GetAnnee } from 'src/data/domain/DataProcs';
 import { IAnneeDoc } from '../../../data/domain/DomainData';
 import { IBaseState } from '../../../data/state/InfoState';
 import { InfoAction, IPayload } from '../../../data/state/IPayload';
-import { ComputePagesCount } from '../../../data/state/reducers/BaseReducer';
 import { GetInitialAnneeState } from '../../../data/state/stores/initialState';
 import { CHANGE_ANNEE_SUCCESS } from "../../AppState/redux/AppStateActions";
 import {
@@ -32,17 +33,29 @@ function refreshAnnee(
 ): IBaseState<IAnneeDoc> {
   return produce(state, pRet => {
     pRet.busy = false;
-    if (p.page) {
-      pRet.currentPage = p.page;
-    }
     if (p.anneesCount) {
       const n = p.anneesCount;
       pRet.itemsCount = n;
-      pRet.pagesCount = ComputePagesCount(n, state.pageSize);
+      if (pRet.pageSize < n){
+        pRet.pageSize = n;
+      }
+      pRet.pagesCount = (n > 0) ? 1 : 0;
+      pRet.currentPage = (n > 0) ? 1 : 0;
     }
     if (p.annees) {
       pRet.pageData = p.annees;
     }
+    if (p.anneeid){
+       const id = p.anneeid;
+       const v = pRet.pageData.find((x) =>{
+         return (x.id === id);
+       })
+       if (v){
+         pRet.current = v;
+       } else {
+         pRet.current = GetAnnee();
+       }
+    }// 
     if (p.annee) {
       pRet.current = p.annee;
       pRet.addMode = false;
@@ -103,6 +116,7 @@ export function anneeSubReducer(
         }
         pRet.busy = false;
       });
+    case REFRESH_GLOBAL_SUCCESS:
     case REFRESH_ANNEE_SUCCESS:
     case ANNEE_REMOVE_ATTACHMENT_SUCCESS:
     case ANNEE_SAVE_ATTACHMENT_SUCCESS:

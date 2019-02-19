@@ -81,6 +81,7 @@ export interface IPayload {
   dataVarsCount?:number;
   dataVar?:IDataVarDoc;
   dataVars?:IDataVarDoc[];
+  datavarid?:string;
   //
   stringData?:string[];
 } // interface IPayload

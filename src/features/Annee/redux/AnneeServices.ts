@@ -20,7 +20,7 @@ export class AnneeServices {
     let px = state.annees.pageData.find((x) =>{
       return (x.id === sid);
     });
-    if (px === undefined){
+    if (!px){
       const pMan = BaseServices.getPersistManager(state);
       px = await pMan.fetchAnneeByIdAsync(sid);
     }
@@ -30,18 +30,36 @@ export class AnneeServices {
   public static async saveAnneeAsync(state: IInfoState): Promise<IPayload> {
     const pMan = BaseServices.getPersistManager(state);
     const p = state.annees.current;
-    await pMan.saveAnneeAsync(p);
-    return this.refreshAnneesAsync(state);
+    const r = await pMan.saveAnneeAsync(p);
+    const pRet = await AnneeServices.refreshAnneesAsync(state);
+    pRet.annee = r;
+    return pRet;
   } // saveAnneeAsync
 
   public static async removeAnneeAsync(state: IInfoState): Promise<IPayload> {
     const pMan = BaseServices.getPersistManager(state);
     const id = state.annees.current.id;
     await pMan.removeAnneeAsync(id);
-    return this.refreshAnneesAsync(state);
+    return AnneeServices.refreshAnneesAsync(state);
   } // removeAnneeAsync
-  public static refreshAnneesAsync(state: IInfoState): Promise<IPayload> {
-    return this.gotoPageAnneeAsync(state, state.annees.currentPage);
+  public static async refreshAnneesAsync(state: IInfoState): Promise<IPayload> {
+    const pMan = BaseServices.getPersistManager(state);
+    const nTotal = await pMan.getAnneesCountAsync();
+    const anneeid = state.appstate.anneeid;
+    const semestreid = state.appstate.semestreid;
+    const groupeid = state.appstate.groupeid;
+    const nx = await pMan.getEtudAffectationsCountAsync(anneeid,semestreid,groupeid);
+    const affs = await pMan.getEtudAffectationsAsync(anneeid,semestreid,groupeid,0,nx);
+    const xopts = await pMan.getAnneeSemestreGroupeEtudiantsOptionsAsync(anneeid,semestreid,groupeid);
+    const annees = await pMan.getAnneesAsync(0, nTotal);
+    const opts = await pMan.getAnneesOptionsAsync();
+    return {
+      annees,
+      anneesCount: nTotal,
+      anneesOptions: opts,
+      etudAffectations:affs,
+      etudiantsOptions: xopts,
+    };
   } // RefreshControles
   public static async gotoPageAnneeAsync(
     state: IInfoState,

@@ -3,6 +3,7 @@ import { IInfoState } from '../../../data/state/InfoState';
 import { IPayload } from '../../../data/state/IPayload';
 import { BaseServices } from '../../../data/state/services/BaseServices';
 import { GetInitialMatiere } from '../../../data/state/stores/StateProcs';
+import { IOption } from './../../../data/domain/DomainData.d';
 
 //
 export class MatiereServices {
@@ -31,17 +32,34 @@ export class MatiereServices {
     const pMan = BaseServices.getPersistManager(state);
     const p = state.matieres.current;
     await pMan.saveMatiereAsync(p);
-    return this.refreshMatieresAsync(state);
+    return MatiereServices.refreshMatieresAsync(state);
   } // saveMatiereAsync
 
   public static async removeMatiereAsync(state: IInfoState): Promise<IPayload> {
     const pMan = BaseServices.getPersistManager(state);
     const id = state.matieres.current.id;
     await pMan.removeMatiereAsync(id);
-    return this.refreshMatieresAsync(state);
+    return MatiereServices.refreshMatieresAsync(state);
   } // removeMatiereAsync
-  public static refreshMatieresAsync(state: IInfoState): Promise<IPayload> {
-    return this.gotoPageMatiereAsync(state, state.matieres.currentPage);
+  public static async refreshMatieresAsync(state: IInfoState): Promise<IPayload> {
+    const pMan = BaseServices.getPersistManager(state);
+    const nTotal = await pMan.getMatieresCountAsync();
+    const matieres = await pMan.getMatieresAsync(
+      undefined,0,nTotal);
+     const vv:IOption[] = [];
+     matieres.forEach((x) =>{
+       let s = x.tag;
+       if (s.trim().length < 1) {
+         s = x.sigle;
+       }
+      vv.push({id:x.id,text:s,url:x.uniteid});
+     }); 
+    return {
+      matieres,
+      matieresCount: nTotal,
+      matieresOptions: vv,
+      page:1
+    };
   } // RefreshControles
   public static async gotoPageMatiereAsync(
     state: IInfoState,

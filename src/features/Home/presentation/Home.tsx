@@ -11,6 +11,8 @@ export interface IHomeProps {
     semestres: IOption[];
     groupeid: string;
     groupes: IOption[];
+    unites: IOption[];
+    uniteid:string;
     busy:boolean;
     //
     ValueChanged?: (val: any, propname?: string) => void;
@@ -55,6 +57,14 @@ export class Home extends BaseComponent<IHomeProps>{
                       items={p.groupes}
                       prompt="Groupe:"
                       propname="groupeid"
+                      busy={p.busy}
+                      onItemChoosen={p.ValueChanged}
+                    />
+                     <ItemChoiceComponent
+                      text={p.uniteid}
+                      items={p.unites}
+                      prompt="Unite:"
+                      propname="uniteid"
                       busy={p.busy}
                       onItemChoosen={p.ValueChanged}
                     />

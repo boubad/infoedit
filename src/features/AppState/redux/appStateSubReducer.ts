@@ -43,7 +43,8 @@ import {
   CHANGE_UNITE_BEGIN,
   CHANGE_UNITE_SUCCESS,
   REFRESH_ALL_BEGIN,
-  REFRESH_ALL_SUCCESS
+  REFRESH_ALL_SUCCESS,
+  REFRESH_GLOBAL_SUCCESS
 } from "./AppStateActions";
 /////////////////////////////////////////////
 export function appStateSubReducer(
@@ -67,6 +68,7 @@ export function appStateSubReducer(
       return produce(state, pRet => {
         pRet.busy = true;
       });
+    case REFRESH_GLOBAL_SUCCESS:
     case REFRESH_ALL_SUCCESS:
     case CHANGE_ANNEE_SUCCESS:
     case CHANGE_SEMESTRE_SUCCESS:

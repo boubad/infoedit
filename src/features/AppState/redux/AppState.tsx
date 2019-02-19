@@ -28,7 +28,14 @@ const getAnneeid = (state: IInfoState): string => {
   return state.appstate.anneeid;
 };
 const getMatieres = (state: IInfoState): IOption[] => {
-  return state.appstate.matieresOptions;
+  const pRet:IOption[] = [{id:'',text:''}];
+  const uniteid = state.appstate.uniteid;
+  state.matieres.pageData.forEach((x) =>{
+    if (x.uniteid === uniteid){
+      pRet.push({id:x.id,text:x.name,url:x.uniteid});
+    }
+  });
+  return pRet;
 };
 const getAnnees = (state: IInfoState): IOption[] => {
   return state.appstate.anneesOptions;

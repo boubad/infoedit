@@ -1,5 +1,6 @@
 import { FluxStandardAction } from "flux-standard-action";
 import produce from "immer";
+import { REFRESH_GLOBAL_SUCCESS } from './../../AppState/redux/AppStateActions';
 
 import { GetSemestre } from '../../../data/domain/DataProcs';
 import { ISemestreDoc } from '../../../data/domain/DomainData';
@@ -36,21 +37,18 @@ function refreshSemestre(
 ): IBaseState<ISemestreDoc> {
   return produce(state, pRet => {
     pRet.busy = false;
+    if (p.semestres){
+      pRet.pageData = p.semestres;
+      const n = pRet.pageData.length;
+      pRet.itemsCount = n;
+      if (pRet.pageSize  < n){
+        pRet.pageSize = n;
+      }
+      pRet.pagesCount = (n > 0) ? 1 : 0;
+      pRet.currentPage = (n > 0) ? 1 : 0;
+    }// p.semestres
     if (p.page) {
       pRet.currentPage = p.page;
-    }
-    if (p.semestresCount) {
-      const n = p.semestresCount;
-      pRet.itemsCount = n;
-      const nc = pRet.pageSize;
-      let np = Math.floor(n / nc);
-      if (n % nc !== 0) {
-        np = np + 1;
-      }
-      pRet.pagesCount = np;
-    }
-    if (p.semestres) {
-      pRet.pageData = p.semestres;
     }
     if (p.semestre) {
       pRet.current = p.semestre;
@@ -89,6 +87,7 @@ export function semestreSubReducer(
         }
         pRet.busy = false;
       });
+    case REFRESH_GLOBAL_SUCCESS:
     case REFRESH_ALL_SUCCESS:
     case SAVE_SEMESTRE_ITEM_SUCCESS:
     case REMOVE_SEMESTRE_ITEM_SUCCESS:

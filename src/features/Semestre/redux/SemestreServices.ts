@@ -1,4 +1,5 @@
 import { IInfoState } from '../../../data/state/InfoState';
+import { IOption } from './../../../data/domain/DomainData.d';
 
 import { IPayload } from '../../../data/state/IPayload';
 
@@ -34,8 +35,10 @@ export class SemestreServices {
   public static async saveSemestreAsync(state: IInfoState): Promise<IPayload> {
     const pMan = BaseServices.getPersistManager(state);
     const p = state.semestres.current;
-    await pMan.saveSemestreAsync(p);
-    return this.refreshSemestresAsync(state);
+    const px = await pMan.saveSemestreAsync(p);
+    const pRet = await SemestreServices.refreshSemestresAsync(state);
+    pRet.semestre = px;
+    return pRet;
   } // saveSemestreAsync
 
   public static async removeSemestreAsync(
@@ -44,10 +47,34 @@ export class SemestreServices {
     const pMan = BaseServices.getPersistManager(state);
     const id = state.semestres.current.id;
     await pMan.removeSemestreAsync(id);
-    return this.refreshSemestresAsync(state);
+    return SemestreServices.refreshSemestresAsync(state);
   } // removeSemestreAsync
-  public static refreshSemestresAsync(state: IInfoState): Promise<IPayload> {
-    return this.gotoPageSemestreAsync(state, state.semestres.currentPage);
+  public static async refreshSemestresAsync(state: IInfoState): Promise<IPayload> {
+    const pMan = BaseServices.getPersistManager(state);
+    const nTotal = await pMan.getSemestresCountAsync();
+    const anneeid = state.appstate.anneeid;
+    const semestreid = state.appstate.semestreid;
+    const groupeid = state.appstate.groupeid;
+    const nx = await pMan.getEtudAffectationsCountAsync(anneeid,semestreid,groupeid);
+    const affs = await pMan.getEtudAffectationsAsync(anneeid,semestreid,groupeid,0,nx);
+    const opts = await pMan.getAnneeSemestreGroupeEtudiantsOptionsAsync(anneeid,semestreid,groupeid);
+    const semestres = await pMan.getSemestresAsync(0, nTotal);
+    const opts2:IOption[] = [{id:'',text:''}];
+    semestres.forEach((x) =>{
+      let stag = x.tag;
+      if (stag.trim().length < 1){
+        stag = x.sigle;
+      }
+       opts2.push({id:x.id,text:stag});
+    });
+    return {
+      etudAffectations:affs,
+      etudiantsOptions: opts,
+      page:1,
+      semestres,
+      semestresCount: nTotal,
+      semestresOptions: opts2
+    };
   } // RefreshControles
   public static async gotoPageSemestreAsync(
     state: IInfoState,

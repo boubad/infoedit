@@ -69,17 +69,17 @@ export class MatiereManager extends SemestreManager {
     return await this.loadMatiereByIdAsync(docid);
   } // saveAsync
   //
-  public getMatieresCountAsync(uniteid: string): Promise<number> {
+  public getMatieresCountAsync(uniteid?: string): Promise<number> {
     const sel: any = {
       type: { $eq: TYPE_MATIERE }
     };
-    if (uniteid.trim().length > 0) {
+    if ( uniteid && uniteid.trim().length > 0) {
       sel.uniteid = { $eq: uniteid };
     }
     return this.pStore.findDocsCountBySelector(sel);
   } // getCountAsync
   public async getMatieresAsync(
-    uniteid: string,
+    uniteid: string|null|undefined,
     offset: number,
     count: number
   ): Promise<IMatiereDoc[]> {
@@ -89,7 +89,7 @@ export class MatiereManager extends SemestreManager {
     const sel: any = {
       type: { $eq: TYPE_MATIERE }
     };
-    if (uniteid.trim().length > 0) {
+    if (uniteid && uniteid.trim().length > 0) {
       sel.uniteid = { $eq: uniteid };
     }
     const pp: IItemMatiere[] = await this.pStore.findDocsBySelector(

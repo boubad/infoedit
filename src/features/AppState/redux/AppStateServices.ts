@@ -1,3 +1,4 @@
+import { IOption } from 'src/data/domain/DomainData';
 import { GetMatiere } from '../../../data/domain/DataProcs';
 import { IInfoState } from '../../../data/state/InfoState';
 import { IPayload } from '../../../data/state/IPayload';
@@ -367,4 +368,90 @@ export class AppStateServices {
     pRet.dataVarsOptions = await pMan.getDataVarOptionsAsync();
     return pRet;
   } // RefreshGlobalOptions
+  public static async RefreshGlobalOptionsAsync(state: IInfoState): Promise<IPayload> {
+    const pMan = BaseServices.getPersistManager(state);
+    const pRet: IPayload = {
+      };
+      {
+        const n = await pMan.getAnneesCountAsync();
+        const vv = await pMan.getAnneesAsync(0,n);
+        const opts:IOption[] = [{id:'',text:''}];
+        vv.forEach((x) =>{
+            let stag = x.tag;
+            if (stag.trim().length < 1){
+              stag = x.sigle;
+            }
+            opts.push({id:x.id,text:stag});
+        }); // x
+        pRet.anneesCount = n;
+        pRet.annees = vv;
+        pRet.anneesOptions = opts;
+        pRet.anneeid = '';
+      } // annees
+      {
+        const n = await pMan.getSemestresCountAsync();
+        const vv = await pMan.getSemestresAsync(0,n);
+        const opts:IOption[] = [{id:'',text:''}];
+        vv.forEach((x) =>{
+            let stag = x.tag;
+            if (stag.trim().length < 1){
+              stag = x.sigle;
+            }
+            opts.push({id:x.id,text:stag});
+        }); // x
+        pRet.semestresCount = n;
+        pRet.semestres = vv;
+        pRet.semestresOptions = opts;
+        pRet.semestreid = '';
+      } // semestres
+      {
+        const n = await pMan.getGroupesCountAsync();
+        const vv = await pMan.getGroupesAsync(0,n);
+        const opts:IOption[] = [{id:'',text:''}];
+        vv.forEach((x) =>{
+            opts.push({id:x.id,text:x.sigle});
+        }); // x
+        pRet.groupesCount = n;
+        pRet.groupes = vv;
+        pRet.groupesOptions = opts;
+        pRet.groupeid = '';
+      } // groupes
+      {
+        const n = await pMan.getUnitesCountAsync();
+        const vv = await pMan.getUnitesAsync(0,n);
+        const opts:IOption[] = [{id:'',text:''}];
+        vv.forEach((x) =>{
+            opts.push({id:x.id,text:x.sigle});
+        }); // x
+        pRet.unitesCount = n;
+        pRet.unites = vv;
+        pRet.unitesOptions = opts;
+        pRet.uniteid = '';
+      } // unites
+      {
+        const n = await pMan.getMatieresCountAsync();
+        const vv = await pMan.getMatieresAsync(undefined,0,n);
+        const opts:IOption[] = [];
+        vv.forEach((x) =>{
+            opts.push({id:x.id,text:x.sigle,url:x.uniteid});
+        }); // x
+        pRet.matieresCount = n;
+        pRet.matieres = vv;
+        pRet.matieresOptions = opts;
+        pRet.matiereid = '';
+      } // matieres
+      {
+        const n = await pMan.getDataVarsCountAsync();
+        const vv = await pMan.getDataVarsAsync(0,n);
+        const opts:IOption[] = [{id:'',text:''}];
+        vv.forEach((x) =>{
+            opts.push({id:x.id,text:x.sigle});
+        }); // x
+        pRet.dataVarsCount = n;
+        pRet.dataVars = vv;
+        pRet.dataVarsOptions = opts;
+        pRet.datavarid = '';
+      } // unites
+    return pRet;
+  } // refreshGlobalOptionsAsync
 } // class EtudiantServices
