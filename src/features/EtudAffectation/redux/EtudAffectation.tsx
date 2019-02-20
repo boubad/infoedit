@@ -59,10 +59,10 @@ const getCurrentOptions = (state: IInfoState) : IOption[] => {
    return pRet;
 };
 const getStartDate = (state: IInfoState): string => {
-  return state.appstate.semestreStartDate;
+  return state.affectations.current.startdate;
 };
 const getEndDate = (state: IInfoState): string => {
-  return state.appstate.semestreEndDate;
+  return state.affectations.current.enddate;
 };
 //
 const selector = createSelector(

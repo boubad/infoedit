@@ -12,25 +12,7 @@ export interface IAppStatus {
 } // interface IAppStatus
 export interface IAppState {
   readonly busy:boolean;
-  readonly semestreid: string;
-  readonly groupeid: string;
-  readonly matiereid: string;
-  readonly anneeid: string;
-  readonly uniteid: string;
-  readonly matiereSigle:string;
-  readonly matieresOptions: IOption[];
-  readonly anneesOptions: IOption[];
-  readonly groupesOptions: IOption[];
-  readonly semestresOptions: IOption[];
-  readonly unitesOptions: IOption[];
-  readonly anneeStartDate: string;
-  readonly anneeEndDate: string;
-  readonly semestreStartDate: string;
-  readonly semestreEndDate: string;
-  readonly affectations: IAffectationDoc[];
-  readonly affectationid: string;
   readonly ownerid:string;
-  readonly dataVarsOptions:IOption[];
 } // interface IAppState
 export interface IBaseState<T> {
   readonly busy: boolean;

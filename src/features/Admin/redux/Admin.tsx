@@ -8,22 +8,18 @@ const getHasStatus = (state: IInfoState): boolean => {
   return state.appstatus.error.length > 0 || state.appstatus.status.length > 0;
 };
 const getCanAffectations = (state: IInfoState): boolean => {
-  return (
-    state.appstate.anneeid.length > 0 && state.appstate.semestreid.length > 0 &&
-    state.appstate.groupesOptions.length > 0
-  );
+  const  anneeid = state.annees.current.id;
+  const semestreid = state.semestres.current.id;
+  return (anneeid.length > 0) && (semestreid.length > 0) && (state.groupes.pageData.length > 0);
 };
 const getCanEtudAffectations = (state: IInfoState): boolean => {
-  return (
-    state.appstate.affectationid.length > 0 &&
-    state.outils.freeEtudiantsOpts.length > 0
-  );
+  return (state.affectations.current.id.length > 0) && (state.outils.freeEtudiantsOpts.length > 0);
 };
 const getCanChangeStatus = (state: IInfoState): boolean => {
   return (
-    state.appstate.anneeid.length > 0 &&
-    state.appstate.semestreid.length > 0 &&
-    state.appstate.groupeid.length > 0
+    state.annees.current.id.length > 0 &&
+    state.semestres.current.id.length > 0 &&
+    state.groupes.current.id.length > 0
   );
 };
 //

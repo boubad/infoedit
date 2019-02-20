@@ -5,7 +5,6 @@ import { IBaseState } from "../../../data/state/InfoState";
 import { InfoAction, IPayload } from "../../../data/state/IPayload";
 import { GetInitialUniteState } from "../../../data/state/stores/initialState";
 import {
-  CHANGE_UNITE_SUCCESS,
   REFRESH_ALL_SUCCESS
 } from "../../../features/AppState/redux/AppStateActions";
 import { REFRESH_GLOBAL_SUCCESS } from "./../../AppState/redux/AppStateActions";
@@ -87,10 +86,8 @@ export function uniteSubReducer(
     case UNITE_REMOVE_ATTACHMENT_SUCCESS:
     case UNITE_SAVE_ATTACHMENT_SUCCESS:
     case GOTO_PAGE_UNITE_SUCCESS:
-    case CHANGE_UNITE_SUCCESS:
     case SAVE_UNITE_ITEM_SUCCESS:
     case REMOVE_UNITE_ITEM_SUCCESS:
-    case CHANGE_UNITE_SUCCESS:
       return refreshUnite(state, p);
     case SELECT_UNITE_ITEM:
       return produce(state, pRet => {

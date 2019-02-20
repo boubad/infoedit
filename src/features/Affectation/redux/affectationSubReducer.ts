@@ -1,10 +1,13 @@
 import produce from "immer";
-import { GetAffectation } from '../../../data/domain/DataProcs';
-import { IAffectationDoc } from '../../../data/domain/DomainData';
-import { IBaseState } from '../../../data/state/InfoState';
-import { InfoAction, IPayload } from '../../../data/state/IPayload';
-import { GetInitialAffectationState } from '../../../data/state/stores/initialState';
-import { CHANGE_ANNEE_SUCCESS, CHANGE_SEMESTRE_SUCCESS } from '../../../features/AppState/redux/AppStateActions';
+import { GetAffectation } from "../../../data/domain/DataProcs";
+import { IAffectationDoc } from "../../../data/domain/DomainData";
+import { IBaseState } from "../../../data/state/InfoState";
+import { InfoAction, IPayload } from "../../../data/state/IPayload";
+import { GetInitialAffectationState } from "../../../data/state/stores/initialState";
+import {
+  CHANGE_ANNEE_SUCCESS,
+  CHANGE_SEMESTRE_SUCCESS
+} from "../../../features/AppState/redux/AppStateActions";
 import {
   AFFECTATION_REMOVE_ATTACHMENT_BEGIN,
   AFFECTATION_REMOVE_ATTACHMENT_SUCCESS,
@@ -29,20 +32,14 @@ function refreshAffectation(
 ): IBaseState<IAffectationDoc> {
   return produce(state, pRet => {
     pRet.busy = false;
-    if (p.page) {
-      pRet.currentPage = p.page;
-    }
-    if (p.affectationsCount) {
-      const n = p.affectationsCount;
-      pRet.itemsCount = n;
-      if (n > pRet.pageSize) {
-        pRet.pageSize = n;
-      }
-    }
-    pRet.currentPage = 1;
-    pRet.pagesCount = 1;
     if (p.affectations) {
       pRet.pageData = p.affectations;
+      const n = pRet.pageData.length;
+      if (pRet.pageSize < n) {
+        pRet.pageSize = n;
+      }
+      pRet.pagesCount = n > 0 ? 1 : 0;
+      pRet.currentPage = n > 0 ? 1 : 0;
     }
     if (p.affectation) {
       pRet.current = p.affectation;
@@ -143,6 +140,11 @@ export function affectationSubReducer(
               break;
             case "enddate":
               pz.enddate = val;
+              pz.modified = true;
+              pRet.current = pz;
+              break;
+            case "ownerid":
+              pz.ownerid = val;
               pz.modified = true;
               pRet.current = pz;
               break;

@@ -20,28 +20,8 @@ export function GetInitialAppStatus(): IAppStatus {
 } // GetInitialAppStatus
 export function GetInitialAppState(): IAppState {
   return {
-    anneeid: "",
-    anneesOptions: [],
     busy: false,
-    groupeid: "",
-    groupesOptions: [],
-    matiereid: "",
-    matieresOptions: [],
-    // tslint:disable-next-line:object-literal-sort-keys
-    matiereSigle:'',
-    semestreid: "",
-    semestresOptions: [],
-    uniteid: "",
-    unitesOptions: [],
-    // tslint:disable-next-line:object-literal-sort-keys
-    anneeStartDate: "",
-    anneeEndDate: "",
-    semestreStartDate: "",
-    semestreEndDate: "",
-    affectationid: "",
-    affectations: [],
     ownerid: "",
-    dataVarsOptions:[],
   };
 } // getInitialAppState
 export function GetInitialAnneeState(): IBaseState<IAnneeDoc> {

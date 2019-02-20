@@ -1,12 +1,8 @@
-import { IOption } from 'src/data/domain/DomainData';
 import { GetMatiere } from '../../../data/domain/DataProcs';
 import { IInfoState } from '../../../data/state/InfoState';
 import { IPayload } from '../../../data/state/IPayload';
 import { BaseServices } from '../../../data/state/services/BaseServices';
-import { GetInitialAffectation, GetInitialAnnee, GetInitialControle, GetInitialEtudAffectation, GetInitialGroupe, GetInitialMatiere, GetInitialSemestre, GetInitialUnite } from '../../../data/state/stores/StateProcs';
-
-//
-
+import { GetInitialAffectation, GetInitialAnnee, GetInitialControle, GetInitialEtudAffectation, GetInitialGroupe, GetInitialMatiere, GetInitialSemestre} from '../../../data/state/stores/StateProcs';
 //
 export class AppStateServices {
     //
@@ -27,6 +23,7 @@ export class AppStateServices {
         if (matiereid.length < 1) {
           return pRet;
         }
+        pRet.matiereid = matiereid;
         const pMan = BaseServices.getPersistManager(state);  
         const mat = state.matieres.pageData.find((x)=>{
           return (x.id === matiereid);
@@ -39,9 +36,9 @@ export class AppStateServices {
         const pMat = (pRet.matiere) ? pRet.matiere : GetMatiere();
         pRet.matiereSigle = pMat.sigle;
         pRet.matiereid = matiereid;
-        const semestreid = state.appstate.semestreid;
-        const anneeid = state.appstate.anneeid;
-        const groupeid = state.appstate.groupeid;
+        const semestreid = state.semestres.current.id;
+        const anneeid = state.annees.current.id;
+        const groupeid = state.groupes.current.id;
         if (anneeid.length < 1 || semestreid.length < 1 || groupeid.length < 1) {
           return pRet;
         }
@@ -68,44 +65,6 @@ export class AppStateServices {
         return pRet;
       } // ChangeMatiereAsync
     //
-  public static async changeUniteAsync(
-    state: IInfoState,
-    uniteid: string
-  ): Promise<IPayload> {
-    const pRet: IPayload = {
-      controle: GetInitialControle(state),
-      controles: [],
-      controlesCount: 0,
-      etudiantDescs:[],
-      matiereid:'',
-      matieresCount:0,
-      // tslint:disable-next-line:object-literal-sort-keys
-      matiereSigle:'',
-      // tslint:disable-next-line:object-literal-sort-keys
-      matieres:[],
-      matieresOptions:[],
-      unite: GetInitialUnite(state),
-      uniteid: "",
-    };
-    if (uniteid.length < 1) {
-      return pRet;
-    }
-    pRet.uniteid = uniteid;
-    const pMan = BaseServices.getPersistManager(state);
-    const un = state.unites.pageData.find((x)=>{
-          return (x.id === uniteid);
-        });  
-        if (un !== undefined){
-          pRet.unite = Object.assign({},un);
-        } else {
-          pRet.unite = await pMan.fetchUniteByIdAsync(uniteid);
-        }    
-    pRet.matieresCount = await pMan.getMatieresCountAsync(uniteid);
-    pRet.matieres = await pMan.getMatieresAsync(uniteid,0,state.matieres.pageSize);
-    pRet.matieresOptions = await pMan.getMatieresOptionsAsync(uniteid);
-    return pRet;
-  } // ChangeUniteAsync
-  //
   public static async changeGroupeAsync(
     state: IInfoState,
     groupeid: string
@@ -134,11 +93,23 @@ export class AppStateServices {
         } else {
           pRet.groupe = await pMan.fetchGroupeByIdAsync(groupeid);
         }     
-    const semestreid = state.appstate.semestreid;
-    const anneeid = state.appstate.anneeid;
+    const semestreid = state.semestres.current.id;
+    const anneeid = state.annees.current.id;
     if (anneeid.length < 1 || semestreid.length < 1) {
       return pRet;
     }
+    pRet.semestreid = semestreid;
+    pRet.anneeid = anneeid;
+    const n = await pMan.getAffectationsCountAsync(anneeid, semestreid);  
+    pRet.affectationsCount = n;
+    const affs = await pMan.getAffectationsAsync(anneeid, semestreid, 0, n);
+    pRet.affectations = affs;
+    const cur = affs.find((x) =>{
+      return (x.groupeid === groupeid) && (x.semestreid === semestreid) && (x.anneeid === anneeid);
+    });  
+    if (cur !== undefined){
+      pRet.affectation = cur;
+    }  
     pRet.etudAffectationsCount = await pMan.getEtudAffectationsCountAsync(anneeid,semestreid,groupeid);
     pRet.etudAffectations = await pMan.getEtudAffectationsAsync(anneeid,semestreid,groupeid,0,state.etudaffectations.pageSize);  
     pRet.etudiantsOptions  = await pMan.getAnneeSemestreGroupeEtudiantsOptionsAsync(
@@ -146,10 +117,11 @@ export class AppStateServices {
       semestreid,
       groupeid
     );
-    const matiereid = state.appstate.matiereid;
+    const matiereid = state.matieres.current.id;
     if (matiereid.length < 1) {
       return pRet;
     }
+    pRet.matiereid = matiereid;
    pRet.controlesCount = await pMan.getControlesCountAsync(
       anneeid,
       semestreid,
@@ -199,37 +171,36 @@ export class AppStateServices {
         } else {
           pRet.semestre = await pMan.fetchSemestreByIdAsync(semestreid);
         }       
-    const anneeid = state.appstate.anneeid;
+    const anneeid = state.annees.current.id;
     if (anneeid.length < 1) {
       return pRet;
     }
+    pRet.anneeid = anneeid;
     const n = await pMan.getAffectationsCountAsync(anneeid, semestreid);  
     pRet.affectationsCount = n;
     const affs = await pMan.getAffectationsAsync(anneeid, semestreid, 0, n);
-    const startDate = state.appstate.anneeStartDate;
-    const endDate = state.appstate.anneeEndDate;
-    const nx = affs.length;
-    for (let i = 0; i < nx; i++){
-      const x = affs[i];
-      if (x.startdate.length < 1){
-         x.startdate = startDate;
-      }
-      if (x.enddate.length < 1){
-        x.enddate = endDate;
-      }
-    }// i
     pRet.affectations = affs;
-    const matiereid = state.appstate.matiereid;
+    const matiereid = state.matieres.current.id;
+    if (matiereid.length < 1){
+      return pRet;
+    }
+    pRet.matiereid = matiereid;
     pRet.etudiantDescs =  await pMan.getAnneeSemestreMatiereStats(
       anneeid,
       matiereid,
       semestreid,
     );
-    const groupeid = state.appstate.groupeid;
-    
+    const groupeid = state.groupes.current.id;
     if (groupeid.length < 1) {
       return pRet;
     }
+    pRet.groupeid = groupeid;
+    const cur = affs.find((x) =>{
+      return (x.groupeid === groupeid) && (x.semestreid === semestreid) && (x.anneeid === anneeid);
+    });  
+    if (cur !== undefined){
+      pRet.affectation = cur;
+    }  
    pRet.etudAffectationsCount = await pMan.getEtudAffectationsCountAsync(anneeid,semestreid,groupeid);
     pRet.etudAffectations = await pMan.getEtudAffectationsAsync(anneeid,semestreid,groupeid,0,state.etudaffectations.pageSize);  
     pRet.etudiantsOptions  = await pMan.getAnneeSemestreGroupeEtudiantsOptionsAsync(
@@ -237,9 +208,6 @@ export class AppStateServices {
       semestreid,
       groupeid
     );
-    if (matiereid.length < 1) {
-      return pRet;
-    }
    pRet.controlesCount = await pMan.getControlesCountAsync(
       anneeid,
       semestreid,
@@ -291,38 +259,25 @@ export class AppStateServices {
           an = await pMan.fetchAnneeByIdAsync(anneeid);
         }     
     pRet.annee = an; 
-    pRet.anneeStartDate = an.startdate;
-    pRet.anneeEndDate = an.enddate;
-    const semestreid = state.appstate.semestreid;
+    const semestreid = state.semestres.current.id;
     if (semestreid.length < 1) {
       return pRet;
     }
+    pRet.semestreid = semestreid;
     const n = await pMan.getAffectationsCountAsync(anneeid, semestreid);  
     pRet.affectationsCount = n;
     const affs = await pMan.getAffectationsAsync(anneeid, semestreid, 0, n);
-    const startDate = state.appstate.anneeStartDate;
-    const endDate = state.appstate.anneeEndDate;
-    const nx = affs.length;
-    for (let i = 0; i < nx; i++){
-      const x = affs[i];
-      if (x.startdate.length < 1){
-         x.startdate = startDate;
-      }
-      if (x.enddate.length < 1){
-        x.enddate = endDate;
-      }
-    }// i
     pRet.affectations = affs;
-    const groupeid = state.appstate.groupeid;
+    const groupeid = state.groupes.current.id;
     if (groupeid.length < 1) {
       return pRet;
     }
+    pRet.groupeid = groupeid;
     const cur = affs.find((x) =>{
-      return (x.id === groupeid);
+      return (x.groupeid === groupeid) && (x.semestreid === semestreid) && (x.anneeid === anneeid);
     });  
     if (cur !== undefined){
-      pRet.semestreStartDate = cur.startdate;
-      pRet.semestreEndDate = cur.enddate;
+      pRet.affectation = cur;
     }  
     pRet.etudAffectationsCount = await pMan.getEtudAffectationsCountAsync(anneeid,semestreid,groupeid);
     pRet.etudAffectations = await pMan.getEtudAffectationsAsync(anneeid,semestreid,groupeid,0,state.etudaffectations.pageSize);  
@@ -331,15 +286,16 @@ export class AppStateServices {
       semestreid,
       groupeid
     );
-    const matiereid = state.appstate.matiereid;
+    const matiereid = state.matieres.current.id;
+    if (matiereid.length < 1) {
+      return pRet;
+    }
+    pRet.matiereid = matiereid;
     pRet.etudiantDescs =  await pMan.getAnneeSemestreMatiereStats(
       anneeid,
       matiereid,
       semestreid,
     );
-    if (matiereid.length < 1) {
-      return pRet;
-    }
    pRet.controlesCount = await pMan.getControlesCountAsync(
       anneeid,
       semestreid,
@@ -357,100 +313,33 @@ export class AppStateServices {
     return pRet;
   } // ChangeAnneeAsync
   ////////////////////////////////////////////
-  public static async refreshAllAsync(state: IInfoState): Promise<IPayload> {
-    const pMan = BaseServices.getPersistManager(state);
-    const pRet: IPayload = {
-      };
-    pRet.anneesOptions= await pMan.getAnneesOptionsAsync();
-    pRet.semestresOptions = await pMan.getSemestresOptionsAsync();
-    pRet.groupesOptions = await pMan.getGroupesOptionsAsync();
-    pRet.unitesOptions = await pMan.getUnitesOptionsAsync();
-    pRet.dataVarsOptions = await pMan.getDataVarOptionsAsync();
-    return pRet;
-  } // RefreshGlobalOptions
   public static async RefreshGlobalOptionsAsync(state: IInfoState): Promise<IPayload> {
     const pMan = BaseServices.getPersistManager(state);
     const pRet: IPayload = {
       };
       {
         const n = await pMan.getAnneesCountAsync();
-        const vv = await pMan.getAnneesAsync(0,n);
-        const opts:IOption[] = [{id:'',text:''}];
-        vv.forEach((x) =>{
-            let stag = x.tag;
-            if (stag.trim().length < 1){
-              stag = x.sigle;
-            }
-            opts.push({id:x.id,text:stag});
-        }); // x
-        pRet.anneesCount = n;
-        pRet.annees = vv;
-        pRet.anneesOptions = opts;
-        pRet.anneeid = '';
+        pRet.annees = await pMan.getAnneesAsync(0,n);
       } // annees
       {
         const n = await pMan.getSemestresCountAsync();
-        const vv = await pMan.getSemestresAsync(0,n);
-        const opts:IOption[] = [{id:'',text:''}];
-        vv.forEach((x) =>{
-            let stag = x.tag;
-            if (stag.trim().length < 1){
-              stag = x.sigle;
-            }
-            opts.push({id:x.id,text:stag});
-        }); // x
-        pRet.semestresCount = n;
-        pRet.semestres = vv;
-        pRet.semestresOptions = opts;
-        pRet.semestreid = '';
+        pRet.semestres = await pMan.getSemestresAsync(0,n);
       } // semestres
       {
         const n = await pMan.getGroupesCountAsync();
-        const vv = await pMan.getGroupesAsync(0,n);
-        const opts:IOption[] = [{id:'',text:''}];
-        vv.forEach((x) =>{
-            opts.push({id:x.id,text:x.sigle});
-        }); // x
-        pRet.groupesCount = n;
-        pRet.groupes = vv;
-        pRet.groupesOptions = opts;
-        pRet.groupeid = '';
+        pRet.groupes = await pMan.getGroupesAsync(0,n);
       } // groupes
       {
         const n = await pMan.getUnitesCountAsync();
-        const vv = await pMan.getUnitesAsync(0,n);
-        const opts:IOption[] = [{id:'',text:''}];
-        vv.forEach((x) =>{
-            opts.push({id:x.id,text:x.sigle});
-        }); // x
-        pRet.unitesCount = n;
-        pRet.unites = vv;
-        pRet.unitesOptions = opts;
-        pRet.uniteid = '';
+        pRet.unites = await pMan.getUnitesAsync(0,n);
       } // unites
       {
         const n = await pMan.getMatieresCountAsync();
-        const vv = await pMan.getMatieresAsync(undefined,0,n);
-        const opts:IOption[] = [];
-        vv.forEach((x) =>{
-            opts.push({id:x.id,text:x.sigle,url:x.uniteid});
-        }); // x
-        pRet.matieresCount = n;
-        pRet.matieres = vv;
-        pRet.matieresOptions = opts;
-        pRet.matiereid = '';
+        pRet.matieres = await pMan.getMatieresAsync(undefined,0,n);
       } // matieres
       {
         const n = await pMan.getDataVarsCountAsync();
-        const vv = await pMan.getDataVarsAsync(0,n);
-        const opts:IOption[] = [{id:'',text:''}];
-        vv.forEach((x) =>{
-            opts.push({id:x.id,text:x.sigle});
-        }); // x
-        pRet.dataVarsCount = n;
-        pRet.dataVars = vv;
-        pRet.dataVarsOptions = opts;
-        pRet.datavarid = '';
+        pRet.dataVars =  await pMan.getDataVarsAsync(0,n);
       } // unites
     return pRet;
   } // refreshGlobalOptionsAsync

@@ -4,6 +4,7 @@ import {
   GetDataVarDoc as GetDataVar
 } from "../../../data/domain/DataProcs";
 import { IDataVarDoc } from "../../../data/domain/DomainData";
+import { REFRESH_GLOBAL_SUCCESS } from './../../AppState/redux/AppStateActions';
 
 import { IBaseState } from '../../../data/state/InfoState';
 import { InfoAction, IPayload } from '../../../data/state/IPayload';
@@ -36,26 +37,20 @@ function refreshDataVar(
 ): IBaseState<IDataVarDoc> {
   return produce(state, pRet => {
     pRet.busy = false;
-    if (p.page) {
-      pRet.currentPage = p.page;
-    }
-    if (p.dataVarsCount) {
-      const n = p.dataVarsCount;
-      pRet.itemsCount = n;
-      const nc = pRet.pageSize;
-      let np = Math.floor(n / nc);
-      if (n % nc !== 0) {
-        np = np + 1;
-      }
-      pRet.pagesCount = np;
-    }
     if (p.dataVars) {
       pRet.pageData = p.dataVars;
+      const n = pRet.pageData.length;
+      if (pRet.pageSize < n){
+        pRet.pageSize = 1;
+      }
+      pRet.itemsCount = n;
+      pRet.pagesCount = (n > 0) ? 1 : 0;
+      pRet.currentPage = (n > 0) ? 1 : 0;
     }
     if (p.dataVar) {
       pRet.current = p.dataVar;
+      pRet.addMode = false;
     }
-    pRet.addMode = false;
   });
 } // refreshDataVar
 /////////////////////////////////////////////
@@ -86,6 +81,7 @@ export function datavarSubReducer(
         }
         pRet.busy = false;
       });
+    case REFRESH_GLOBAL_SUCCESS:
     case DATAVAR_REMOVE_ATTACHMENT_SUCCESS:
     case DATAVAR_SAVE_ATTACHMENT_SUCCESS:
     case GOTO_PAGE_DATAVAR_SUCCESS:

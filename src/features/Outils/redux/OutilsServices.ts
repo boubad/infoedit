@@ -35,9 +35,9 @@ export class OutilsServices {
     state: IInfoState
   ): Promise<IPayload> {
     const pMan = BaseServices.getPersistManager(state);
-    const anneeid = state.appstate.anneeid;
-    const semestreid = state.appstate.semestreid;
-    const groupeid = state.appstate.groupeid;
+    const anneeid = state.annees.current.id;
+    const semestreid = state.semestres.current.id;
+    const groupeid = state.groupes.current.id;
     const status = state.etudiants.etudiantStatus;
     const nTotal = await pMan.getEtudiantsCountAsync(status);
     const page = 1;
@@ -69,9 +69,9 @@ export class OutilsServices {
       newstatus = ETUDIANT_STATUS_FREE;
     }
     const pMan = BaseServices.getPersistManager(state);
-    const anneeid = state.appstate.anneeid;
-    const semestreid = state.appstate.semestreid;
-    const groupeid = state.appstate.groupeid;
+    const anneeid = state.annees.current.id;
+    const semestreid = state.semestres.current.id;
+    const groupeid = state.groupes.current.id;
     await pMan.changeAnneeSemestreEtudiantsStatus(anneeid, semestreid, newstatus);
     const status = state.etudiants.etudiantStatus;
     const nTotal = await pMan.getEtudiantsCountAsync(status);
@@ -109,9 +109,9 @@ export class OutilsServices {
     const count = state.etudiants.pageSize;
     const offset = 0;
     const etudiants = await pMan.getEtudiantsAsync(status, offset, count);
-    const anneeid = state.appstate.anneeid;
-    const semestreid = state.appstate.semestreid;
-    const groupeid = state.appstate.groupeid;
+    const anneeid = state.annees.current.id;
+    const semestreid = state.semestres.current.id;
+    const groupeid = state.groupes.current.id;
     const nx = await pMan.getEtudAffectationsCountAsync(anneeid,semestreid,groupeid);
     const affs = await pMan.getEtudAffectationsAsync(anneeid,semestreid,groupeid,0,nx);
     const opts = await pMan.getAnneeSemestreGroupeEtudiantsOptionsAsync(anneeid,semestreid,groupeid);

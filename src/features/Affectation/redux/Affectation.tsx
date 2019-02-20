@@ -38,13 +38,17 @@ const getItems = (state: IInfoState): IAffectationDoc[] => {
   return state.affectations.pageData;
 };
 const getGroupesOptions = (state: IInfoState): IOption[] => {
-  return state.appstate.groupesOptions;
+  const pRet:IOption[] = [{id:'',text:''}];
+  state.groupes.pageData.forEach((x) =>{
+    pRet.push({id:x.id,text:x.sigle});
+  });
+  return pRet;
 };
 const getStartDate = (state: IInfoState): string => {
-  return state.appstate.anneeStartDate;
+  return state.annees.current.startdate;
 };
 const getEndDate = (state: IInfoState): string => {
-  return state.appstate.anneeEndDate;
+  return state.annees.current.enddate;
 };
 //
 const selector = createSelector(

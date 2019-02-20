@@ -8,13 +8,11 @@ export interface IAppStateProps {
   anneeid: string;
   annees: IOption[];
   matiereid: string;
-  uniteid:string;
   semestreid: string;
   semestres: IOption[];
   groupeid: string;
   groupes: IOption[];
   matieres: IOption[];
-  unites: IOption[];
   busy:boolean;
   //
   ValueChanged?: (val: any, propname?: string) => void;
@@ -55,14 +53,6 @@ export class AppState extends BaseComponent<IAppStateProps> {
                   items={p.groupes}
                   prompt="Groupe:"
                   propname="groupeid"
-                  busy={busy}
-                  onItemChoosen={p.ValueChanged}
-                />
-                <ItemChoiceComponent
-                  text={p.uniteid}
-                  items={p.unites}
-                  prompt="Unité:"
-                  propname="uniteid"
                   busy={busy}
                   onItemChoosen={p.ValueChanged}
                 />

@@ -4,54 +4,67 @@ import { IOption } from '../../../data/domain/DomainData';
 import { IInfoState } from '../../../data/state/InfoState';
 import { InfoDispatch } from '../../../data/state/IPayload';
 import { AppState, IAppStateProps } from '../presentation/AppState';
-import { changeAnnee, changeGroupe, changeMatiere, changeSemestre, changeUnite } from './AppStateActions';
+import { changeAnnee, changeGroupe, changeMatiere, changeSemestre } from './AppStateActions';
 //
 const getBusy = (state: IInfoState) : boolean => {
   return state.appstate.busy || state.annees.busy || state.semestres.busy || state.groupes.busy || state.unites.busy || state.matieres.busy || state.outils.busy || state.affectations.busy || state.etudaffectations.busy || state.details.busy || state.appstatus.busy;
 };
-const getUniteid = (state: IInfoState): string => {
-  return state.appstate.uniteid;
-};
-const getUnites = (state: IInfoState): IOption[] => {
-  return state.appstate.unitesOptions;
-};
 const getGroupeid = (state: IInfoState): string => {
-  return state.appstate.groupeid;
+  return state.groupes.current.id;
 };
 const getSemestreid = (state: IInfoState): string => {
-  return state.appstate.semestreid;
+  return state.semestres.current.id;
 };
 const getMatiereid = (state: IInfoState): string => {
-  return state.appstate.matiereid;
+  return state.matieres.current.id;
 };
 const getAnneeid = (state: IInfoState): string => {
-  return state.appstate.anneeid;
+  return state.annees.current.id;
 };
 const getMatieres = (state: IInfoState): IOption[] => {
   const pRet:IOption[] = [{id:'',text:''}];
-  const uniteid = state.appstate.uniteid;
   state.matieres.pageData.forEach((x) =>{
-    if (x.uniteid === uniteid){
-      pRet.push({id:x.id,text:x.name,url:x.uniteid});
+    let stag = x.tag;
+    if (stag.trim().length < 1){
+      stag = x.sigle;
     }
+    pRet.push({id:x.id,text:stag});
   });
   return pRet;
 };
 const getAnnees = (state: IInfoState): IOption[] => {
-  return state.appstate.anneesOptions;
+  const pRet:IOption[] = [{id:'',text:''}];
+  state.annees.pageData.forEach((x) =>{
+    let stag = x.tag;
+    if (stag.trim().length < 1){
+      stag = x.sigle;
+    }
+      pRet.push({id:x.id,text:stag});
+  });
+  return pRet;
 };
 const getGroupes = (state: IInfoState): IOption[] => {
-  return state.appstate.groupesOptions;
+  const pRet:IOption[] = [{id:'',text:''}];
+  state.groupes.pageData.forEach((x) =>{
+    pRet.push({id:x.id,text:x.sigle});
+  });
+  return pRet;
 };
 const getSemestres = (state: IInfoState): IOption[] => {
-  return state.appstate.semestresOptions;
+  const pRet:IOption[] = [{id:'',text:''}];
+  state.semestres.pageData.forEach((x) =>{
+    let stag = x.tag;
+    if (stag.trim().length < 1){
+      stag = x.sigle;
+    }
+      pRet.push({id:x.id,text:stag});
+  });
+  return pRet;
 };
 //
 const selector = createSelector(
   [
     getBusy,
-    getUniteid,
-    getUnites,
     getGroupeid,
     getSemestreid,
     getMatiereid,
@@ -63,8 +76,6 @@ const selector = createSelector(
   ],
   (
     busy:boolean,
-    uniteid: string,
-    unites: IOption[],
     groupeid: string,
     semestreid: string,
     matiereid: string,
@@ -76,11 +87,10 @@ const selector = createSelector(
   ) => {
     return {
       busy,
-      uniteid,
-      unites,
       // tslint:disable-next-line:object-literal-sort-keys
       groupeid,
       semestreid,
+      // tslint:disable-next-line:object-literal-sort-keys
       matiereid,
       anneeid,
       annees,
@@ -105,8 +115,6 @@ function mapDispatchToProps(dispatch: InfoDispatch) {
         dispatch(changeMatiere(val));
       } else if (s === "anneeid") {
         dispatch(changeAnnee(val));
-      } else if (s === "uniteid") {
-        dispatch(changeUnite(val));
       }
     }
   };

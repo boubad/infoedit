@@ -19,7 +19,7 @@ import {
 } from "./DataVarActions";
 //
 const getBusy = (state: IInfoState): boolean => {
-  return state.unites.busy;
+  return state.datavars.busy;
 };
 const getAddMode = (state: IInfoState): boolean => {
   return state.datavars.addMode;
@@ -28,13 +28,13 @@ const getCurrent = (state: IInfoState): IDataVarDoc => {
   return state.datavars.current;
 };
 const getCurrentPage = (state: IInfoState): number => {
-  return state.unites.currentPage;
+  return state.datavars.currentPage;
 };
 const getDisplayPage = (state: IInfoState): number => {
-  return state.unites.displayPages;
+  return state.datavars.displayPages;
 };
 const getPagesCount = (state: IInfoState): number => {
-  return state.unites.pagesCount;
+  return state.datavars.pagesCount;
 };
 const getItems = (state: IInfoState): IDataVarDoc[] => {
   return state.datavars.pageData;

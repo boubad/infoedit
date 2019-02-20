@@ -132,11 +132,10 @@ export function FindEtudAffectationById(
 /////////////////////////////////////////////
 export function GetInitialAffectation(state: IInfoState): IAffectationDoc {
   const pz = GetAffectation();
-  const p = state.appstate;
-  pz.anneeid = p.anneeid;
-  pz.semestreid = p.semestreid;
-  pz.startdate = p.anneeStartDate;
-  pz.enddate = p.anneeEndDate;
+  pz.anneeid = state.annees.current.id;
+  pz.semestreid = state.semestres.current.id;
+  pz.startdate = state.annees.current.startdate;
+  pz.enddate = state.annees.current.enddate;
   pz.ownerid = state.appstate.ownerid;
   return pz;
 } // GetInitialAffectation
@@ -144,14 +143,14 @@ export function GetInitialEtudAffectation(
   state: IInfoState
 ): IEtudAffectationDoc {
   const pz = GetEtudAffectation();
-  const p = state.appstate;
-  pz.affectationid = p.affectationid;
+  const p = state.affectations.current;
+  pz.affectationid = p.id;
   pz.anneeid = p.anneeid;
   pz.semestreid = p.semestreid;
   pz.groupeid = p.groupeid;
-  pz.startdate = p.semestreStartDate;
-  pz.enddate = p.semestreEndDate;
-  pz.ownerid = state.appstate.ownerid;
+  pz.startdate = p.startdate;
+  pz.enddate = p.enddate;
+  pz.ownerid = p.ownerid;
   return pz;
 } // GetInitialAffectation
 export function GetInitialAnnee(state: IInfoState): IAnneeDoc {
@@ -164,7 +163,7 @@ export function GetInitialAnnee(state: IInfoState): IAnneeDoc {
 //
 export function GetInitialMatiere(state: IInfoState): IMatiereDoc {
   const pz = GetMatiere();
-  pz.uniteid = state.appstate.uniteid;
+  pz.uniteid = state.unites.current.id;
   pz.ownerid = state.appstate.ownerid;
   pz.coefficient=1.0;
   return pz;
@@ -192,13 +191,13 @@ export function GetInitialSemestre(state: IInfoState): ISemestreDoc {
 //
 export function GetInitialControle(state: IInfoState): IControleDoc {
   const pz = GetControle();
-  const p = state.appstate;
-  pz.affectationid = p.affectationid;
+  const p = state.affectations.current;
+  pz.affectationid = p.id;
   pz.anneeid = p.anneeid;
-  pz.matiereid = p.matiereid;
+  pz.matiereid = state.matieres.current.id;
   pz.semestreid = p.semestreid;
   pz.groupeid = p.groupeid;
-  pz.uniteid = p.uniteid;
+  pz.uniteid = state.matieres.current.uniteid;
   pz.coefficient = 1.0;
   pz.date = new Date().toISOString().slice(0, 10);
   pz.displaydate = DateToDisplay(pz.date);

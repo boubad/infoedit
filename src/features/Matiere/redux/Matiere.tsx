@@ -39,10 +39,14 @@ const getItems = (state: IInfoState): IMatiereDoc[] => {
   return state.matieres.pageData;
 };
 const getItemOptions = (state: IInfoState): IOption[] => {
-  return state.appstate.unitesOptions;
+  const pRet:IOption[] = [{id:'',text:''}];
+  state.unites.pageData.forEach((x) =>{
+    pRet.push({id:x.id,text:x.sigle});
+  });
+  return pRet;
 };
 const getUniteid = (state: IInfoState): string => {
-  return state.appstate.uniteid;
+  return state.unites.current.id;
 };
 const selector = createSelector(
   [

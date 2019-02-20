@@ -50,10 +50,8 @@ export class MatiereManager extends SemestreManager {
     };
     const pp: any[] = await this.pStore.findDocsBySelector(
       {
-        type: { $eq: TYPE_MATIERE },
-        // tslint:disable-next-line:object-literal-sort-keys
         sigle: { $eq: sigle },
-        uniteid: { $eq: uniteid }
+        type: { $eq: TYPE_MATIERE }
       },
       0,
       1,

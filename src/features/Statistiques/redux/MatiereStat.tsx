@@ -13,7 +13,7 @@ const getBusy = (state: IInfoState): boolean => {
   return state.appstate.busy || state.stats.busy;
 };
 const getMatiereSigle = (state:IInfoState) : string => {
-  return state.appstate.matiereSigle;
+  return state.matieres.current.sigle;
 }
 const selector = createSelector(
   [getBusy, getDescs,getMatiereSigle],

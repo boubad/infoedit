@@ -3,36 +3,52 @@ import { createSelector } from "reselect";
 import { IOption } from '../../../data/domain/DomainData';
 import { IInfoState } from '../../../data/state/InfoState';
 import { InfoDispatch } from '../../../data/state/IPayload';
-import { changeAnnee, changeGroupe, changeSemestre, changeUnite, refreshGlobal } from '../../../features/AppState/redux/AppStateActions';
+import { changeAnnee, changeGroupe, changeSemestre, refreshGlobal } from '../../../features/AppState/redux/AppStateActions';
 import { Home, IHomeProps } from '../presentation/Home';
 //
 const getBusy = (state: IInfoState) : boolean => {
   return state.appstate.busy || state.annees.busy || state.semestres.busy || state.groupes.busy || state.unites.busy || state.matieres.busy || state.outils.busy || state.affectations.busy || state.etudaffectations.busy || state.details.busy || state.appstatus.busy;
 };
 const getGroupeid = (state: IInfoState): string => {
-  return state.appstate.groupeid;
+  return state.groupes.current.id;
 };
 const getSemestreid = (state: IInfoState): string => {
-  return state.appstate.semestreid;
+  return state.semestres.current.id;
 };
 const getAnneeid = (state: IInfoState): string => {
-  return state.appstate.anneeid;
+  return state.annees.current.id;
 };
-const getUniteid = (state: IInfoState): string => {
-  return state.appstate.uniteid;
-};
+
 const getAnnees = (state: IInfoState): IOption[] => {
-  return state.appstate.anneesOptions;
+  const pRet:IOption[] = [{id:'',text:''}];
+  state.annees.pageData.forEach((x) =>{
+    let stag = x.tag;
+    if (stag.trim().length < 1){
+      stag = x.sigle;
+    }
+      pRet.push({id:x.id,text:stag});
+  });
+  return pRet;
 };
 const getGroupes = (state: IInfoState): IOption[] => {
-  return state.appstate.groupesOptions;
+  const pRet:IOption[] = [{id:'',text:''}];
+  state.groupes.pageData.forEach((x) =>{
+    pRet.push({id:x.id,text:x.sigle});
+  });
+  return pRet;
 };
 const getSemestres = (state: IInfoState): IOption[] => {
-  return state.appstate.semestresOptions;
+  const pRet:IOption[] = [{id:'',text:''}];
+  state.semestres.pageData.forEach((x) =>{
+    let stag = x.tag;
+    if (stag.trim().length < 1){
+      stag = x.sigle;
+    }
+      pRet.push({id:x.id,text:stag});
+  });
+  return pRet;
 };
-const getUnites = (state: IInfoState): IOption[] => {
-  return state.appstate.unitesOptions;
-};
+
 //
 const selector = createSelector(
   [
@@ -42,9 +58,7 @@ const selector = createSelector(
     getAnneeid,
     getAnnees,
     getGroupes,
-    getSemestres,
-    getUniteid,
-    getUnites
+    getSemestres
   ],
   (
     busy:boolean,
@@ -53,9 +67,7 @@ const selector = createSelector(
     anneeid: string,
     annees: IOption[],
     groupes: IOption[],
-    semestres: IOption[],
-    uniteid:string,
-    unites:IOption[]
+    semestres: IOption[]
   ) => {
     return {
       anneeid,
@@ -64,9 +76,7 @@ const selector = createSelector(
       groupeid,
       groupes,
       semestreid,
-      semestres,
-      uniteid,
-      unites
+      semestres
     };
   }
 );
@@ -86,9 +96,7 @@ function mapDispatchToProps(dispatch: InfoDispatch) {
         dispatch(changeSemestre(val));
       }  else if (s === "anneeid") {
         dispatch(changeAnnee(val));
-      } else if (s === "uniteid") {
-        dispatch(changeUnite(val));
-      } 
+      }
     }
   };
 } // mapDispatchToProps

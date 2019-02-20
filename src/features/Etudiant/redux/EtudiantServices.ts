@@ -137,9 +137,9 @@ export class EtudiantServices {
   ): Promise<IPayload> {
     const pMan = BaseServices.getPersistManager(state);
     await pMan.removeEtudiantAsync(state.etudiants.current.id);
-    const anneeid = state.appstate.anneeid;
-    const semestreid = state.appstate.semestreid;
-    const groupeid = state.appstate.groupeid;
+    const anneeid = state.annees.current.id;
+    const semestreid = state.semestres.current.id;
+    const groupeid = state.groupes.current.id;
     const nx = await pMan.getEtudAffectationsCountAsync(anneeid,semestreid,groupeid);
     const affs = await pMan.getEtudAffectationsAsync(anneeid,semestreid,groupeid,0,nx);
     const opts = await pMan.getAnneeSemestreGroupeEtudiantsOptionsAsync(anneeid,semestreid,groupeid);
@@ -155,9 +155,9 @@ export class EtudiantServices {
   public static async saveEtudiantAsync(state: IInfoState): Promise<IPayload> {
     const pMan = BaseServices.getPersistManager(state);
     await pMan.saveEtudiantAsync(state.etudiants.current);
-    const anneeid = state.appstate.anneeid;
-    const semestreid = state.appstate.semestreid;
-    const groupeid = state.appstate.groupeid;
+    const anneeid = state.annees.current.id;
+    const semestreid = state.semestres.current.id;
+    const groupeid = state.groupes.current.id;
     const nx = await pMan.getEtudAffectationsCountAsync(anneeid,semestreid,groupeid);
     const affs = await pMan.getEtudAffectationsAsync(anneeid,semestreid,groupeid,0,nx);
     const opts = await pMan.getAnneeSemestreGroupeEtudiantsOptionsAsync(anneeid,semestreid,groupeid);
@@ -207,9 +207,9 @@ export class EtudiantServices {
       }
     }
     const etudiants = await pMan.getEtudiantsAsync(status, offset, count);
-    const anneeid = state.appstate.anneeid;
-    const semestreid = state.appstate.semestreid;
-    const groupeid = state.appstate.groupeid;
+    const anneeid = state.annees.current.id;
+    const semestreid = state.semestres.current.id;
+    const groupeid = state.groupes.current.id;
     const nx = await pMan.getEtudAffectationsCountAsync(anneeid,semestreid,groupeid);
     const affs = await pMan.getEtudAffectationsAsync(anneeid,semestreid,groupeid,0,nx);
     const opts = await pMan.getAnneeSemestreGroupeEtudiantsOptionsAsync(anneeid,semestreid,groupeid);

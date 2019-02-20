@@ -45,9 +45,9 @@ export class AnneeServices {
   public static async refreshAnneesAsync(state: IInfoState): Promise<IPayload> {
     const pMan = BaseServices.getPersistManager(state);
     const nTotal = await pMan.getAnneesCountAsync();
-    const anneeid = state.appstate.anneeid;
-    const semestreid = state.appstate.semestreid;
-    const groupeid = state.appstate.groupeid;
+    const anneeid = state.annees.current.id;
+    const semestreid = state.semestres.current.id;
+    const groupeid = state.groupes.current.id;
     const nx = await pMan.getEtudAffectationsCountAsync(anneeid,semestreid,groupeid);
     const affs = await pMan.getEtudAffectationsAsync(anneeid,semestreid,groupeid,0,nx);
     const xopts = await pMan.getAnneeSemestreGroupeEtudiantsOptionsAsync(anneeid,semestreid,groupeid);
@@ -78,9 +78,9 @@ export class AnneeServices {
         offset = 0;
       }
     }
-    const anneeid = state.appstate.anneeid;
-    const semestreid = state.appstate.semestreid;
-    const groupeid = state.appstate.groupeid;
+    const anneeid = state.annees.current.id;
+    const semestreid = state.semestres.current.id;
+    const groupeid = state.groupes.current.id;
     const nx = await pMan.getEtudAffectationsCountAsync(anneeid,semestreid,groupeid);
     const affs = await pMan.getEtudAffectationsAsync(anneeid,semestreid,groupeid,0,nx);
     const xopts = await pMan.getAnneeSemestreGroupeEtudiantsOptionsAsync(anneeid,semestreid,groupeid);

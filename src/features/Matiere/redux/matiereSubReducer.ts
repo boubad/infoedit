@@ -8,7 +8,6 @@ import { InfoAction, IPayload } from "../../../data/state/IPayload";
 import { GetInitialMatiereState } from "../../../data/state/stores/initialState";
 import {
   CHANGE_MATIERE_SUCCESS,
-  CHANGE_UNITE_SUCCESS,
   REFRESH_ALL_SUCCESS
 } from "../../../features/AppState/redux/AppStateActions";
 import {
@@ -92,7 +91,6 @@ export function matiereSubReducer(
     case MATIERE_SAVE_ATTACHMENT_SUCCESS:
     case GOTO_PAGE_MATIERE_SUCCESS:
     case CHANGE_MATIERE_SUCCESS:
-    case CHANGE_UNITE_SUCCESS:
     case REMOVE_MATIERE_ITEM_SUCCESS:
     case SAVE_MATIERE_ITEM_SUCCESS:
       return refreshMatiere(state, p);

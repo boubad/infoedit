@@ -52,8 +52,8 @@ export class AffectationServices {
     page: number
   ): Promise<IPayload> {
     const pMan = BaseServices.getPersistManager(state);
-    const semestreid = state.appstate.semestreid;
-    const anneeid = state.appstate.anneeid;
+    const semestreid = state.semestres.current.id;
+    const anneeid = state.annees.current.id;
     if (page < 1) {
       page = 1;
     }
@@ -115,8 +115,8 @@ export class AffectationServices {
   } // removeEtudiantAttachment
   //
   private static checkAffectation(state: IInfoState, pz: IAffectationDoc) {
-    const startDate = state.appstate.anneeStartDate;
-    const endDate = state.appstate.anneeEndDate;
+    const startDate = state.annees.current.startdate;
+    const endDate = state.annees.current.enddate;
     if (pz.startdate.length < 1) {
       pz.startdate = startDate;
     }

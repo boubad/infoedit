@@ -178,10 +178,10 @@ export class ControleServices {
   ): Promise<IPayload> {
     const pMan = BaseServices.getPersistManager(state);
     const nTotal = await pMan.getControlesCountAsync(
-      state.appstate.anneeid,
-      state.appstate.semestreid,
-      state.appstate.groupeid,
-      state.appstate.matiereid
+      state.annees.current.id,
+      state.semestres.current.id,
+      state.groupes.current.id,
+      state.matieres.current.id
     );
     if (page < 1) {
       page = 1;
@@ -195,10 +195,10 @@ export class ControleServices {
       }
     }
     const controles = await pMan.getControlesAsync(
-      state.appstate.anneeid,
-      state.appstate.semestreid,
-      state.appstate.groupeid,
-      state.appstate.matiereid,
+      state.annees.current.id,
+      state.semestres.current.id,
+      state.groupes.current.id,
+      state.matieres.current.id,
       offset,
       count
     );

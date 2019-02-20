@@ -13,30 +13,10 @@ const getStatus = (state: IInfoState) : string =>{
     return state.etudiants.etudiantStatus;
 }
 const getAnneename = (state:IInfoState) : string =>{
-    let sRet = "";
-    const id = state.appstate.anneeid;
-    if (id.length > 0){
-        const p = state.appstate.anneesOptions.find((x) =>{
-            return (x.id === id);
-        })
-        if (p !== undefined){
-            sRet = p.text;
-        }
-    }// id
-    return sRet;
+    return state.annees.current.name;
 }
 const getSemestrename = (state:IInfoState) : string =>{
-    let sRet = "";
-    const id = state.appstate.semestreid;
-    if (id.length > 0){
-        const p = state.appstate.semestresOptions.find((x) =>{
-            return (x.id === id);
-        })
-        if (p !== undefined){
-            sRet = p.text;
-        }
-    }// id
-    return sRet;
+    return state.semestres.current.name;
 }
 const getBusy = (state: IInfoState) : boolean =>{
     return state.outils.busy;

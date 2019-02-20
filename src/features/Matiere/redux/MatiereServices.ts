@@ -66,7 +66,7 @@ export class MatiereServices {
     page: number
   ): Promise<IPayload> {
     const pMan = BaseServices.getPersistManager(state);
-    const nTotal = await pMan.getMatieresCountAsync(state.appstate.uniteid);
+    const nTotal = await pMan.getMatieresCountAsync(state.unites.current.id);
     if (page < 1) {
       page = 1;
     }
@@ -79,7 +79,7 @@ export class MatiereServices {
       }
     }
     const matieres = await pMan.getMatieresAsync(
-      state.appstate.uniteid,
+      state.unites.current.id,
       offset,
       count
     );

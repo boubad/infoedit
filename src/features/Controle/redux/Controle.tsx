@@ -42,10 +42,10 @@ const getCurrent = (state: IInfoState): IControleDoc => {
   return state.controles.current;
 };
 const getStartDate = (state: IInfoState): string => {
-  return state.appstate.semestreStartDate;
+  return state.affectations.current.startdate;
 };
 const getEndDate = (state: IInfoState): string => {
-  return state.appstate.semestreEndDate;
+  return state.affectations.current.enddate;
 };
 const getEtudAffectations = (state: IInfoState): IOption[] => {
   return state.controles.etudiantsOptions;

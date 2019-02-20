@@ -3,35 +3,6 @@ import { createAction } from "redux-actions";
 import { IInfoState } from '../../../data/state/InfoState';
 import { AppStateServices } from './AppStateServices';
 /////////////////////////////////////
-//
-export const CHANGE_UNITE_BEGIN = "CHANGE_UNITE_BEGIN";
-const changeUniteBeginAction = createAction(CHANGE_UNITE_BEGIN);
-export const CHANGE_UNITE_SUCCESS = "CHANGE_UNITE_SUCCESS";
-const changeUniteSuccessAction = createAction(CHANGE_UNITE_SUCCESS);
-export const CHANGE_UNITE_FAIL = "CHANGE_UNITE_FAIL";
-const changeUniteFailAction = createAction(CHANGE_UNITE_FAIL);
-//
-export function changeUnite(annee: string): any {
-  return (dispatch: Dispatch, getState: () => IInfoState) => {
-    dispatch(changeUniteBeginAction());
-    const promise = new Promise((resolve, reject) => {
-      const doRequest = AppStateServices.changeUniteAsync(getState(), annee);
-      doRequest.then(
-        res => {
-            dispatch(changeUniteSuccessAction(res));
-            resolve(res);
-        },
-        err => {
-          dispatch(changeUniteFailAction(err));
-          reject(err);
-        }
-      );
-    });
-    return promise;
-  };
-} // saveUnite
-/////////////////////////////////////
-//
 export const CHANGE_SEMESTRE_BEGIN = "CHANGE_SEMESTRE_BEGIN";
 const changeSemestreBeginAction = createAction(CHANGE_SEMESTRE_BEGIN);
 export const CHANGE_SEMESTRE_SUCCESS = "CHANGE_SEMESTRE_SUCCESS";
@@ -154,7 +125,7 @@ export function refreshAll() : any {
   return (dispatch: Dispatch, getState:()=>IInfoState) => {
     dispatch(refreshAllBeginAction());
     const promise = new Promise((resolve, reject) => {
-        const doRequest = AppStateServices.refreshAllAsync(getState());
+        const doRequest = AppStateServices.RefreshGlobalOptionsAsync(getState());
         doRequest.then(
           (res) => {
             dispatch(refreshAllSuccessAction(res));
