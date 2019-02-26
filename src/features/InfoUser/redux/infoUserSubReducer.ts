@@ -1,11 +1,29 @@
 import { FluxStandardAction } from "flux-standard-action";
 import produce from "immer";
-import { GetInitialUserState } from 'src/data/state/stores/initialState';
-import { GetInfoUser } from '../../../data/domain/DataProcs';
-import { IInfoUserDoc } from '../../../data/domain/DomainData';
-import { IBaseState } from '../../../data/state/InfoState';
-import { IPayload } from '../../../data/state/IPayload';
-import { CANCEL_INFOUSER_ITEM, CHANGE_INFOUSER_FIELD, CREATE_INFOUSER_ITEM, GOTO_PAGE_INFOUSER_BEGIN, GOTO_PAGE_INFOUSER_SUCCESS, INFOUSER_REMOVE_ATTACHMENT_BEGIN, INFOUSER_REMOVE_ATTACHMENT_SUCCESS, INFOUSER_SAVE_ATTACHMENT_BEGIN, INFOUSER_SAVE_ATTACHMENT_SUCCESS, REMOVE_INFOUSER_ITEM_BEGIN, REMOVE_INFOUSER_ITEM_SUCCESS, SAVE_INFOUSER_ITEM_BEGIN, SAVE_INFOUSER_ITEM_SUCCESS, SELECT_INFOUSER_BEGIN, SELECT_INFOUSER_SUCCESS, SET_USERAVATAR_BEGIN, SET_USERAVATAR_SUCCESS } from './InfoUserActions';
+import { GetInitialUserState } from "src/data/state/stores/initialState";
+import { GetInfoUser } from "../../../data/domain/DataProcs";
+import { IInfoUserDoc } from "../../../data/domain/DomainData";
+import { IBaseState } from "../../../data/state/InfoState";
+import { IPayload } from "../../../data/state/IPayload";
+import {
+  CANCEL_INFOUSER_ITEM,
+  CHANGE_INFOUSER_FIELD,
+  CREATE_INFOUSER_ITEM,
+  GOTO_PAGE_INFOUSER_BEGIN,
+  GOTO_PAGE_INFOUSER_SUCCESS,
+  INFOUSER_REMOVE_ATTACHMENT_BEGIN,
+  INFOUSER_REMOVE_ATTACHMENT_SUCCESS,
+  INFOUSER_SAVE_ATTACHMENT_BEGIN,
+  INFOUSER_SAVE_ATTACHMENT_SUCCESS,
+  REMOVE_INFOUSER_ITEM_BEGIN,
+  REMOVE_INFOUSER_ITEM_SUCCESS,
+  SAVE_INFOUSER_ITEM_BEGIN,
+  SAVE_INFOUSER_ITEM_SUCCESS,
+  SELECT_INFOUSER_BEGIN,
+  SELECT_INFOUSER_SUCCESS,
+  SET_USERAVATAR_BEGIN,
+  SET_USERAVATAR_SUCCESS
+} from "./InfoUserActions";
 //////////////////////////////////////////
 function refreshInfoUser(
   state: IBaseState<IInfoUserDoc>,
@@ -50,10 +68,10 @@ function refreshInfoUser(
 } // refreshInfoUser
 /////////////////////////////////////////////
 export function infoUserSubReducer(
-  state:IBaseState<IInfoUserDoc>,
+  state: IBaseState<IInfoUserDoc>,
   action: FluxStandardAction<IPayload>
 ): IBaseState<IInfoUserDoc> {
-  if (!state){
+  if (!state) {
     return GetInitialUserState();
   }
   const p = action.payload ? action.payload : {};
@@ -70,11 +88,9 @@ export function infoUserSubReducer(
       });
     case CREATE_INFOUSER_ITEM:
       return produce(state, pRet => {
-        if (p.user){
-          pRet.previousId = pRet.current.id;
-          pRet.current = p.user;
-          pRet.addMode = true;
-        }
+        pRet.previousId = pRet.current.id;
+        pRet.current = GetInfoUser();
+        pRet.addMode = true;
         pRet.busy = false;
       });
     case SET_USERAVATAR_SUCCESS:
@@ -150,8 +166,8 @@ export function infoUserSubReducer(
         pRet.busy = false;
       });
     default:
-    return produce(state, pRet => {
-      pRet.busy = false;
-    });
+      return produce(state, pRet => {
+        pRet.busy = false;
+      });
   } // type
 } // etudiantSubReducer
