@@ -1,4 +1,4 @@
-import { IAffectationDoc, IAnneeDoc, IControleDoc, IDataVarDoc, IEtudAffectationDoc, IEtudiantDesc, IEtudiantDoc, IEvtDoc, IGroupeDoc, IMatiereDoc, INoteDoc, IOption, ISemestreDoc, IUniteDoc } from '../domain/DomainData';
+import { IAffectationDoc, IAnneeDoc, IControleDoc, IDataVarDoc, IEtudAffectationDoc, IEtudiantDesc, IEtudiantDoc, IEvtDoc, IGroupeDoc, IInfoUserDoc, IMatiereDoc, INoteDoc, IOption, ISemestreDoc, IUniteDoc } from '../domain/DomainData';
 
 //
 export interface IAppData {
@@ -12,7 +12,7 @@ export interface IAppStatus {
 } // interface IAppStatus
 export interface IAppState {
   readonly busy:boolean;
-  readonly ownerid:string;
+  readonly owner:IInfoUserDoc;
 } // interface IAppState
 export interface IBaseState<T> {
   readonly busy: boolean;
@@ -72,5 +72,6 @@ export interface IInfoState {
   readonly details: IDetailState;
   readonly stats: IStatState;
   readonly datavars: IBaseState<IDataVarDoc>;
+  readonly users:IBaseState<IInfoUserDoc>;
 } // interface IInfoState
 //

@@ -5,6 +5,7 @@ import { Nav, NavItem, NavLink, TabContent, Table, TabPane } from "reactstrap";
 import { BaseComponent } from "../../../components/BaseComponent";
 import AppState from "../../../features/AppState/redux/AppState";
 import Controle from "../../../features/Controle/redux/Controle";
+import LoginForm from '../../../features/Login/redux/LoginForm';
 import MatiereStat from "../../../features/Statistiques/redux/MatiereStat";
 import StatusComponent from "../../AppStatus/redux/StatusComponent";
 ////////////////////////
@@ -13,6 +14,7 @@ export interface IConsultProps {
   hasAffectation: boolean;
   canStatMatiere: boolean;
   hasMatiere:boolean;
+  connected:boolean;
 } // interface IMainAppProps
 interface IConsultState {
   activeTab: string;
@@ -28,6 +30,11 @@ export class Consult extends BaseComponent<IConsultProps, IConsultState> {
   } // constructor
   public render(): React.ReactNode {
     const p = this.props;
+    if (!p.connected){
+      return (
+        <LoginForm />
+      );
+    }
     return (
       <Table>
         <tbody className={this.getInfoStyle()}>

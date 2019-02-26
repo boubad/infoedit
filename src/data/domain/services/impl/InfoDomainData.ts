@@ -11,3 +11,4 @@ export const TYPE_EVT = "evt";
 export const TYPE_NOTE = "note";
 export const TYPE_DATAVAR = "datavar";
 export const TYPE_STAT = "stat"; 
+export const TYPE_INFOUSER = "infouser";

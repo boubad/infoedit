@@ -1,6 +1,7 @@
 import {connectRouter} from 'connected-react-router';
 import {History} from 'history';
 import { combineReducers } from 'redux';
+import { infoUserSubReducer } from 'src/features/InfoUser/redux/infoUserSubReducer';
 import { affectationSubReducer } from '../../../features/Affectation/redux/affectationSubReducer';
 import { anneeSubReducer } from '../../../features/Annee/redux/anneeSubReducer';
 import { appDataSubReducer } from '../../../features/AppData/redux/appDataSubReducer';
@@ -37,6 +38,7 @@ export const createRootReducer = (history:History<any>) => {
     semestres :semestreSubReducer,
     unites : uniteSubReducer,
     details: detailsSubReducer,
-    stats: statsSubReducer
+    stats: statsSubReducer,
+    users: infoUserSubReducer
   });
 };

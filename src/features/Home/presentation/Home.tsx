@@ -3,6 +3,7 @@ import { Form, Table } from "reactstrap";
 import { BaseComponent } from '../../../components/BaseComponent';
 import { ItemChoiceComponent } from '../../../components/InputChoiceComponent';
 import { IOption } from '../../../data/domain/DomainData';
+import LoginForm from '../../../features/Login/redux/LoginForm';
 //
 export interface IHomeProps {
     anneeid: string;
@@ -12,6 +13,7 @@ export interface IHomeProps {
     groupeid: string;
     groupes: IOption[];
     busy:boolean;
+    connected:boolean;
     //
     ValueChanged?: (val: any, propname?: string) => void;
     RefreshAll?: () => void;
@@ -28,6 +30,12 @@ export class Home extends BaseComponent<IHomeProps>{
       }// componentWillMount
       public render(): React.ReactNode {
         const p = this.props;
+        if (!p.connected){
+          return (
+            <LoginForm  
+            />
+          );
+        }// not connected
         return (
           <Table bordered={true}>
             <tbody className={this.getInfoStyle()}>

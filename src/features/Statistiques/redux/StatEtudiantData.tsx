@@ -24,14 +24,18 @@ const getBusy = (state: IInfoState): boolean => {
     state.appstatus.busy
   );
 };
+const getConnected = (state: IInfoState): boolean => {
+  return state.appstate.owner.id.length > 0;
+};
 const getStringData = (state: IInfoState): string[] => {
   return state.outils.stringData;
 };
 const selector = createSelector(
-  [getBusy, getStringData],
-  (busy: boolean, stringData: string[]) => {
+  [getBusy, getStringData,getConnected],
+  (busy: boolean, stringData: string[],connected:boolean) => {
     return {
       busy,
+      connected,
       stringData
     };
   }

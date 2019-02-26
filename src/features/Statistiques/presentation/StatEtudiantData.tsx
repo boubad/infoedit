@@ -1,10 +1,12 @@
 import * as React from "react";
 import { Button } from "reactstrap";
 import { BaseComponent } from "../../../components/BaseComponent";
+import LoginForm from '../../../features/Login/redux/LoginForm';
 //
 export interface IStatEtudiantDataProps {
   busy: boolean;
   stringData: string[];
+  connected:boolean;
   //
   doCheck?: () => any;
 } // IMatiereStatProps
@@ -23,6 +25,9 @@ export class StatEtudiantData extends BaseComponent<IStatEtudiantDataProps> {
   } // componentWillMount
 
   public render(): React.ReactNode {
+    if (!this.props.connected){
+      return (<LoginForm />);
+    }
     return (
       <div className={this.getInfoStyle()}>
         <div hidden={this.props.busy}>

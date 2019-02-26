@@ -1,8 +1,8 @@
 import { IAppData, IAppState, IAppStatus, IBaseState, IControleState, IDetailState, IEtudiantState, IInfoState, IOutilsState, IStatState } from '../InfoState';
 
-import { IAffectationDoc, IAnneeDoc, IDataVarDoc, IEtudAffectationDoc, IGroupeDoc, IMatiereDoc, ISemestreDoc, IUniteDoc } from '../../../data/domain/DomainData';
+import { IAffectationDoc, IAnneeDoc, IDataVarDoc, IEtudAffectationDoc, IGroupeDoc, IInfoUserDoc, IMatiereDoc, ISemestreDoc, IUniteDoc } from '../../../data/domain/DomainData';
 
-import { GetAffectation, GetAnnee, GetControle, GetDataVarDoc, GetEtudAffectation, GetEtudiant, GetEvt, GetGroupe, GetMatiere, GetNote, GetSemestre, GetUnite } from '../../../data/domain/DataProcs';
+import { GetAffectation, GetAnnee, GetControle, GetDataVarDoc, GetEtudAffectation, GetEtudiant, GetEvt, GetGroupe, GetInfoUser, GetMatiere, GetNote, GetSemestre, GetUnite } from '../../../data/domain/DataProcs';
 
 ///////////////////////////////////
 export function GetInitialAppData(): IAppData {
@@ -21,7 +21,7 @@ export function GetInitialAppStatus(): IAppStatus {
 export function GetInitialAppState(): IAppState {
   return {
     busy: false,
-    ownerid: "",
+    owner: GetInfoUser(),
   };
 } // getInitialAppState
 export function GetInitialAnneeState(): IBaseState<IAnneeDoc> {
@@ -209,6 +209,22 @@ export function GetInitialStatState(): IStatState {
   });
 }
 //
+export function GetInitialUserState(): IBaseState<IInfoUserDoc> {
+  return {
+    addMode: false,
+    busy: false,
+    displayPages: 5,
+    // tslint:disable-next-line:object-literal-sort-keys
+    current: GetInfoUser(),
+    currentPage: 0,
+    itemsCount: 0,
+    pagesCount: 0,
+    pageData: [],
+    pageSize: 20,
+    previousId: ""
+  };
+} // GetInitialSemestreState
+//
 export  const initialState: IInfoState = {
   appdata: GetInitialAppData(),
   appstatus: GetInitialAppStatus(),
@@ -227,6 +243,7 @@ export  const initialState: IInfoState = {
   outils: GetInitialOutilsState(),
   details: GetInitialDetailState(),
   stats: GetInitialStatState(),
-  datavars: GetInitialVarDocState()
+  datavars: GetInitialVarDocState(),
+  users:GetInitialUserState()
 }; // initialDataModel
 //

@@ -26,6 +26,18 @@ export interface IBaseDoc {
   loaded: boolean;
   attachments: IAttachedDoc[];
 } // interface IBaseDoc
+export interface IInfoUserDoc extends IBaseDoc {
+  lastname: string;
+  firstname: string;
+  email: string;
+  avatar: string;
+  status: string;
+  sexe:string;
+  url: string;
+  fullname: string;
+  password:string;
+  username:string;
+}// interface IInfoUserDoc
 export interface ISigleNamedDoc extends IBaseDoc {
   sigle: string;
   name: string;

@@ -20,11 +20,13 @@ import {
   IExportEtudiantDesc,
   IMatiereDesc
 } from "../../../data/domain/DomainData";
+import LoginForm from '../../../features/Login/redux/LoginForm';
 //
 export interface IMatiereStatProps {
   matieresigle: string;
   descs: IEtudiantDesc[];
   busy: boolean;
+  connected:boolean;
   //
   showDetail?: (id: string) => void;
 } // IMatiereStatProps
@@ -47,6 +49,9 @@ export class MatiereStat extends BaseComponent<
   } // constructor
   //
   public render(): React.ReactNode {
+    if (!this.props.connected){
+      return (<LoginForm />);
+    }
     return (
       <div className={this.getInfoStyle()}>
         <Nav tabs={true}>

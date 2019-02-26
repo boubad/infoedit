@@ -9,6 +9,7 @@ import {
   IEtudiantDoc,
   IEvtDoc,
   IGroupeDoc,
+  IInfoUserDoc,
   IMatiereDesc,
   IMatiereDoc,
   INoteDoc,
@@ -178,6 +179,32 @@ export function GetMatiere(): IMatiereDoc {
     }
   );
 } // GetMatiere
+//
+export function GetInfoUser(): IInfoUserDoc {
+  return Object.assign(
+    {},
+    {
+      id: "",
+      rev: "",
+      // tslint:disable-next-line:object-literal-sort-keys
+      observations: "",
+      modified: false,
+      lastname: "",
+      firstname: "",
+      email: "",
+      avatar: "",
+      url: "",
+      fullname: "",
+      attachments: [],
+      loaded: false,
+      status: "",
+      sexe:"",
+      ownerid:"",
+      password:'',
+      username:'',
+    }
+  );
+}// GetInfoUser
 //
 export function GetEtudiant(): IEtudiantDoc {
   return Object.assign(

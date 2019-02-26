@@ -1,6 +1,6 @@
 import { FluxStandardAction } from "flux-standard-action";
 import { Dispatch } from "redux";
-import { IAffectationDoc, IAnneeDoc, IControleDoc, IDataVarDoc, IEtudAffectationDoc, IEtudiantDesc, IEtudiantDoc, IEvtDoc, IGroupeDoc, IMatiereDoc, INoteDoc, IOption, ISemestreDoc, IUniteDoc } from '../domain/DomainData';
+import { IAffectationDoc, IAnneeDoc, IControleDoc, IDataVarDoc, IEtudAffectationDoc, IEtudiantDesc, IEtudiantDoc, IEvtDoc, IGroupeDoc, IInfoUserDoc, IMatiereDoc, INoteDoc, IOption, ISemestreDoc, IUniteDoc } from '../domain/DomainData';
 
 export interface IPayload {
   semestreid?: string;
@@ -84,6 +84,12 @@ export interface IPayload {
   datavarid?:string;
   //
   stringData?:string[];
+  //
+  usersCount?:number;
+  user?:IInfoUserDoc;
+  users?:IInfoUserDoc[];
+  userid?:string;
+  //
 } // interface IPayload
 ////////////////////////////////
 export type InfoAction = FluxStandardAction<IPayload>;

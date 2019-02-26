@@ -8,6 +8,7 @@ import {
   GetEtudiant,
   GetEvt,
   GetGroupe,
+  GetInfoUser,
   GetMatiere,
   GetNote,
   GetSemestre,
@@ -25,6 +26,7 @@ import {
   IEtudiantDoc,
   IEvtDoc,
   IGroupeDoc,
+  IInfoUserDoc,
   IMatiereDoc,
   INoteDoc,
   IOption,
@@ -44,6 +46,7 @@ import {
   IItemEtudiant,
   IItemEvt,
   IItemGroupe,
+  IItemInfoUser,
   IItemMatiere,
   IItemNote,
   IItemSemestre,
@@ -757,6 +760,27 @@ export class BaseDataManager {
     }
     return pRet;
   } // convertEtudiantDocAsync
+  protected convertInfoUserDoc(
+    p: IItemInfoUser
+  ): IInfoUserDoc {
+    
+    const pRet = GetInfoUser();
+    pRet.id = p._id ? p._id : "";
+    pRet.rev = p._rev ? p._rev : "";
+    pRet.observations = p.observations ? p.observations : "";
+    pRet.lastname = p.lastname ? p.lastname : "";
+    pRet.firstname = p.firstname ? p.firstname : "";
+    pRet.email = p.email ? p.email : "";
+    pRet.fullname = (pRet.lastname + " " + pRet.firstname).trim();
+    pRet.avatar = p.avatar ? p.avatar : "";
+    pRet.status = p.status ? p.status : "";
+    pRet.sexe = (p.sexe) ? p.sexe: '';
+    pRet.password = (p.password) ? p.password : '';
+    pRet.username = (p.username) ? p.username : '';
+    pRet.url = this.pStore.formBlobUrl(pRet.id, pRet.avatar);
+    pRet.attachments = this.getDocAttachments(p);
+    return pRet;
+  } // convertInfoUserDoc(
   protected convertSemestreDoc(p: IItemSemestre): ISemestreDoc {
     
     const pRet = GetSemestre();

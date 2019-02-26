@@ -15,15 +15,20 @@ const getBusy = (state: IInfoState): boolean => {
 const getMatiereSigle = (state:IInfoState) : string => {
   return state.matieres.current.sigle;
 }
+const getConnected = (state: IInfoState): boolean => {
+  return state.appstate.owner.id.length > 0;
+};
 const selector = createSelector(
-  [getBusy, getDescs,getMatiereSigle],
+  [getBusy, getDescs,getMatiereSigle,getConnected],
   (
     busy: boolean,
     descs: IEtudiantDesc[],
-    matieresigle:string
+    matieresigle:string,
+    connected:boolean
   ) => {
     return {
       busy,
+      connected,
       descs,
       matieresigle
     };

@@ -1,7 +1,9 @@
 import produce from "immer";
+import { GetInfoUser } from 'src/data/domain/DataProcs';
 import { IAppState } from "../../../data/state/InfoState";
 import { InfoAction } from "../../../data/state/IPayload";
 import { GetInitialAppState } from "../../../data/state/stores/initialState";
+import { LOGIN_INFOUSER_BEGIN, LOGIN_INFOUSER_SUCCESS, LOGOUT_INFOUSER } from './../../InfoUser/redux/InfoUserActions';
 import {
   CHANGE_ANNEE_BEGIN,
   CHANGE_ANNEE_SUCCESS,
@@ -23,6 +25,7 @@ export function appStateSubReducer(
     return GetInitialAppState();
   }
   switch (action.type) {
+    case LOGIN_INFOUSER_BEGIN:
     case REFRESH_GLOBAL_BEGIN:
     case CHANGE_ANNEE_BEGIN:
     case CHANGE_SEMESTRE_BEGIN:
@@ -39,6 +42,21 @@ export function appStateSubReducer(
       return produce(state, pRet => {
         pRet.busy = false;
       });
+    case LOGIN_INFOUSER_SUCCESS:
+    return produce(state, pRet => {
+      pRet.busy = false;
+      const p = action.payload;
+      if (p && p.user && p.user.id){
+        pRet.owner = p.user;
+      } else {
+        pRet.owner = GetInfoUser();
+      }
+    });
+    case LOGOUT_INFOUSER:
+    return produce(state, pRet => {
+      pRet.busy = false;
+      pRet.owner = GetInfoUser();
+    });
     default:
       return produce(state, pRet => {
         pRet.busy = false;

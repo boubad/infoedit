@@ -82,6 +82,23 @@ export interface IItemMatiere {
   tag?:string;
 } // interface IItemMatiere
 //
+export interface IItemInfoUser {
+  _id?: string;
+  _rev?: string;
+  _deleted?: boolean;
+  _attachments?: any;
+  type?: string;
+  observations?: string;
+  lastname?: string;
+  firstname?: string;
+  email?: string;
+  avatar?: string;
+  status?: string;
+  sexe?:string;
+  password?:string;
+  username?:string;
+} // interface IItemInfoUser
+//
 export interface IItemEtudiant {
   _id?: string;
   _rev?: string;

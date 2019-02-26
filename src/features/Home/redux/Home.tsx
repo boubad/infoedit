@@ -18,7 +18,9 @@ const getSemestreid = (state: IInfoState): string => {
 const getAnneeid = (state: IInfoState): string => {
   return state.annees.current.id;
 };
-
+const getConnected = (state: IInfoState) : boolean => {
+  return state.appstate.owner.id.length > 0;
+}
 const getAnnees = (state: IInfoState): IOption[] => {
   const pRet:IOption[] = [{id:'',text:''}];
   state.annees.pageData.forEach((x) =>{
@@ -58,7 +60,8 @@ const selector = createSelector(
     getAnneeid,
     getAnnees,
     getGroupes,
-    getSemestres
+    getSemestres,
+    getConnected
   ],
   (
     busy:boolean,
@@ -67,12 +70,14 @@ const selector = createSelector(
     anneeid: string,
     annees: IOption[],
     groupes: IOption[],
-    semestres: IOption[]
+    semestres: IOption[],
+    connected:boolean
   ) => {
     return {
       anneeid,
       annees,
       busy,
+      connected,
       groupeid,
       groupes,
       semestreid,

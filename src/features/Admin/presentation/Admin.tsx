@@ -10,6 +10,8 @@ import DataVar from "../../../features/DataVar/redux/DataVar";
 import EtudAffectation from "../../../features/EtudAffectation/redux/EtudAffectation";
 import Etudiant from "../../../features/Etudiant/redux/Etudiant";
 import Groupe from "../../../features/Groupe/redux/Groupe";
+import InfoUser from '../../../features/InfoUser/redux/InfoUser';
+import LoginForm from '../../../features/Login/redux/LoginForm';
 import Matiere from "../../../features/Matiere/redux/Matiere";
 import ChangeStatus from "../../../features/Outils/redux/ChangeStatus";
 import ImportEtudiants from "../../../features/Outils/redux/ImportEtudiants";
@@ -23,6 +25,7 @@ export interface IAdminProps {
   canAffectations: boolean;
   canEtudAffectations: boolean;
   canChangeStatus: boolean;
+  connected: boolean;
 } // interface IMainAppProps
 interface IAdminState {
   activeTab: string;
@@ -38,6 +41,9 @@ export class Admin extends BaseComponent<IAdminProps, IAdminState> {
   } // constructor
   public render(): React.ReactNode {
     const p = this.props;
+    if (!p.connected){
+      return (<LoginForm/>);
+    }
     return (
       <Table>
         <tbody className={this.getInfoStyle()}>
@@ -175,6 +181,16 @@ export class Admin extends BaseComponent<IAdminProps, IAdminState> {
                       Variables
                     </NavLink>
                   </NavItem>
+                  <NavItem>
+                    <NavLink
+                      className={classnames({
+                        active: this.state.activeTab === "14"
+                      })}
+                      onClick={this.toggle.bind(this, "14")}
+                    >
+                      Utilisateurs
+                    </NavLink>
+                  </NavItem>
                 </Nav>
                 <TabContent activeTab={this.state.activeTab}>
                   <TabPane tabId="1">
@@ -212,6 +228,9 @@ export class Admin extends BaseComponent<IAdminProps, IAdminState> {
                   </TabPane>
                   <TabPane tabId="13">
                     <DataVar />
+                  </TabPane>
+                  <TabPane tabId="14">
+                    <InfoUser />
                   </TabPane>
                 </TabContent>
               </div>

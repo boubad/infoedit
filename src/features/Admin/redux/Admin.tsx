@@ -22,24 +22,30 @@ const getCanChangeStatus = (state: IInfoState): boolean => {
     state.groupes.current.id.length > 0
   );
 };
+const getConnected = (state: IInfoState) : boolean => {
+  return state.appstate.owner.id.length > 0;
+}
 //
 const selector = createSelector(
   [
     getHasStatus,
     getCanAffectations,
     getCanEtudAffectations,
-    getCanChangeStatus
+    getCanChangeStatus,
+    getConnected
   ],
   (
     hasStatus: boolean,
     canAffectations: boolean,
     canEtudAffectations: boolean,
-    canChangeStatus
+    canChangeStatus,
+    connected:boolean
   ) => {
     return {
       canAffectations,
       canChangeStatus,
       canEtudAffectations,
+      connected,
       hasStatus,
     };
   }

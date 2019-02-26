@@ -4,9 +4,9 @@ import { BaseDataManager } from "./BaseDataManager";
 import { IDataStore } from "./IDataStore";
 import { IItemDataVar } from "./impl/IInfoDomain";
 import { TYPE_DATAVAR } from "./impl/InfoDomainData";
-import { StatItemManager } from './StatItemManager';
+import { InfoUserManager } from './InfoUserManager';
 //
-export class DataVarManager extends StatItemManager {
+export class DataVarManager extends InfoUserManager {
   //
   constructor(pStore: IDataStore) {
     super(pStore);

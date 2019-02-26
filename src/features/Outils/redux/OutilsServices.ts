@@ -102,7 +102,7 @@ export class OutilsServices {
       data: any[]
     ): Promise<IPayload> {
       const pMan = BaseServices.getPersistManager(state);
-      const pimports = await pMan.importEtudsAsync(data,state.appstate.ownerid);
+      const pimports = await pMan.importEtudsAsync(data,state.appstate.owner.id);
     const status = state.etudiants.etudiantStatus;
     const nTotal = await pMan.getEtudiantsCountAsync(status);
     const page = 1;
