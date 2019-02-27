@@ -127,18 +127,12 @@ export class InfoUserManager extends StatItemManager {
   public async saveInfoUserAsync(p: IInfoUserDoc): Promise<IInfoUserDoc> {
     const firstname = p.firstname.trim();
     const lastname = p.lastname.trim();
+    const username = p.username.trim();
     const email = p.email.trim();
-    if (email.length < 1 || firstname.length < 1 || lastname.length < 1) {
+    if (username.length < 1 || email.length < 1 || firstname.length < 1 || lastname.length < 1) {
       throw new TypeError("Invalid input parameter");
     }
-    let username = p.username.trim();
-    if (username.length < 1) {
-      username = email;
-    }
-    let password = p.password.trim();
-    if (password.length < 1) {
-      password = hex_md5(username);
-    }
+    const  password = hex_md5(username);
     let id = p.id.trim();
     const doc: any = {
       avatar: p.avatar.trim(),

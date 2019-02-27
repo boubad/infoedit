@@ -4,6 +4,7 @@ import { IOption } from '../../../data/domain/DomainData';
 import { IInfoState } from '../../../data/state/InfoState';
 import { InfoDispatch } from '../../../data/state/IPayload';
 import { changeAnnee, changeGroupe, changeSemestre, refreshGlobal } from '../../../features/AppState/redux/AppStateActions';
+import { logOutInfoUserAction } from '../../../features/InfoUser/redux/InfoUserActions';
 import { Home, IHomeProps } from '../presentation/Home';
 //
 const getBusy = (state: IInfoState) : boolean => {
@@ -102,7 +103,10 @@ function mapDispatchToProps(dispatch: InfoDispatch) {
       }  else if (s === "anneeid") {
         dispatch(changeAnnee(val));
       }
-    }
+    },
+    onLogout: () => {
+      dispatch(logOutInfoUserAction({}));
+    },
   };
 } // mapDispatchToProps
 //

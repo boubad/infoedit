@@ -81,11 +81,12 @@ export class InfoUserServices {
   //
   public static async saveInfoUserAsync(state: IInfoState): Promise<IPayload> {
     const pMan = BaseServices.getPersistManager(state);
-    await pMan.saveInfoUserAsync(state.users.current);
+    const user = await pMan.saveInfoUserAsync(state.users.current);
     const pRet:IPayload = {};
     const n = await pMan.getUsersCountAsync();
     const pp = await pMan.getUsersAsync(0,state.users.pageSize);
     pRet.usersCount = n;
+    pRet.user = user;
     pRet.users = pp;
     return pRet;
   } // saveInfoUser

@@ -1,8 +1,8 @@
 import * as React from "react";
-import { Form, Table } from "reactstrap";
-import { BaseComponent } from '../../../components/BaseComponent';
-import { ItemChoiceComponent } from '../../../components/InputChoiceComponent';
-import { IOption } from '../../../data/domain/DomainData';
+import { Button, Form, FormGroup, Table } from "reactstrap";
+import { BaseComponent } from "../../../components/BaseComponent";
+import { ItemChoiceComponent } from "../../../components/InputChoiceComponent";
+import { IOption } from "../../../data/domain/DomainData";
 //
 export interface IAppStateProps {
   anneeid: string;
@@ -13,26 +13,32 @@ export interface IAppStateProps {
   groupeid: string;
   groupes: IOption[];
   matieres: IOption[];
-  busy:boolean;
+  busy: boolean;
   //
   ValueChanged?: (val: any, propname?: string) => void;
+  onLogout?: () => void;
 } // interface IGlobalStateComponentProps
 //
 export class AppState extends BaseComponent<IAppStateProps> {
   constructor(props?: any) {
     super(props);
+    this.onLogout = this.onLogout.bind(this);
   } // constructor
   public render(): React.ReactNode {
     const p = this.props;
-    const busy = (this.props.busy !== undefined && this.props.busy !== null && this.props.busy === true) ? true: false;
+    const busy =
+      this.props.busy !== undefined &&
+      this.props.busy !== null &&
+      this.props.busy === true
+        ? true
+        : false;
     return (
       <Table bordered={true}>
         <tbody className={this.getInfoStyle()}>
           <tr>
-
             <td className="text-center">
               <Form inline={true}>
-              <ItemChoiceComponent
+                <ItemChoiceComponent
                   text={p.anneeid}
                   items={this.props.annees}
                   prompt="Année:"
@@ -64,6 +70,11 @@ export class AppState extends BaseComponent<IAppStateProps> {
                   busy={busy}
                   onItemChoosen={p.ValueChanged}
                 />
+                <FormGroup>
+                  <Button color="secondary" onClick={this.onLogout}>
+                    Déconnexion!
+                  </Button>
+                </FormGroup>
               </Form>
             </td>
           </tr>
@@ -71,4 +82,9 @@ export class AppState extends BaseComponent<IAppStateProps> {
       </Table>
     );
   } // render
+  private onLogout(e?: any) {
+    if (this.props.onLogout) {
+      this.props.onLogout();
+    }
+  } // onLogout
 } // class AppState

@@ -46,13 +46,6 @@ export class InfoUserInfo extends BaseInfoComponent<IInfoUserDoc> {
             busy={this.props.busy}
             onTextChanged={this.props.onFieldChanged}
           />
-           <InputItemComponent
-            text={p.password}
-            prompt={"Mot de passe:"}
-            propname={"password"}
-            busy={this.props.busy}
-            onTextChanged={this.props.onFieldChanged}
-          />
           <InputEmailComponent
             text={p.email}
             prompt={"Adresse courriel:"}

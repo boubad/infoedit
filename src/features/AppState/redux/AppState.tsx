@@ -3,6 +3,7 @@ import { createSelector } from "reselect";
 import { IOption } from '../../../data/domain/DomainData';
 import { IInfoState } from '../../../data/state/InfoState';
 import { InfoDispatch } from '../../../data/state/IPayload';
+import { logOutInfoUserAction } from '../../../features/InfoUser/redux/InfoUserActions';
 import { AppState, IAppStateProps } from '../presentation/AppState';
 import { changeAnnee, changeGroupe, changeMatiere, changeSemestre } from './AppStateActions';
 //
@@ -116,7 +117,10 @@ function mapDispatchToProps(dispatch: InfoDispatch) {
       } else if (s === "anneeid") {
         dispatch(changeAnnee(val));
       }
-    }
+    },
+    onLogout: () => {
+      dispatch(logOutInfoUserAction({}));
+    },
   };
 } // mapDispatchToProps
 //

@@ -2,6 +2,7 @@ import { connect } from "react-redux";
 import { createSelector } from "reselect";
 import { IInfoState } from '../../../data/state/InfoState';
 import { InfoDispatch } from '../../../data/state/IPayload';
+import { logOutInfoUserAction } from '../../../features/InfoUser/redux/InfoUserActions';
 import { getStatData } from "../../Outils/redux/OutilsActions";
 import {
   IStatEtudiantDataProps,
@@ -48,7 +49,10 @@ function mapDispatchToProps(dispatch: InfoDispatch) {
   return {
     doCheck: () => {
       dispatch(getStatData());
-    }
+    },
+    onLogout: () => {
+      dispatch(logOutInfoUserAction({}));
+    },
   };
 } // mapDispatchToProps
 //

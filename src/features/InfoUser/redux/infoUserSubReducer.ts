@@ -113,11 +113,11 @@ export function infoUserSubReducer(
         pRet.busy = false;
         const id = pRet.previousId;
         pRet.addMode = false;
-        const px = pRet.pageData.find(x => {
+        const pxx = pRet.pageData.find(x => {
           return x.id === id;
         });
-        if (px !== undefined) {
-          pRet.current = Object.assign({}, px);
+        if (pxx !== undefined) {
+          pRet.current = Object.assign({}, pxx);
         } else {
           pRet.current = GetInfoUser();
         }
@@ -132,18 +132,17 @@ export function infoUserSubReducer(
             case "username":
               pz.username = val;
               pz.modified = true;
-              break;
-            case "password":
-              pz.password = val;
-              pz.modified = true;
+              pRet.current = pz;
               break;
             case "sexe":
               pz.sexe = val;
               pz.modified = true;
+              pRet.current = pz;
               break;
             case "email":
               pz.email = val;
               pz.modified = true;
+              pRet.current = pz;
               break;
             case "firstname":
               pz.firstname = val;
@@ -152,14 +151,17 @@ export function infoUserSubReducer(
             case "lastname":
               pz.lastname = val;
               pz.modified = true;
+              pRet.current = pz;
               break;
             case "observations":
               pz.observations = val;
               pz.modified = true;
+              pRet.current = pz;
               break;
             case "status":
               pz.status = val;
               pz.modified = true;
+              pRet.current = pz;
               break;
           } // field
         } // p

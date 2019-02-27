@@ -10,7 +10,7 @@ export const createInfoUserAction = createAction(CREATE_INFOUSER_ITEM);
 export const CANCEL_INFOUSER_ITEM = "CANCEL_INFOUSER_ITEM";
 export const cancelInfoUserAction = createAction(CANCEL_INFOUSER_ITEM);
 //
-export const CHANGE_INFOUSER_FIELD = "CHANGE_INFOUSER_FIELD";
+export const CHANGE_INFOUSER_FIELD = "CHANGE_USER_FIELD";
 export const changeInfoUserFieldAction = createAction(CHANGE_INFOUSER_FIELD);
 ///////////////////////////////////////////////////////
 export const LOGOUT_INFOUSER = "LOGOUT_INFOUSER";

@@ -1,8 +1,9 @@
 import * as React from "react";
-import { Button, Form } from "reactstrap";
+import { Button, Form, FormGroup } from "reactstrap";
 import { BaseComponent } from "src/components/BaseComponent";
 import { InputEmailComponent } from "../../../components/InputEmailComponent";
 import { InputItemComponent } from "../../../components/InputItemComponent";
+import { InputPasswordComponent } from '../../../components/InputPasswordComponent';
 
 export interface ILoginFormProps {
   busy: boolean;
@@ -31,8 +32,8 @@ export class LoginForm extends BaseComponent<ILoginFormProps, ILoginFormState> {
     const bOk =
       p.password.length > 0 && (p.username.length > 0 || p.email.length > 0);
     return (
-      <div className={this.getInfoStyle()}>
-        <Form>
+      
+        <Form inline={true}>
           <InputItemComponent
             text={p.username}
             prompt={"Identifiant utilisateur:"}
@@ -47,18 +48,17 @@ export class LoginForm extends BaseComponent<ILoginFormProps, ILoginFormState> {
             busy={this.props.busy}
             onTextChanged={this.onTextChanged}
           />
-          <InputItemComponent
+          <InputPasswordComponent
             text={p.password}
             prompt={"Mot de passe:"}
             propname={"password"}
             busy={this.props.busy}
             onTextChanged={this.onTextChanged}
           />
+          <FormGroup hidden={!bOk}>
+          <Button color='primary' onClick={this.onLogin} disabled={this.props.busy}>Connexion!</Button>
+          </FormGroup>
         </Form>
-        <div hidden={!bOk}>
-        <Button color='primary' onClick={this.onLogin} disabled={this.props.busy}>Connexion!</Button>
-        </div>
-      </div>
     );
   } // render
   private onLogin(e: any) {
