@@ -124,6 +124,17 @@ export class InfoUserManager extends StatItemManager {
     return this.convertInfoUserDoc(data);
   } // loadInfoUserAsync
   //
+  public async changeInfoUserPasswordAsync(id:string, newPass:string) : Promise<IInfoUserDoc> {
+    let data: IItemInfoUser = await this.pStore.findDocById(id);
+    if (data._id !== id) {
+      throw new TypeError("User not found");
+    }
+    data.password = hex_md5(newPass);
+    const docid = await this.pStore.maintainsDoc(data);
+    data = await this.pStore.findDocById(docid);
+    return this.convertInfoUserDoc(data);
+  }// changeInfoUserPasswordAsync
+  //
   public async saveInfoUserAsync(p: IInfoUserDoc): Promise<IInfoUserDoc> {
     const firstname = p.firstname.trim();
     const lastname = p.lastname.trim();
@@ -141,6 +152,7 @@ export class InfoUserManager extends StatItemManager {
       lastname: p.lastname.trim(),
       observations: p.observations.trim(),
       password,
+      role: p.role,
       sexe: p.sexe,
       status: p.status.trim().length > 0 ? p.status : ETUDIANT_STATUS_FREE,
       type: TYPE_INFOUSER,

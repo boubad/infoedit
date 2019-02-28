@@ -129,6 +129,11 @@ export function infoUserSubReducer(
           const val = p.value;
           const pz = pRet.current;
           switch (p.field) {
+            case "role":
+              pz.role = val;
+              pz.modified = true;
+              pRet.current = pz;
+              break;
             case "username":
               pz.username = val;
               pz.modified = true;

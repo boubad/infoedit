@@ -37,6 +37,7 @@ export interface IInfoUserDoc extends IBaseDoc {
   fullname: string;
   password:string;
   username:string;
+  role:string;
 }// interface IInfoUserDoc
 export interface ISigleNamedDoc extends IBaseDoc {
   sigle: string;

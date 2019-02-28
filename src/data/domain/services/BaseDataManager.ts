@@ -777,6 +777,7 @@ export class BaseDataManager {
     pRet.sexe = (p.sexe) ? p.sexe: '';
     pRet.password = (p.password) ? p.password : '';
     pRet.username = (p.username) ? p.username : '';
+    pRet.role = (p.role) ? p.role : '';
     pRet.url = this.pStore.formBlobUrl(pRet.id, pRet.avatar);
     pRet.attachments = this.getDocAttachments(p);
     return pRet;

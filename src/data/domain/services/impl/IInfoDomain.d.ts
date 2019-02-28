@@ -97,6 +97,7 @@ export interface IItemInfoUser {
   sexe?:string;
   password?:string;
   username?:string;
+  role?:string;
 } // interface IItemInfoUser
 //
 export interface IItemEtudiant {

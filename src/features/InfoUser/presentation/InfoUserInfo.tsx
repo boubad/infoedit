@@ -1,14 +1,23 @@
 import * as React from "react";
-import { Form} from "reactstrap";
+import { Form } from "reactstrap";
+import { ItemChoiceComponent } from "../../../components/InputChoiceComponent";
 import { InputDescComponent } from "../../../components/InputDescComponent";
 import { InputEmailComponent } from "../../../components/InputEmailComponent";
-import { InputItemComponent } from '../../../components/InputItemComponent';
+import { InputItemComponent } from "../../../components/InputItemComponent";
 import { InputNameTextComponent } from "../../../components/InputNameTextComponent";
 import { InputUpperTextComponent } from "../../../components/InputUpperTextComponent";
 import { StatusChoiceComponent } from "../../../components/StatusChoiceComponent";
-import { IInfoUserDoc } from "../../../data/domain/DomainData";
+import { IInfoUserDoc, IOption } from "../../../data/domain/DomainData";
 import { BaseInfoComponent } from "../../../features/Common/presentation/BaseInfoComponent";
-
+//
+const roleOptions: IOption[] = [
+  { id: "", text: "" },
+  { id: "prof", text: "Enseignant" },
+  { id: "oper", text: "Operateur" },
+  { id: "admin", text: "Administrateur" },
+  { id: "sys", text: "Système" }
+];
+//
 export class InfoUserInfo extends BaseInfoComponent<IInfoUserDoc> {
   constructor(props?: any) {
     super(props);
@@ -18,7 +27,15 @@ export class InfoUserInfo extends BaseInfoComponent<IInfoUserDoc> {
     return (
       <div>
         <Form className={this.getInfoStyle()}>
-        <InputUpperTextComponent
+          <ItemChoiceComponent
+            text={p.role}
+            items={roleOptions}
+            prompt="Role:"
+            propname="role"
+            busy={this.props.busy}
+            onItemChoosen={this.props.onFieldChanged}
+          />
+          <InputUpperTextComponent
             text={p.sexe}
             prompt={"Sexe:"}
             propname={"sexe"}

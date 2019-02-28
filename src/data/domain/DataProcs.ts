@@ -202,6 +202,7 @@ export function GetInfoUser(): IInfoUserDoc {
       ownerid:"",
       password:'',
       username:'',
+      role:''
     }
   );
 }// GetInfoUser
