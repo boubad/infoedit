@@ -853,6 +853,7 @@ export class BaseDataManager {
     pRet.rev = p._rev ? p._rev : "";
     pRet.etudiantid = (p.etudiantid) ? p.etudiantid : '';
     pRet.anneetag = (p.anneetag) ? p.anneetag : "";
+    pRet.ident = (p.ident) ? p.ident : '';
     pRet.data = (p.data) ? p.data : {};
     pRet.attachments = this.getDocAttachments(p);
     return pRet;

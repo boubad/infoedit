@@ -13,6 +13,7 @@ export interface IStatItemDoc {
   id: string;
   rev: string;
   anneetag:string;
+  ident:string;
   etudiantid:string;
   attachments: IAttachedDoc[];
   data:any;

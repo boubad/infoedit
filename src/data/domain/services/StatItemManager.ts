@@ -262,10 +262,12 @@ export class StatItemManager extends BaseDataManager {
     if (etudiantid.length < 1) {
       throw new TypeError("Cannot save statitem");
     }
+    const pEtud = await this.fetchEtudiantByIdAsync(etudiantid);
     const doc: any = {
       anneetag: p.anneetag,
       data: p.data,
       etudiantid: p.etudiantid,
+      ident: pEtud.ident,
       type: TYPE_STAT
     };
     const pp: any[] = await this.pStore.findDocsBySelector(

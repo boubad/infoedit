@@ -227,6 +227,7 @@ export interface IItemStat {
   _deleted?: boolean;
   _attachments?: any;
   anneetag?:string;
+  ident?:string;
   etudiantid?:string;
   type?: string;
   data?: any;

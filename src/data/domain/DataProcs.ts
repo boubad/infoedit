@@ -77,6 +77,7 @@ export function GetStatItem():IStatItemDoc {
     data:{},
     etudiantid:'',
     id:'',
+    ident:'',
     rev:''
   });
 }// GetStatItem
