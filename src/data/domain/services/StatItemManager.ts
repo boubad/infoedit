@@ -64,6 +64,7 @@ export class StatItemManager extends BaseDataManager {
     const semestresMap: Map<string, string> = new Map<string, string>();
     const matieresMap: Map<string, string> = new Map<string, string>();
     const oMap: Map<string, IWorkItem> = new Map<string, IWorkItem>();
+
     const sel: any = {
       etudiantid: { $eq: etudiantid },
       type: { $eq: TYPE_NOTE }
