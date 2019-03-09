@@ -10,8 +10,6 @@
 /build
 
 # misc
-package-lock.json
-yarn.lock
 .vscode/chrome
 .alm
 .DS_Store
@@ -23,6 +21,5 @@ yarn.lock
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-**/wslpackage-lock.json
 **/*.js
 **/*.map
