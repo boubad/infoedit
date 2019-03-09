@@ -73,7 +73,7 @@ export class Controle extends BaseComponent<IControlesProps> {
                 displayPages={p.displayPages}
                 pagesCount={p.pagesCount}
                 items={p.items}
-                busy={this.props.busy}
+                busy={p.busy}
                 refresh={p.refresh}
                 gotoPage={p.gotoPage}
                 selectItem={p.selectItem}
@@ -90,7 +90,7 @@ export class Controle extends BaseComponent<IControlesProps> {
                 currentNote={p.currentNote}
                 currentEvt={p.currentEvt}
                 evtAddMode={p.evtAddMode}
-                busy={this.props.busy}
+                busy={p.busy}
                 onFieldChanged={p.onFieldChanged}
                 onEditCommand={p.onEditCommand}
                 onSaveAttachment={p.onSaveAttachment}
