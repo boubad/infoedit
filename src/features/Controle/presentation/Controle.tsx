@@ -98,6 +98,7 @@ export class Controle extends BaseComponent<IControlesProps> {
                 onCheck={p.onCheck}
                 onNoteSelectItem={p.onNoteSelectItem}
                 onNoteFieldChanged={p.onNoteFieldChanged}
+                onNoteEditCommand={p.onNoteEditCommand}
                 onNoteSaveAttachment={p.onNoteSaveAttachment}
                 onNoteRemoveAttachment={p.onNoteRemoveAttachment}
                 onEvtEditCommand={p.onEvtEditCommand}

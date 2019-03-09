@@ -82,7 +82,6 @@ export class DataPersistManager extends StatDataManager {
             firstname = firstname.toUpperCase();
           }
           const pz = GetEtudiant();
-          pz.ownerid = ownerid;
           pz.firstname = firstname;
           pz.lastname = lastname;
           pz.status = ETUDIANT_STATUS_FREE;

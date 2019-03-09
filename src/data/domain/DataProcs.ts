@@ -95,7 +95,6 @@ export function GetDataVarDoc(): IDataVarDoc {
       modified: false,
       attachments: [],
       loaded: false,
-      ownerid: "",
       modalvalues: [],
       vartype: "",
       tag:""
@@ -115,8 +114,7 @@ export function GetGroupe(): IGroupeDoc {
       sigle: "",
       modified: false,
       attachments: [],
-      loaded: false,
-      ownerid: ""
+      loaded: false
     }
   );
 } // GetGroupe
@@ -132,8 +130,7 @@ export function GetUnite(): IUniteDoc {
       sigle: "",
       modified: false,
       attachments: [],
-      loaded: false,
-      ownerid: ""
+      loaded: false
     }
   );
 } // GetUnite
@@ -151,7 +148,6 @@ export function GetSemestre(): ISemestreDoc {
       modified: false,
       attachments: [],
       loaded: false,
-      ownerid: "",
       tag:""
     }
   );
@@ -175,7 +171,6 @@ export function GetMatiere(): IMatiereDoc {
       uniteid: "",
       loaded: false,
       unitename: "",
-      ownerid: "",
       tag:""
     }
   );
@@ -229,7 +224,6 @@ export function GetEtudiant(): IEtudiantDoc {
       loaded: false,
       status: "",
       affectations: [],
-      ownerid: "",
       ident: "",
       data: {},
       sexe:'M',
@@ -254,7 +248,6 @@ export function GetAnnee(): IAnneeDoc {
       attachments: [],
       loaded: false,
       sigle: "",
-      ownerid: "",
       displaystartdate: "",
       displayenddate: "",
       tag:""
@@ -281,7 +274,6 @@ export function GetAffectation(): IAffectationDoc {
       loaded: false,
       startdate: "",
       enddate: "",
-      ownerid: "",
       displaystartdate: "",
       displayenddate: ""
     }
@@ -312,7 +304,6 @@ export function GetEtudAffectation(): IEtudAffectationDoc {
       groupeid: "",
       semestreid: "",
       etudiantStatus: "",
-      ownerid: "",
       displaystartdate: "",
       displayenddate: ""
     }

@@ -27,7 +27,6 @@ export class SemestreManager extends UniteManager {
     const doc: any = {
       name,
       observations: p.observations,
-      ownerid: p.ownerid,
       sigle,
       tag: (p.tag.trim().length < 1) ? sigle.toUpperCase() : p.tag.trim().toUpperCase(),
       type: TYPE_SEMESTRE

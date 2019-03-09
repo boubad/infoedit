@@ -143,11 +143,6 @@ export function affectationSubReducer(
               pz.modified = true;
               pRet.current = pz;
               break;
-            case "ownerid":
-              pz.ownerid = val;
-              pz.modified = true;
-              pRet.current = pz;
-              break;
             default:
               break;
           } // field

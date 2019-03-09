@@ -2,10 +2,8 @@
 export interface IItemDataVar {
   _id?: string;
   _rev?: string;
-  _deleted?: boolean;
   _attachments?: any;
   type?: string;
-  ownerid?: string;
   observations?: string;
   sigle?: string;
   name?: string;
@@ -16,10 +14,8 @@ export interface IItemDataVar {
 export interface IItemAnnee {
   _id?: string;
   _rev?: string;
-  _deleted?: boolean;
   _attachments?: any;
   type?: string;
-  ownerid?: string;
   observations?: string;
   sigle?: string;
   name?: string;
@@ -31,10 +27,8 @@ export interface IItemAnnee {
 export interface IItemGroupe {
   _id?: string;
   _rev?: string;
-  _deleted?: boolean;
   _attachments?: any;
   type?: string;
-  ownerid?: string;
   observations?: string;
   sigle?: string;
   name?: string;
@@ -43,10 +37,8 @@ export interface IItemGroupe {
 export interface IItemUnite {
   _id?: string;
   _rev?: string;
-  _deleted?: boolean;
   _attachments?: any;
   type?: string;
-  ownerid?: string;
   observations?: string;
   sigle?: string;
   name?: string;
@@ -55,10 +47,8 @@ export interface IItemUnite {
 export interface IItemSemestre {
   _id?: string;
   _rev?: string;
-  _deleted?: boolean;
   _attachments?: any;
   type?: string;
-  ownerid?: string;
   observations?: string;
   sigle?: string;
   name?: string;
@@ -68,10 +58,8 @@ export interface IItemSemestre {
 export interface IItemMatiere {
   _id?: string;
   _rev?: string;
-  _deleted?: boolean;
   _attachments?: any;
   type?: string;
-  ownerid?: string;
   observations?: string;
   sigle?: string;
   name?: string;
@@ -85,7 +73,6 @@ export interface IItemMatiere {
 export interface IItemInfoUser {
   _id?: string;
   _rev?: string;
-  _deleted?: boolean;
   _attachments?: any;
   type?: string;
   observations?: string;
@@ -103,10 +90,8 @@ export interface IItemInfoUser {
 export interface IItemEtudiant {
   _id?: string;
   _rev?: string;
-  _deleted?: boolean;
   _attachments?: any;
   type?: string;
-  ownerid?: string;
   observations?: string;
   lastname?: string;
   firstname?: string;
@@ -122,10 +107,8 @@ export interface IItemEtudiant {
 export interface IItemAffectation {
   _id?: string;
   _rev?: string;
-  _deleted?: boolean;
   _attachments?: any;
   type?: string;
-  ownerid?: string;
   observations?: string;
   anneeid?: string;
   semestreid?: string;
@@ -136,10 +119,8 @@ export interface IItemAffectation {
 export interface IItemEtudAffectation {
   _id?: string;
   _rev?: string;
-  _deleted?: boolean;
   _attachments?: any;
   type?: string;
-  ownerid?: string;
   observations?: string;
   anneeid?: string;
   semestreid?: string;
@@ -153,7 +134,6 @@ export interface IItemEtudAffectation {
 export interface IItemControle {
   _id?: string;
   _rev?: string;
-  _deleted?: boolean;
   _attachments?: any;
   type?: string;
   ownerid?: string;
@@ -174,7 +154,6 @@ export interface IItemControle {
 export interface IItemEvt {
   _id?: string;
   _rev?: string;
-  _deleted?: boolean;
   _attachments?: any;
   type?: string;
   ownerid?: string;
@@ -195,7 +174,6 @@ export interface IItemEvt {
 export interface IItemNote {
   _id?: string;
   _rev?: string;
-  _deleted?: boolean;
   _attachments?: any;
   type?: string;
   ownerid?: string;
@@ -224,7 +202,6 @@ export interface IItemAttInfo {
 export interface IItemStat {
   _id?: string;
   _rev?: string;
-  _deleted?: boolean;
   _attachments?: any;
   anneetag?:string;
   ident?:string;

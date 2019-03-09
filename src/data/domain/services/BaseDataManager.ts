@@ -509,7 +509,6 @@ export class BaseDataManager {
     const pRet = GetEvt();
     pRet.id = p._id ? p._id : "";
     pRet.rev = p._rev ? p._rev : "";
-    pRet.ownerid = p.ownerid ? p.ownerid : "";
     pRet.affectationid = p.affectationid ? p.affectationid : "";
     pRet.etudaffectationid = p.etudaffectationid ? p.etudaffectationid : "";
     pRet.observations = p.observations ? p.observations : "";
@@ -546,7 +545,6 @@ export class BaseDataManager {
   protected async convertNoteDocAsync(p: IItemNote): Promise<INoteDoc> {
     
     const pRet = GetNote();
-    pRet.ownerid = p.ownerid ? p.ownerid : "";
     pRet.affectationid = p.affectationid ? p.affectationid : "";
     pRet.etudaffectationid = p.etudaffectationid ? p.etudaffectationid : "";
     pRet.controleid = p.controleid ? p.controleid : "";
@@ -588,7 +586,6 @@ export class BaseDataManager {
   ): Promise<IEtudAffectationDoc> {
     
     const pRet = GetEtudAffectation();
-    pRet.ownerid = p.ownerid ? p.ownerid : "";
     pRet.id = p._id ? p._id : "";
     pRet.rev = p._rev ? p._rev : "";
     pRet.observations = p.observations ? p.observations : "";
@@ -626,7 +623,6 @@ export class BaseDataManager {
     const pRet = GetAffectation();
     pRet.id = p._id ? p._id : "";
     pRet.rev = p._rev ? p._rev : "";
-    pRet.ownerid = p.ownerid ? p.ownerid : "";
     pRet.observations = p.observations ? p.observations : "";
     pRet.attachments = this.getDocAttachments(p);
     pRet.semestreid = p.semestreid ? p.semestreid : "";
@@ -660,7 +656,6 @@ export class BaseDataManager {
     pRet.modified = false;
     pRet.id = p._id ? p._id : "";
     pRet.rev = p._rev ? p._rev : "";
-    pRet.ownerid = p.ownerid ? p.ownerid : "";
     pRet.observations = p.observations ? p.observations : "";
     pRet.sigle = p.sigle ? p.sigle : "";
     pRet.name = p.name ? p.name : "";
@@ -717,7 +712,6 @@ export class BaseDataManager {
     pRet.modified = false;
     pRet.id = p._id ? p._id : "";
     pRet.rev = p._rev ? p._rev : "";
-    pRet.ownerid = p.ownerid ? p.ownerid : "";
     pRet.observations = p.observations ? p.observations : "";
     pRet.startdate = p.startdate ? p.startdate : "";
     pRet.enddate = p.enddate ? p.enddate : "";
@@ -739,7 +733,6 @@ export class BaseDataManager {
     const pRet = GetEtudiant();
     pRet.id = p._id ? p._id : "";
     pRet.rev = p._rev ? p._rev : "";
-    pRet.ownerid = p.ownerid ? p.ownerid : "";
     pRet.observations = p.observations ? p.observations : "";
     pRet.lastname = p.lastname ? p.lastname : "";
     pRet.firstname = p.firstname ? p.firstname : "";
@@ -787,7 +780,6 @@ export class BaseDataManager {
     const pRet = GetSemestre();
     pRet.id = p._id ? p._id : "";
     pRet.rev = p._rev ? p._rev : "";
-    pRet.ownerid = p.ownerid ? p.ownerid : "";
     pRet.observations = p.observations ? p.observations : "";
     pRet.name = p.name ? p.name : "";
     pRet.sigle = p.sigle ? p.sigle : "";
@@ -803,7 +795,6 @@ export class BaseDataManager {
     const pRet = GetDataVarDoc();
     pRet.id = p._id ? p._id : "";
     pRet.rev = p._rev ? p._rev : "";
-    pRet.ownerid = p.ownerid ? p.ownerid : "";
     pRet.observations = p.observations ? p.observations : "";
     pRet.name = p.name ? p.name : "";
     pRet.sigle = p.sigle ? p.sigle : "";
@@ -821,7 +812,6 @@ export class BaseDataManager {
     const pRet = GetUnite();
     pRet.id = p._id ? p._id : "";
     pRet.rev = p._rev ? p._rev : "";
-    pRet.ownerid = p.ownerid ? p.ownerid : "";
     pRet.observations = p.observations ? p.observations : "";
     pRet.name = p.name ? p.name : "";
     pRet.sigle = p.sigle ? p.sigle : "";
@@ -836,7 +826,6 @@ export class BaseDataManager {
     const pRet = GetGroupe();
     pRet.id = p._id ? p._id : "";
     pRet.rev = p._rev ? p._rev : "";
-    pRet.ownerid = p.ownerid ? p.ownerid : "";
     pRet.observations = p.observations ? p.observations : "";
     pRet.name = p.name ? p.name : "";
     pRet.sigle = p.sigle ? p.sigle : "";

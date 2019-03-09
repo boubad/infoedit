@@ -34,7 +34,6 @@ export class AnneeManager extends ControleManager {
       enddate: d2,
       name,
       observations: p.observations,
-      ownerid: p.ownerid,
       sigle,
       startdate: d1,
       tag: (p.tag.trim().length < 1) ? sigle.toUpperCase() : p.tag.trim().toUpperCase(),

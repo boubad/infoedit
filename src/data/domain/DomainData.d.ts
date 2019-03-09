@@ -21,7 +21,7 @@ export interface IStatItemDoc {
 export interface IBaseDoc {
   id: string;
   rev: string;
-  ownerid: string;
+  
   observations: string;
   modified: boolean;
   loaded: boolean;
@@ -113,6 +113,7 @@ export interface IEtudiantDoc extends IBaseDoc {
   affectations: IEtudAffectationDoc[];
 } // interface IEtudiantDoc
 export interface IItemMatiereAffectationDoc extends IBaseAffectationDoc {
+  ownerid: string;
   affectationid: string;
   uniteid: string;
   unitename: string;

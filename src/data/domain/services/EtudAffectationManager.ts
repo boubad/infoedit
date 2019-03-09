@@ -85,7 +85,6 @@ export class EtudAffectationManager extends EtudiantManager {
       etudiantid,
       groupeid,
       observations: p.observations.trim(),
-      ownerid: p.ownerid,
       semestreid,
       startdate: d1,
       type: TYPE_ETUD_AFFECTATION

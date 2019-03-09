@@ -25,7 +25,6 @@ export class GroupeManager extends MatiereManager {
     const doc: any = {
       name,
       observations: p.observations.trim(),
-      ownerid: p.ownerid,
       sigle,
       type: TYPE_GROUPE
     };

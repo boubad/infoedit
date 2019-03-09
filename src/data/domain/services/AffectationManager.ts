@@ -47,7 +47,6 @@ export class AffectationManager extends AnneeManager {
         enddate:end,
         groupeid,
         observations: p.observations,
-        ownerid: p.ownerid,
         semestreid,
         startdate:start,
         type: TYPE_AFFECTATION

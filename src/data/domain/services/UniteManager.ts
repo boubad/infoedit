@@ -27,7 +27,6 @@ export class UniteManager extends DataVarManager {
     const doc: any = {
       name,
       observations: p.observations,
-      ownerid: p.ownerid,
       sigle,
       type: TYPE_UNITE
     };

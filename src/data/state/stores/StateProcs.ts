@@ -136,7 +136,6 @@ export function GetInitialAffectation(state: IInfoState): IAffectationDoc {
   pz.semestreid = state.semestres.current.id;
   pz.startdate = state.annees.current.startdate;
   pz.enddate = state.annees.current.enddate;
-  pz.ownerid = state.appstate.owner.id;
   return pz;
 } // GetInitialAffectation
 export function GetInitialEtudAffectation(
@@ -150,42 +149,35 @@ export function GetInitialEtudAffectation(
   pz.groupeid = p.groupeid;
   pz.startdate = p.startdate;
   pz.enddate = p.enddate;
-  pz.ownerid = p.ownerid;
   return pz;
 } // GetInitialAffectation
 export function GetInitialAnnee(state: IInfoState): IAnneeDoc {
   const pz = GetAnnee();
   pz.startdate = new Date().toISOString().slice(0, 10);
   pz.enddate = new Date().toISOString().slice(0, 10);
-  pz.ownerid = state.appstate.owner.id;
   return pz;
 } // GetInitialDate
 //
 export function GetInitialMatiere(state: IInfoState): IMatiereDoc {
   const pz = GetMatiere();
   pz.uniteid = state.unites.current.id;
-  pz.ownerid = state.appstate.owner.id;
   pz.coefficient=1.0;
   return pz;
 } // GetInitialMatiere
 export function GetInitialDataVar(state: IInfoState): IDataVarDoc {
   const pz = GetDataVarDoc();
-  pz.ownerid = state.appstate.owner.id;
   return pz;
 } // GetInitialDataVarDo
 export function GetInitialGroupe(state: IInfoState): IGroupeDoc {
   const pz = GetGroupe();
-  pz.ownerid = state.appstate.owner.id;
   return pz;
 } // GetInitialGroupe
 export function GetInitialUnite(state: IInfoState): IUniteDoc {
   const pz = GetUnite();
-  pz.ownerid = state.appstate.owner.id;
   return pz;
 } // GetInitialUnite
 export function GetInitialSemestre(state: IInfoState): ISemestreDoc {
   const pz = GetSemestre();
-  pz.ownerid = state.appstate.owner.id;
   return pz;
 } // GetInitialUnite
 //
@@ -207,7 +199,6 @@ export function GetInitialControle(state: IInfoState): IControleDoc {
 export function GetInitialEtudiant(state: IInfoState): IEtudiantDoc {
   const pz = GetEtudiant();
   pz.status = ETUDIANT_STATUS_FREE;
-  pz.ownerid = state.appstate.owner.id;
   return pz;
 } // GetInitialEtudiant
 export function GetInitialUser(state: IInfoState): IInfoUserDoc {

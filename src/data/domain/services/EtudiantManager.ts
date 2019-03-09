@@ -59,7 +59,6 @@ export class EtudiantManager extends GroupeManager {
       ident: p.ident.trim(),
       lastname: p.lastname.trim(),
       observations: p.observations.trim(),
-      ownerid: p.ownerid,
       redoublant: p.redoublant,
       sexe:p.sexe,
       status: p.status.trim().length > 0 ? p.status : ETUDIANT_STATUS_FREE,

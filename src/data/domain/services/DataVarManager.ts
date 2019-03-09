@@ -30,7 +30,6 @@ export class DataVarManager extends InfoUserManager {
       modalvalues: p.modalvalues,
       name,
       observations: p.observations,
-      ownerid: p.ownerid,
       sigle,
       tag: (p.tag.trim().length < 1) ? sigle.toUpperCase() : p.tag.trim().toUpperCase(),
       type: TYPE_DATAVAR,

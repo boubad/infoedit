@@ -130,10 +130,6 @@ export function uniteSubReducer(
               pz.sigle = val;
               pz.modified = true;
               break;
-            case "ownerid":
-              pz.ownerid = val;
-              pz.modified = true;
-              break;
             default:
               break;
           } // field

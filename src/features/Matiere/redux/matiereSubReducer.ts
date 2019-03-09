@@ -155,10 +155,6 @@ export function matiereSubReducer(
               pz.tag = val;
               pz.modified = true;
               break;
-            case "ownerid":
-              pz.ownerid = val;
-              pz.modified = true;
-              break;
             default:
               break;
           } // field
